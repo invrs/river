@@ -1,0 +1,58 @@
+{
+  "name": "encrypt-tasks",
+  "version": "0.0.1",
+  "description": "Encrypt/decrypt files or JSON values",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "webpack",
+    "fix": "npm run lint -- --fix",
+    "prepublishOnly": "npm run build",
+    "pretty": "prettier --write **/*.css **/*.json **/*.md",
+    "lint": "eslint --ignore-path .gitignore --ext=js .",
+    "test": "jest test"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged && npm test"
+    }
+  },
+  "lint-staged": {
+    "*.{css,json,md}": ["prettier --write", "git add"],
+    "*.js": [
+      "eslint --ignore-path .gitignore --fix",
+      "git add"
+    ]
+  },
+  "prettier": {
+    "printWidth": 60,
+    "semi": false,
+    "trailingComma": "es5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/invrs/tasks.git"
+  },
+  "keywords": ["boilerplate", "nodejs", "starter"],
+  "author": "Winton Welsh <winton@cyclo.ps>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/invrs/tasks/issues"
+  },
+  "homepage": "https://github.com/invrs/tasks#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-node6": "^11.0.0",
+    "eslint": "^4.16.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-prettier": "^2.5.0",
+    "husky": "^0.15.0-rc.3",
+    "jest": "^22.1.4",
+    "lint-staged": "^6.0.1",
+    "prettier": "^1.10.2",
+    "webpack": "^3.10.0"
+  },
+  "dependencies": {}
+}
