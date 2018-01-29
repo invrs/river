@@ -1,0 +1,9 @@
+#!/usr/bin/env node
+
+require("task-env")({
+  args: process.argv.slice(2),
+  jsonDir: __dirname + "/config",
+  tasks: [
+    require("../dist")
+  ],
+}).catch(console.error)

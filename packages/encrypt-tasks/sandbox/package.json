@@ -1,0 +1,14 @@
+{
+  "name": "encrypt-tasks-sandbox",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Winton Welsh <winton@cyclo.ps>",
+  "license": "MIT",
+  "dependencies": {
+    "task-env": "^1.2.1"
+  }
+}
