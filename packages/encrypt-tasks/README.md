@@ -8,7 +8,7 @@
 npm install --save encrypt-tasks
 ```
 
-Add `encrypt-tasks` into your `tasks`:
+Add `encrypt-tasks` into your Task Env `tasks`:
 
 ```js
 #!/usr/bin/env node
@@ -24,7 +24,7 @@ See [Task Env docs](https://github.com/invrs/task-env#readme) for more info.
 
 ## Initialize
 
-The `encrypt.init` task adds an `encryptTasks` key to your configs:
+The `encrypt.init` task creates `encrypt.tasks.json` in your `jsonDir`:
 
 ```bash
 ./run encrypt.init
@@ -32,16 +32,24 @@ The `encrypt.init` task adds an `encryptTasks` key to your configs:
 
 ## Configuration
 
-The `encryptTasks` key contains the following options:
+The `encryptTasks` namespace defines what to encrypt:
 
-| Field      | Description                                            |
-| ---------- | ------------------------------------------------------ |
-| `jsonDirs` | Array of directories to look for encrypted JSON fields |
-| `files`    | Array of files to encrypt in entirety                  |
+| Field        | Type             | Description                                     |
+| ------------ | ---------------- | ----------------------------------------------- |
+| `files`      | `Array.<String>` | Files to encrypt                                |
+| `jsonDirs`   | `Array.<String>` | Directories to search for encrypted JSON values |
+| `publicKey`  | `String`         | Path to RSA public key                          |
+| `privateKey` | `String`         | Path to RSA private key                         |
 
-### Encrypting JSON values
+### Encrypted JSON values
 
-To encrypt JSON string values, add `<={encrypt}` to the beginning of the string.
+Prepend string values with `<~` to encrypt them:
+
+```json
+{
+  "secret": "<~Encrypt this value!"
+}
+```
 
 ## Encrypt
 

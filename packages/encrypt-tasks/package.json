@@ -1,7 +1,8 @@
 {
   "name": "encrypt-tasks",
   "version": "0.0.1",
-  "description": "Encrypt/decrypt files or JSON values",
+  "description":
+    "Task Env tasks to encrypt/decrypt files or JSON values",
   "main": "dist/index.js",
   "scripts": {
     "build": "webpack",
@@ -32,8 +33,8 @@
     "type": "git",
     "url": "git+ssh://git@github.com/invrs/tasks.git"
   },
-  "keywords": ["boilerplate", "nodejs", "starter"],
-  "author": "Winton Welsh <winton@cyclo.ps>",
+  "keywords": ["task-env", "tasks", "encrypt"],
+  "author": "Inverse Labs <labs@inverse.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/invrs/tasks/issues"
@@ -45,6 +46,7 @@
     "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-node6": "^11.0.0",
+    "commandland": "0.0.8",
     "eslint": "^4.16.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.5.0",
@@ -52,6 +54,7 @@
     "jest": "^22.1.4",
     "lint-staged": "^6.0.1",
     "prettier": "^1.10.2",
+    "task-env": "^1.4.1",
     "webpack": "^3.10.0"
   },
   "dependencies": {}

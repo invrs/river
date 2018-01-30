@@ -1,0 +1,10 @@
+{
+  "encryptTasks": {
+    "files": [],
+    "jsonDirs": [
+      "/Users/winton/Dropbox/cyclops/tasks/packages/encrypt-tasks/test/fixture"
+    ],
+    "publicKey": "~/.ssh/id_rsa.pub",
+    "privateKey": "~/.ssh/id_rsa"
+  }
+}

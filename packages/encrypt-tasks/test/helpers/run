@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 
+var path = require("path")
 require("task-env")({
   args: process.argv.slice(2),
-  jsonDir: __dirname + "/config",
+  jsonDir: path.resolve(__dirname, "../fixture"),
   tasks: [
-    require("../dist")
+    require("../../dist")
   ],
 }).catch(console.error)

@@ -15,8 +15,10 @@
     "sourceType": "module"
   },
   "rules": {
+    "curly": "error",
     "indent": ["error", 2],
     "linebreak-style": ["error", "unix"],
+    "no-console": ["error", { "allow": ["warn", "error"] }],
     "quotes": ["error", "double"],
     "semi": ["error", "never"],
     "sort-keys": [
