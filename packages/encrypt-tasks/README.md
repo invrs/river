@@ -8,7 +8,7 @@
 npm install --save encrypt-tasks
 ```
 
-Add `encrypt-tasks` into your Task Env `tasks`:
+Require `encrypt-tasks` into your `tasks`:
 
 ```js
 #!/usr/bin/env node
@@ -24,7 +24,7 @@ See [Task Env docs](https://github.com/invrs/task-env#readme) for more info.
 
 ## Initialize
 
-The `encrypt.init` task creates `encrypt.tasks.json` in your `jsonDir`:
+Run the `encrypt.init` task to set your config:
 
 ```bash
 ./run encrypt.init
