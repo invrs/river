@@ -1,0 +1,18 @@
+0 silly input [ 'npm', 'test' ]
+1 silly flags { _: [ 'exec' ],
+1 silly flags   'reject-cycles': false,
+1 silly flags   rejectCycles: false,
+1 silly flags   command: 'npm',
+1 silly flags   args: [ 'test' ] }
+2 verbose rootPath /Users/winton/Dropbox/cyclops/tasks
+3 info version 2.8.0
+4 silly existsSync /Users/winton/Dropbox/cyclops/tasks/VERSION
+5 info versioning independent
+6 silly initialize attempt
+7 silly initialize success
+8 silly execute attempt
+9 error exec Errored while executing 'npm test' in 'encrypt-tasks'
+10 error execute callback with error
+11 error Error: Command failed: npm test
+11 error     at Promise.all.then.arr (/Users/winton/Dropbox/cyclops/tasks/node_modules/lerna/node_modules/execa/index.js:236:11)
+11 error     at <anonymous>

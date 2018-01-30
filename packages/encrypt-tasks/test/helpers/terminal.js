@@ -19,6 +19,6 @@ export async function terminal(command, args, responder) {
     pty.on("exit", (code, signal) =>
       resolve({ ...options, code, signal })
     )
-    pty.on("error", () => reject(options))
+    pty.on("error", e => reject(e))
   })
 }
