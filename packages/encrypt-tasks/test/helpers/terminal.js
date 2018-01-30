@@ -1,11 +1,7 @@
 import * as cmd from "commandland"
 
-export async function run(task, responder) {
-  return await terminal(
-    `${__dirname}/run`,
-    [task],
-    responder
-  )
+export async function run(path, task, responder) {
+  return await terminal(`${path}/run`, [task], responder)
 }
 
 export async function terminal(command, args, responder) {

@@ -2,7 +2,6 @@
   "name": "tasks",
   "version": "0.0.1",
   "description": "Inverse tasks",
-  "main": "dist/index.js",
   "scripts": {
     "build": "lerna exec -- npm run build",
     "fix": "lerna exec -- npm run fix",
@@ -31,7 +30,7 @@
     "type": "git",
     "url": "git+ssh://git@github.com/invrs/tasks.git"
   },
-  "keywords": ["boilerplate", "nodejs", "starter"],
+  "keywords": ["tasks", "task-env"],
   "author": "Inverse Labs <labs@inverse.com>",
   "license": "MIT",
   "bugs": {
