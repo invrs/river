@@ -46,7 +46,6 @@
     "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-node6": "^11.0.0",
-    "commandland": "0.0.8",
     "eslint": "^4.16.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-prettier": "^2.5.0",
