@@ -1,24 +1,21 @@
-import * as cmd from "commandland"
+import { run } from "commandland"
+import { fixtures } from "./fixtures"
 
-export async function run(path, task, responder) {
-  return await terminal(`${path}/run`, [task], responder)
-}
+export async function runWithSteps(task, steps) {
+  let { path, read, write } = await fixtures()
+  steps = steps.concat([])
 
-export async function terminal(command, args, responder) {
-  let { options, pty } = cmd.terminal(command, args, {
+  let onData = ({ out, pty }) => {
+    if (steps[0] && out.match(steps[0])) {
+      steps.shift()
+      pty.write("\r")
+    }
+  }
+
+  await run(`${path}/run`, [task], {
+    onData,
     silent: true,
   })
 
-  let out = ""
-
-  return new Promise((resolve, reject) => {
-    pty.on("data", data => {
-      out += data
-      responder({ out, pty })
-    })
-    pty.on("exit", (code, signal) =>
-      resolve({ ...options, code, signal })
-    )
-    pty.on("error", e => reject(e))
-  })
+  return { path, read, steps, write }
 }

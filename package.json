@@ -3,11 +3,11 @@
   "version": "0.0.1",
   "description": "Inverse tasks",
   "scripts": {
-    "build": "lerna exec -- npm run build",
-    "fix": "lerna exec -- npm run fix",
-    "pretty": "lerna exec -- npm run pretty",
-    "lint": "lerna exec -- npm run lint",
-    "test": "lerna exec -- npm test"
+    "build": "lerna run build",
+    "fix": "lerna run fix",
+    "pretty": "lerna run pretty",
+    "lint": "lerna run lint",
+    "test": "lerna run test"
   },
   "husky": {
     "hooks": {

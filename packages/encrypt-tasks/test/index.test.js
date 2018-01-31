@@ -1,27 +1,20 @@
-import { fixtures } from "./helpers/fixtures"
-import { run } from "./helpers/terminal"
+import { runWithSteps } from "./helpers/terminal"
 
-const runInit = async () => {
-  let { path, read, write } = await fixtures()
-  let steps = [/Public key/, /Private key/]
-
-  await run(path, "encrypt.init", ({ out, pty }) => {
-    if (steps[0] && out.match(steps[0])) {
-      steps.shift()
-      pty.write("\r")
-    }
-  })
-
-  return { path, read, steps, write }
-}
+let initSteps = [/Public key/, /Private key/]
 
 test("init questions", async () => {
-  let { steps } = await runInit()
+  let { steps } = await runWithSteps(
+    "encrypt.init",
+    initSteps
+  )
   expect(steps.length).toEqual(0)
 })
 
 test("init config", async () => {
-  let { read } = await runInit()
+  let { read } = await runWithSteps(
+    "encrypt.init",
+    initSteps
+  )
 
   let { encryptTasks } = await read(
     "config/encrypt.tasks.json"
