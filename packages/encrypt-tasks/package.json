@@ -8,6 +8,7 @@
     "build": "webpack",
     "fix": "npm run lint -- --fix",
     "prepublishOnly": "npm run build",
+    "pretest": "npm run build",
     "pretty": "prettier --write **/*.css **/*.json **/*.md",
     "lint": "eslint --ignore-path .gitignore --ext=js .",
     "test": "jest test"
@@ -54,10 +55,11 @@
     "jest": "^22.1.4",
     "lint-staged": "^6.0.1",
     "prettier": "^1.10.2",
-    "task-env": "^1.4.1",
+    "task-env": "^1.4.2",
     "webpack": "^3.10.0"
   },
   "dependencies": {
-    "commandland": "^0.1.2"
+    "commandland": "^0.1.2",
+    "mkdirp": "^0.5.1"
   }
 }

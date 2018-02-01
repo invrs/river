@@ -1,27 +1,48 @@
+import { fixtures } from "./helpers/fixtures"
 import { runWithSteps } from "./helpers/terminal"
 
-let initSteps = [/Public key/, /Private key/]
+test("init", async () => {
+  let fixture = await fixtures()
+  let keyPath = `${fixture.path}/key`
 
-test("init questions", async () => {
-  let { steps } = await runWithSteps(
-    "encrypt.init",
-    initSteps
-  )
-  expect(steps.length).toEqual(0)
-})
+  let { read, steps } = await runWithSteps({
+    fixture,
+    steps: [
+      { match: /Private key/, write: `${keyPath}\r` },
+      { match: /Password/, write: "password\r" },
+    ],
+    task: "encrypt.init",
+  })
 
-test("init config", async () => {
-  let { read } = await runWithSteps(
-    "encrypt.init",
-    initSteps
-  )
+  let key = await read("key")
 
   let { encryptTasks } = await read(
     "config/encrypt.tasks.json"
   )
 
+  expect(steps.length).toEqual(0)
   expect(encryptTasks.files).toEqual([])
+  expect(typeof key).toBe("string")
   expect(typeof encryptTasks.jsonDirs[0]).toBe("string")
   expect(typeof encryptTasks.privateKey).toBe("string")
-  expect(typeof encryptTasks.publicKey).toBe("string")
+})
+
+test("encrypt", async () => {
+  let fixture = await fixtures()
+  let keyPath = `${fixture.path}/key`
+
+  await runWithSteps({
+    fixture,
+    steps: [
+      { match: /Private key/, write: `${keyPath}\r` },
+      { match: /Password/, write: "password\r" },
+    ],
+    task: "encrypt.init",
+  })
+
+  await runWithSteps({
+    fixture,
+    steps: [],
+    task: "encrypt",
+  })
 })
