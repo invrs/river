@@ -5,9 +5,18 @@ import {
   randomBytes,
 } from "crypto"
 
-import { readdir, readFile, writeFile } from "fs"
-import { extname, resolve } from "path"
+import {
+  copyFile,
+  createReadStream,
+  createWriteStream,
+  readdir,
+  readFile,
+  writeFile,
+} from "fs"
+import { extname, join, resolve } from "path"
 import { promisify } from "util"
+
+import glob from "glob"
 
 import { isObject } from "./object"
 
@@ -25,14 +34,52 @@ export const jsonValueSign = {
 
 export async function crypt({ config, dirs, set, type }) {
   return Promise.all([
-    cryptJsonDirs({ config, dirs, set, type }),
+    cryptFiles({ config, dirs, set, type }),
+    cryptJsonDirs({ config, dirs, type }),
   ])
+}
+
+export async function cryptFiles({
+  config,
+  dirs,
+  set,
+  type,
+}) {
+  let { files } = config
+
+  return Promise.all(
+    files.map(async relGlob => {
+      let absGlob = join(dirs.root, relGlob)
+      let paths = await promisify(glob)(absGlob)
+
+      return Promise.all(
+        paths.map(path =>
+          cryptFile({ config, dirs, path, set, type })
+        )
+      )
+    })
+  )
+}
+
+export async function cryptFile({
+  config,
+  dirs,
+  path,
+  set,
+  type,
+}) {
+  let relPath = path.replace(dirs.root + "/", "")
+  let iv = getIv({ config, relPath, type })
+  let fn = type == "en" ? encryptFile : decryptFile
+
+  await setIv({ iv, relPath, set, type })
+  await fn({ config, iv, path })
+  await promisify(copyFile)(`${path}.enc`, path)
 }
 
 export async function cryptJsonDirs({
   config,
   dirs,
-  set,
   type,
 }) {
   let { jsonDirs } = config
@@ -50,7 +97,6 @@ export async function cryptJsonDirs({
             config,
             dirs,
             jsonDir,
-            set,
             type,
           })
         )
@@ -110,7 +156,7 @@ export function cryptJsonValues({
 
     if (isStr && obj[key].match(regex)) {
       let text = obj[key].slice(sign.length)
-      let fn = type == "en" ? encrypt : decrypt
+      let fn = type == "en" ? encryptText : decryptText
 
       obj[key] = sign + fn({ config, iv, text })
       match = true
@@ -122,7 +168,37 @@ export function cryptJsonValues({
   }
 }
 
-function encrypt({ config, iv, text }) {
+async function encryptFile({ config, iv, path }) {
+  let key = Buffer.from(config.key, "hex")
+  let cipher = createCipheriv(algo, key, iv)
+
+  let input = createReadStream(path)
+  let output = createWriteStream(`${path}.enc`)
+
+  input.pipe(cipher).pipe(output)
+
+  return new Promise((resolve, reject) => {
+    output.on("error", e => reject(e))
+    output.on("finish", () => resolve())
+  })
+}
+
+async function decryptFile({ config, iv, path }) {
+  let key = Buffer.from(config.key, "hex")
+  let decipher = createDecipheriv(algo, key, iv)
+
+  let input = createReadStream(path)
+  let output = createWriteStream(`${path}.enc`)
+
+  input.pipe(decipher).pipe(output)
+
+  return new Promise((resolve, reject) => {
+    output.on("error", e => reject(e))
+    output.on("finish", () => resolve())
+  })
+}
+
+function encryptText({ config, iv, text }) {
   let key = Buffer.from(config.key, "hex")
   let cipher = createCipheriv(algo, key, iv)
 
@@ -134,7 +210,7 @@ function encrypt({ config, iv, text }) {
   return hex
 }
 
-function decrypt({ config, text }) {
+function decryptText({ config, text }) {
   let key = Buffer.from(config.key, "hex")
 
   let iv = Buffer.from(text.slice(0, 32), "hex")
@@ -149,14 +225,13 @@ function decrypt({ config, text }) {
   return hex
 }
 
-export function makeIv({ config, relPath, type }) {
-  let iv = config.ivs[relPath]
-
-  if (iv && type != "en") {
+export function getIv({ config, relPath, type }) {
+  if (type == "en") {
+    return randomBytes(16)
+  } else {
+    let iv = config.ivs[relPath]
     return Buffer.from(iv, "hex")
   }
-
-  return randomBytes(16)
 }
 
 export function makeKey(pass) {
@@ -166,14 +241,19 @@ export function makeKey(pass) {
   return sha.digest("hex")
 }
 
-export async function setIv({ config, iv, relPath, set }) {
-  if (config.ivs[relPath]) {
-    return
+export async function setIv({ iv, relPath, set, type }) {
+  if (type == "en") {
+    await set(
+      "encryptTasks.ivs",
+      { [relPath]: iv.toString("hex") },
+      "merge"
+    )
+  } else {
+    let esc = relPath.replace(".", "\\.")
+    await set(
+      `encryptTasks.ivs.${esc}`,
+      undefined,
+      "delete"
+    )
   }
-
-  await set(
-    "encryptTasks.ivs",
-    { [relPath]: iv.toString("hex") },
-    "merge"
-  )
 }

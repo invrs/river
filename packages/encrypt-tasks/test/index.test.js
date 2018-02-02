@@ -61,3 +61,33 @@ test("encrypt/decrypt JSON", async () => {
     expect(decrypted).toBe("<~Encrypt this value!")
   }
 })
+
+test("encrypt/decrypt files", async () => {
+  let fixture = await fixtures()
+  let { read, write } = await runInit(fixture)
+
+  let config = await read("config/encrypt.tasks.json")
+
+  config.encryptTasks.files = ["encrypt.txt"]
+
+  await write("config/encrypt.tasks.json", config)
+  await run({ fixture, task: "encrypt" })
+
+  config = await read("config/encrypt.tasks.json")
+  expect(
+    config.encryptTasks.ivs["encrypt.txt"].length
+  ).toBe(32)
+
+  let encrypt = await read("encrypt.txt")
+  expect(encrypt).not.toBe("Encrypt me!\n")
+
+  await run({ fixture, task: "decrypt" })
+
+  config = await read("config/encrypt.tasks.json")
+  expect(
+    config.encryptTasks.ivs["encrypt.txt"]
+  ).toBeUndefined()
+
+  let decrypt = await read("encrypt.txt")
+  expect(decrypt).toBe("Encrypt me!\n")
+})

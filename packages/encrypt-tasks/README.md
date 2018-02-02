@@ -15,7 +15,7 @@ Require `encrypt-tasks` into your `tasks`:
 
 require("task-env")({
   args: process.argv.slice(2),
-  jsonDir: __dirname + "/config",
+  root: __dirname,
   tasks: [require("encrypt-tasks")],
 })
 ```
@@ -34,12 +34,12 @@ Run the `encrypt.init` task to set your config:
 
 The `encryptTasks` namespace defines what to encrypt:
 
-| Field        | Type             | Description                                     |
-| ------------ | ---------------- | ----------------------------------------------- |
-| `files`      | `Array.<String>` | Files to encrypt                                |
-| `jsonDirs`   | `Array.<String>` | Directories to search for encrypted JSON values |
-| `publicKey`  | `String`         | Path to RSA public key                          |
-| `privateKey` | `String`         | Path to RSA private key                         |
+| Field        | Type             | Description                                               |
+| ------------ | ---------------- | --------------------------------------------------------- |
+| `files`      | `Array.<String>` | Paths of files to encrypt (relative to root, can be glob) |
+| `jsonDirs`   | `Array.<String>` | Directories to search for encrypted JSON values           |
+| `publicKey`  | `String`         | Path to RSA public key                                    |
+| `privateKey` | `String`         | Path to RSA private key                                   |
 
 ### Encrypted JSON values
 
