@@ -27,12 +27,30 @@ test("init", async () => {
   )
   expect(steps.length).toEqual(0)
   expect(config.files).toEqual([])
+
   expect(typeof config.jsonDirs[0]).toBe("string")
   expect(typeof config.privateKey).toBe("string")
 })
 
 test("encrypt", async () => {
   let fixture = await fixtures()
-  await runInit(fixture)
+  let { read, write } = await runInit(fixture)
+
+  write("config/secret.json", {
+    secret: "<~Encrypt this value!",
+  })
+
   await run({ fixture, task: "encrypt" })
+
+  let { secret: encrypted } = await read(
+    "config/secret.json"
+  )
+  expect(encrypted.length).toBe(40)
+
+  await run({ fixture, task: "decrypt" })
+
+  let { secret: decrypted } = await read(
+    "config/secret.json"
+  )
+  expect(decrypted).toBe("<~Encrypt this value!")
 })

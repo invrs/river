@@ -4,8 +4,7 @@ import {
   createHash,
   randomBytes,
 } from "crypto"
-
-import { readdir, readFile } from "fs"
+import { readdir, readFile, writeFile } from "fs"
 import { extname, resolve } from "path"
 import { promisify } from "util"
 
@@ -24,64 +23,67 @@ export async function crypt({
     let jsonFiles = await promisify(readdir)(jsonDir)
 
     for (let basename of jsonFiles) {
-      if (
-        basename.charAt(0) == "." ||
-        extname(basename) != ".json"
-      ) {
+      let isHidden = basename.charAt(0) == "."
+      let isJson = extname(basename) != ".json"
+
+      if (isHidden || isJson) {
         continue
       }
 
       let path = resolve(jsonDir, basename)
       let jsonStr = await promisify(readFile)(path, "utf8")
       let obj = JSON.parse(jsonStr)
+      let json = cryptValues({ obj, privateKey, type })
 
-      cryptValues({ obj, privateKey, type })
+      await promisify(writeFile)(path, json, "utf8")
     }
   }
 }
 
 export function cryptValues({ privateKey, obj, type }) {
   for (let key in obj) {
-    if (isObject(obj)) {
+    let isObj = isObject(obj[key])
+    let isStr = typeof obj[key] == "string"
+    if (isObj) {
       cryptValues({ obj: obj[key], privateKey, type })
-    } else if (obj[key].match(signifierRegex)) {
+    } else if (isStr && obj[key].match(signifierRegex)) {
       let fn = type == "en" ? encrypt : decrypt
       obj[key] =
-        signifier + fn(privateKey, obj[key].substring(2))
+        signifier + fn(privateKey, obj[key].slice(2))
     }
   }
+  return JSON.stringify(obj, null, 2)
 }
 
-export function encrypt(key, data) {
-  let iv = randomBytes(16)
-  let plaintext = Buffer.from(data)
+function encrypt(ivKey, text) {
+  let iv = Buffer.from(ivKey.slice(0, 32), "hex")
+  let key = Buffer.from(ivKey.slice(32), "hex")
+
   let cipher = createCipheriv(algo, key, iv)
-  let ciphertext = cipher.update(plaintext)
+  let crypted = cipher.update(text, "utf8", "hex")
 
-  ciphertext = Buffer.concat([
-    iv,
-    ciphertext,
-    cipher.final(),
-  ])
-
-  return ciphertext.toString("base64")
+  crypted += cipher.final("hex")
+  return crypted
 }
 
-export function decrypt(key, data) {
-  let input = Buffer.from(data)
-  let iv = input.slice(0, 16)
-  let ciphertext = input.slice(16)
+function decrypt(ivKey, text) {
+  let iv = Buffer.from(ivKey.slice(0, 32), "hex")
+  let key = Buffer.from(ivKey.slice(32), "hex")
+
   let decipher = createDecipheriv(algo, key, iv)
-  let plaintext = decipher.update(ciphertext)
+  let dec = decipher.update(text, "hex", "utf8")
 
-  plaintext += decipher.final()
-
-  return plaintext
+  dec += decipher.final("utf8")
+  return dec
 }
 
 export function makeKey(pass) {
+  let iv = randomBytes(16).toString("hex")
+
   let sha = createHash("sha256")
   sha.update(pass)
 
-  return sha.digest("hex")
+  let key = sha.digest("hex")
+
+  return iv + key
 }

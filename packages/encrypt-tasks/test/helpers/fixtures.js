@@ -12,6 +12,7 @@ export async function fixtures() {
     "../../dist",
     resolve(__dirname, "../../dist")
   )
+
   run = run.replace(
     "task-env",
     resolve(__dirname, "../../node_modules/task-env/dist")
