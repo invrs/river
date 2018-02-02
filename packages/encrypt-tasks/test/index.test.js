@@ -32,7 +32,7 @@ test("init", async () => {
   expect(typeof config.privateKey).toBe("string")
 })
 
-test("encrypt/decrypt", async () => {
+test("encrypt/decrypt JSON", async () => {
   let fixture = await fixtures()
   let { read, write } = await runInit(fixture)
 
@@ -40,17 +40,21 @@ test("encrypt/decrypt", async () => {
     secret: "<~Encrypt this value!",
   })
 
-  await run({ fixture, task: "encrypt" })
+  for (let i = 0; i < 2; i++) {
+    await run({ fixture, task: "encrypt" })
 
-  let { secret: encrypted } = await read(
-    "config/secret.json"
-  )
-  expect(encrypted.length).toBe(72)
+    let { secret: encrypted } = await read(
+      "config/secret.json"
+    )
+    expect(encrypted.length).toBe(72)
+  }
 
-  await run({ fixture, task: "decrypt" })
+  for (let i = 0; i < 2; i++) {
+    await run({ fixture, task: "decrypt" })
 
-  let { secret: decrypted } = await read(
-    "config/secret.json"
-  )
-  expect(decrypted).toBe("<~Encrypt this value!")
+    let { secret: decrypted } = await read(
+      "config/secret.json"
+    )
+    expect(decrypted).toBe("<~Encrypt this value!")
+  }
 })

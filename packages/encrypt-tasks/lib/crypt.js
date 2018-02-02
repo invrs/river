@@ -22,40 +22,64 @@ export const signifiers = {
   },
 }
 
-export async function crypt({
+export async function crypt(args) {
+  return Promise.all([cryptJsonDirs(args)])
+}
+
+export async function cryptJsonDirs({
   jsonDirs,
   privateKey,
   type,
 }) {
-  for (let jsonDir of jsonDirs) {
-    let jsonFiles = await promisify(readdir)(jsonDir)
+  return Promise.all(
+    jsonDirs.map(async jsonDir => {
+      let jsonFiles = await promisify(readdir)(jsonDir)
 
-    for (let basename of jsonFiles) {
-      let isHidden = basename.charAt(0) == "."
-      let isJson = extname(basename) != ".json"
-
-      if (isHidden || isJson) {
-        continue
-      }
-
-      let path = resolve(jsonDir, basename)
-      let jsonStr = await promisify(readFile)(path, "utf8")
-      let obj = JSON.parse(jsonStr)
-      let json = cryptValues({ obj, privateKey, type })
-
-      await promisify(writeFile)(path, json, "utf8")
-    }
-  }
+      return Promise.all(
+        jsonFiles.map(basename =>
+          cryptJsonFile({
+            basename,
+            jsonDir,
+            privateKey,
+            type,
+          })
+        )
+      )
+    })
+  )
 }
 
-export function cryptValues({ privateKey, obj, type }) {
+export async function cryptJsonFile({
+  basename,
+  jsonDir,
+  privateKey,
+  type,
+}) {
+  let isHidden = basename.charAt(0) == "."
+  let isJson = extname(basename) != ".json"
+
+  if (isHidden || isJson) {
+    return
+  }
+
+  let path = resolve(jsonDir, basename)
+  let jsonStr = await promisify(readFile)(path, "utf8")
+
+  let obj = JSON.parse(jsonStr)
+  let json = cryptJsonValues({ obj, privateKey, type })
+
+  await promisify(writeFile)(path, json, "utf8")
+}
+
+export function cryptJsonValues({ privateKey, obj, type }) {
   for (let key in obj) {
-    let isObj = isObject(obj[key])
-    let isStr = typeof obj[key] == "string"
     let { pre, regex } = signifiers[type]
 
+    let isObj = isObject(obj[key])
+    let isStr = typeof obj[key] == "string"
+
     if (isObj) {
-      cryptValues({ obj: obj[key], privateKey, type })
+      cryptJsonValues({ obj: obj[key], privateKey, type })
     }
 
     if (isStr && obj[key].match(regex)) {
