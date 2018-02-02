@@ -11,6 +11,7 @@ import {
   createWriteStream,
   readdir,
   readFile,
+  unlink,
   writeFile,
 } from "fs"
 import { extname, join, resolve } from "path"
@@ -69,12 +70,18 @@ export async function cryptFile({
   type,
 }) {
   let relPath = path.replace(dirs.root + "/", "")
-  let iv = getIv({ config, relPath, type })
   let fn = type == "en" ? encryptFile : decryptFile
 
-  await setIv({ iv, relPath, set, type })
-  await fn({ config, iv, path })
-  await promisify(copyFile)(`${path}.enc`, path)
+  let ok = !config.ivs[relPath] && type == "en"
+  ok = ok || (config.ivs[relPath] && type == "de")
+
+  if (ok) {
+    let iv = getIv({ config, relPath, type })
+    await setIv({ iv, relPath, set, type })
+    await fn({ config, iv, path })
+    await promisify(copyFile)(`${path}.enc`, path)
+    await promisify(unlink)(`${path}.enc`)
+  }
 }
 
 export async function cryptJsonDirs({
