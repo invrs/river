@@ -30,11 +30,7 @@ export async function encryptInit({
   try {
     await promisify(readFile)(privateKey, "utf8")
   } catch (e) {
-    let { password } = await askForPass(ask)
-    let key = makeKey(password)
-
-    await promisify(mkdirp)(dirname(privateKey))
-    await promisify(writeFile)(privateKey, key, "utf8")
+    await writePrivateKey({ ask, privateKey })
   }
 }
 
@@ -48,4 +44,12 @@ export async function encrypt({ get, type = "en" }) {
 
 export async function decrypt({ tasks }) {
   await tasks.encrypt({ type: "de" })
+}
+
+async function writePrivateKey({ ask, privateKey }) {
+  let { password } = await askForPass(ask)
+  let key = makeKey(password)
+
+  await promisify(mkdirp)(dirname(privateKey))
+  await promisify(writeFile)(privateKey, key, "utf8")
 }

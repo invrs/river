@@ -8,6 +8,9 @@ export async function run({ fixture, onData, task }) {
     silent: true,
   })
 
+  // eslint-disable-next-line no-console
+  console.log(out.out)
+
   return { ...fixture, ...out }
 }
 
