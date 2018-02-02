@@ -71,15 +71,8 @@ export async function cryptJsonFile({
   let json = cryptJsonValues({ config, iv, obj, type })
 
   if (json) {
+    await setIv({ config, iv, path, set })
     await promisify(writeFile)(path, json, "utf8")
-  }
-
-  if (json && !config.ivs[path]) {
-    await set(
-      "encryptTasks.ivs",
-      { [path]: iv.toString("hex") },
-      "merge"
-    )
   }
 }
 
@@ -156,4 +149,16 @@ export function makeKey(pass) {
   sha.update(pass)
 
   return sha.digest("hex")
+}
+
+export async function setIv({ config, iv, path, set }) {
+  if (config.ivs[path]) {
+    return
+  }
+
+  await set(
+    "encryptTasks.ivs",
+    { [path]: iv.toString("hex") },
+    "merge"
+  )
 }

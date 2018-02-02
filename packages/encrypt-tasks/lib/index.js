@@ -12,7 +12,7 @@ export async function encryptInit({
   get,
   jsonDir,
   set,
-} = {}) {
+}) {
   if (get("encryptTasks")) {
     console.warn("encryptTasks already exists")
     return
