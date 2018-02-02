@@ -26,10 +26,12 @@ test("init", async () => {
     "config/encrypt.tasks.json"
   )
   expect(steps.length).toEqual(0)
+
+  expect(config.ivs).toEqual({})
   expect(config.files).toEqual([])
 
   expect(typeof config.jsonDirs[0]).toBe("string")
-  expect(typeof config.privateKey).toBe("string")
+  expect(typeof config.keyPath).toBe("string")
 })
 
 test("encrypt/decrypt JSON", async () => {
@@ -46,7 +48,7 @@ test("encrypt/decrypt JSON", async () => {
     let { secret: encrypted } = await read(
       "config/secret.json"
     )
-    expect(encrypted.length).toBe(72)
+    expect(encrypted.length).toBe(40)
   }
 
   for (let i = 0; i < 2; i++) {

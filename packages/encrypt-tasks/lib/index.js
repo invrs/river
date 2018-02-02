@@ -18,38 +18,42 @@ export async function encryptInit({
     return
   }
 
-  let { privateKey } = await askForKeys(ask)
-  privateKey = resolve(privateKey)
+  let { keyPath } = await askForKeys(ask)
+  keyPath = resolve(keyPath)
 
   await set("encryptTasks", {
     files: [],
+    ivs: {},
     jsonDirs: [jsonDir],
-    privateKey,
+    keyPath,
   })
 
   try {
-    await promisify(readFile)(privateKey, "utf8")
+    await promisify(readFile)(keyPath, "utf8")
   } catch (e) {
-    await writePrivateKey({ ask, privateKey })
+    await writeKeyPath({ ask, keyPath })
   }
 }
 
-export async function encrypt({ get, type = "en" }) {
-  let { files, jsonDirs, privateKey } = get("encryptTasks")
+export async function encrypt({ get, type = "en", set }) {
+  let config = get("encryptTasks")
 
-  privateKey = await promisify(readFile)(privateKey, "utf8")
+  config.key = await promisify(readFile)(
+    config.keyPath,
+    "utf8"
+  )
 
-  await crypt({ files, jsonDirs, privateKey, type })
+  await crypt({ config, set, type })
 }
 
 export async function decrypt({ tasks }) {
   await tasks.encrypt({ type: "de" })
 }
 
-async function writePrivateKey({ ask, privateKey }) {
+async function writeKeyPath({ ask, keyPath }) {
   let { password } = await askForPass(ask)
   let key = makeKey(password)
 
-  await promisify(mkdirp)(dirname(privateKey))
-  await promisify(writeFile)(privateKey, key, "utf8")
+  await promisify(mkdirp)(dirname(keyPath))
+  await promisify(writeFile)(keyPath, key, "utf8")
 }

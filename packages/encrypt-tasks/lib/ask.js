@@ -3,7 +3,7 @@ export async function askForKeys(ask) {
     {
       default: "~/.inverse/key",
       message: "Private key location",
-      name: "privateKey",
+      name: "keyPath",
       type: "input",
     },
   ])
