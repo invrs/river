@@ -49,7 +49,7 @@ test("encrypt/decrypt JSON", async () => {
     let { secret: encrypted } = await read(
       "config/secret.json"
     )
-    expect(encrypted.length).toBe(40)
+    expect(encrypted.length).toBe(72)
   }
 
   for (let i = 0; i < 2; i++) {

@@ -6,7 +6,7 @@ import {
 } from "crypto"
 
 import { readdir, readFile, writeFile } from "fs"
-import { extname, join, resolve } from "path"
+import { extname, resolve } from "path"
 import { promisify } from "util"
 
 import { isObject } from "./object"
@@ -64,7 +64,6 @@ export async function cryptJsonFile({
   config,
   dirs,
   jsonDir,
-  set,
   type,
 }) {
   let isHidden = basename.charAt(0) == "."
@@ -75,16 +74,13 @@ export async function cryptJsonFile({
   }
 
   let path = resolve(dirs.root, jsonDir, basename)
-  let relPath = join(jsonDir, basename)
-
   let jsonStr = await promisify(readFile)(path, "utf8")
-  let iv = makeIv({ config, relPath })
+  let iv = randomBytes(16)
 
   let obj = JSON.parse(jsonStr)
   let json = cryptJsonValues({ config, iv, obj, type })
 
   if (json) {
-    await setIv({ config, iv, relPath, set })
     await promisify(writeFile)(path, json, "utf8")
   }
 }
@@ -131,13 +127,19 @@ function encrypt({ config, iv, text }) {
   let cipher = createCipheriv(algo, key, iv)
 
   let hex =
-    cipher.update(text, "utf8", "hex") + cipher.final("hex")
+    iv.toString("hex") +
+    cipher.update(text, "utf8", "hex") +
+    cipher.final("hex")
 
   return hex
 }
 
-function decrypt({ config, iv, text }) {
+function decrypt({ config, text }) {
   let key = Buffer.from(config.key, "hex")
+
+  let iv = Buffer.from(text.slice(0, 32), "hex")
+  text = text.slice(32)
+
   let decipher = createDecipheriv(algo, key, iv)
 
   let hex =
@@ -147,10 +149,10 @@ function decrypt({ config, iv, text }) {
   return hex
 }
 
-export function makeIv({ config, relPath }) {
+export function makeIv({ config, relPath, type }) {
   let iv = config.ivs[relPath]
 
-  if (iv) {
+  if (iv && type != "en") {
     return Buffer.from(iv, "hex")
   }
 
