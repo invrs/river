@@ -7,12 +7,7 @@ import mkdirp from "mkdirp"
 import { askForKeys, askForPass } from "./ask"
 import { crypt, makeKey } from "./crypt"
 
-export async function encryptInit({
-  ask,
-  get,
-  jsonDir,
-  set,
-}) {
+export async function encryptInit({ ask, get, dirs, set }) {
   if (get("encryptTasks")) {
     console.warn("encryptTasks already exists")
     return
@@ -24,7 +19,7 @@ export async function encryptInit({
   await set("encryptTasks", {
     files: [],
     ivs: {},
-    jsonDirs: [jsonDir],
+    jsonDirs: [dirs.json],
     keyPath,
   })
 
@@ -35,7 +30,12 @@ export async function encryptInit({
   }
 }
 
-export async function encrypt({ get, type = "en", set }) {
+export async function encrypt({
+  get,
+  dirs,
+  type = "en",
+  set,
+}) {
   let config = get("encryptTasks")
 
   config.key = await promisify(readFile)(
@@ -43,7 +43,7 @@ export async function encrypt({ get, type = "en", set }) {
     "utf8"
   )
 
-  await crypt({ config, set, type })
+  await crypt({ config, dirs, set, type })
 }
 
 export async function decrypt({ tasks }) {

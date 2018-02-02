@@ -2,7 +2,7 @@
 
 require("task-env")({
   args: process.argv.slice(2),
-  rootDir: __dirname,
+  root: __dirname,
   tasks: [
     require("../../dist")
   ],

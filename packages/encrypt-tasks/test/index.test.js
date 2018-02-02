@@ -25,6 +25,7 @@ test("init", async () => {
   let { encryptTasks: config } = await read(
     "config/encrypt.tasks.json"
   )
+
   expect(steps.length).toEqual(0)
 
   expect(config.ivs).toEqual({})

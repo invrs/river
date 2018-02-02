@@ -6,7 +6,7 @@ import {
 } from "crypto"
 
 import { readdir, readFile, writeFile } from "fs"
-import { extname, resolve } from "path"
+import { extname, join, resolve } from "path"
 import { promisify } from "util"
 
 import { isObject } from "./object"
@@ -23,22 +23,32 @@ export const jsonValueSign = {
   },
 }
 
-export async function crypt({ config, set, type }) {
-  return Promise.all([cryptJsonDirs({ config, set, type })])
+export async function crypt({ config, dirs, set, type }) {
+  return Promise.all([
+    cryptJsonDirs({ config, dirs, set, type }),
+  ])
 }
 
-export async function cryptJsonDirs({ config, set, type }) {
+export async function cryptJsonDirs({
+  config,
+  dirs,
+  set,
+  type,
+}) {
   let { jsonDirs } = config
 
   return Promise.all(
     jsonDirs.map(async jsonDir => {
-      let jsonFiles = await promisify(readdir)(jsonDir)
+      let jsonFiles = await promisify(readdir)(
+        resolve(dirs.root, jsonDir)
+      )
 
       return Promise.all(
         jsonFiles.map(basename =>
           cryptJsonFile({
             basename,
             config,
+            dirs,
             jsonDir,
             set,
             type,
@@ -52,6 +62,7 @@ export async function cryptJsonDirs({ config, set, type }) {
 export async function cryptJsonFile({
   basename,
   config,
+  dirs,
   jsonDir,
   set,
   type,
@@ -63,15 +74,17 @@ export async function cryptJsonFile({
     return
   }
 
-  let path = resolve(jsonDir, basename)
+  let path = resolve(dirs.root, jsonDir, basename)
+  let relPath = join(jsonDir, basename)
+
   let jsonStr = await promisify(readFile)(path, "utf8")
-  let iv = makeIv({ config, path })
+  let iv = makeIv({ config, relPath })
 
   let obj = JSON.parse(jsonStr)
   let json = cryptJsonValues({ config, iv, obj, type })
 
   if (json) {
-    await setIv({ config, iv, path, set })
+    await setIv({ config, iv, relPath, set })
     await promisify(writeFile)(path, json, "utf8")
   }
 }
@@ -134,8 +147,8 @@ function decrypt({ config, iv, text }) {
   return hex
 }
 
-export function makeIv({ config, path }) {
-  let iv = config.ivs[path]
+export function makeIv({ config, relPath }) {
+  let iv = config.ivs[relPath]
 
   if (iv) {
     return Buffer.from(iv, "hex")
@@ -151,14 +164,14 @@ export function makeKey(pass) {
   return sha.digest("hex")
 }
 
-export async function setIv({ config, iv, path, set }) {
-  if (config.ivs[path]) {
+export async function setIv({ config, iv, relPath, set }) {
+  if (config.ivs[relPath]) {
     return
   }
 
   await set(
     "encryptTasks.ivs",
-    { [path]: iv.toString("hex") },
+    { [relPath]: iv.toString("hex") },
     "merge"
   )
 }
