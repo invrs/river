@@ -55,20 +55,25 @@ export function cryptValues({ privateKey, obj, type }) {
   return JSON.stringify(obj, null, 2)
 }
 
-function encrypt(ivKey, text) {
-  let iv = Buffer.from(ivKey.slice(0, 32), "hex")
-  let key = Buffer.from(ivKey.slice(32), "hex")
+function encrypt(key, text) {
+  let iv = randomBytes(16)
+  key = Buffer.from(key, "hex")
 
   let cipher = createCipheriv(algo, key, iv)
-  let crypted = cipher.update(text, "utf8", "hex")
+  let crypted = iv.toString("hex")
 
+  crypted += cipher.update(text, "utf8", "hex")
   crypted += cipher.final("hex")
+
   return crypted
 }
 
-function decrypt(ivKey, text) {
-  let iv = Buffer.from(ivKey.slice(0, 32), "hex")
-  let key = Buffer.from(ivKey.slice(32), "hex")
+function decrypt(key, text) {
+  let iv = text.slice(0, 32)
+  text = text.slice(32)
+
+  key = Buffer.from(key, "hex")
+  iv = Buffer.from(iv, "hex")
 
   let decipher = createDecipheriv(algo, key, iv)
   let dec = decipher.update(text, "hex", "utf8")
@@ -78,12 +83,8 @@ function decrypt(ivKey, text) {
 }
 
 export function makeKey(pass) {
-  let iv = randomBytes(16).toString("hex")
-
   let sha = createHash("sha256")
   sha.update(pass)
 
-  let key = sha.digest("hex")
-
-  return iv + key
+  return sha.digest("hex")
 }
