@@ -11,8 +11,16 @@ import { promisify } from "util"
 import { isObject } from "./object"
 
 export const algo = "aes-256-ctr"
-export const signifier = "<~"
-export const signifierRegex = /^<~/
+export const signifiers = {
+  de: {
+    pre: "<~",
+    regex: /^<≈/,
+  },
+  en: {
+    pre: "<≈",
+    regex: /^<~/,
+  },
+}
 
 export async function crypt({
   jsonDirs,
@@ -44,12 +52,17 @@ export function cryptValues({ privateKey, obj, type }) {
   for (let key in obj) {
     let isObj = isObject(obj[key])
     let isStr = typeof obj[key] == "string"
+    let { pre, regex } = signifiers[type]
+
     if (isObj) {
       cryptValues({ obj: obj[key], privateKey, type })
-    } else if (isStr && obj[key].match(signifierRegex)) {
+    }
+
+    if (isStr && obj[key].match(regex)) {
       let fn = type == "en" ? encrypt : decrypt
+
       obj[key] =
-        signifier + fn(privateKey, obj[key].slice(2))
+        pre + fn(privateKey, obj[key].slice(pre.length))
     }
   }
   return JSON.stringify(obj, null, 2)
