@@ -1,17 +1,23 @@
-import { randomBytes } from "crypto"
-import { readdir, readFile, writeFile } from "fs"
-import { extname, resolve } from "path"
-import { promisify } from "util"
+import { isJson, readdir, readJson, writeJson } from "./fs"
+import { resolve } from "path"
 
-import { createCipher, createDecipher } from "./cipher"
-import { isObject } from "./object"
+import {
+  createCipher,
+  createDecipher,
+  extractIv,
+  genIv,
+} from "./cipher"
 
-export const jsonValueSign = {
-  de: {
+import { objectIs } from "./object"
+
+export const types = {
+  decrypt: {
+    crypt: decryptText,
     regex: /^<≈/,
     sign: "<~",
   },
-  en: {
+  encrypt: {
+    crypt: encryptText,
     regex: /^<~/,
     sign: "<≈",
   },
@@ -25,7 +31,7 @@ export async function cryptJsonDirs({
   let { jsonDirs } = config
 
   let promises = jsonDirs.map(async jsonDir => {
-    let jsonFiles = await promisify(readdir)(
+    let jsonFiles = await readdir(
       resolve(dirs.root, jsonDir)
     )
 
@@ -52,60 +58,48 @@ export async function cryptJsonFile({
   jsonDir,
   type,
 }) {
-  let isHidden = basename.charAt(0) == "."
-  let isNotJson = extname(basename) != ".json"
+  if (isJson(basename)) {
+    let path = resolve(dirs.root, jsonDir, basename)
+    let obj = await readJson(path)
+    let match = cryptJsonValues({ config, obj, type })
 
-  if (isHidden || isNotJson) {
-    return
-  }
-
-  let path = resolve(dirs.root, jsonDir, basename)
-  let jsonStr = await promisify(readFile)(path, "utf8")
-  let iv = randomBytes(16)
-
-  let obj = JSON.parse(jsonStr)
-  let json = cryptJsonValues({ config, iv, obj, type })
-
-  if (json) {
-    await promisify(writeFile)(path, json, "utf8")
+    if (match) {
+      await writeJson(path, obj)
+    }
   }
 }
 
 export function cryptJsonValues({
   config,
-  iv,
   match,
   obj,
   type,
 }) {
-  let { sign, regex } = jsonValueSign[type]
+  let { crypt, sign, regex } = types[type]
 
   for (let key in obj) {
-    let isObj = isObject(obj[key])
-    let isStr = typeof obj[key] == "string"
+    let value = obj[key]
+    let is = objectIs({ regex, value })
 
-    if (isObj) {
+    if (is.obj) {
       cryptJsonValues({
         config,
-        iv,
         match,
-        obj: obj[key],
+        obj: value,
         type,
       })
     }
 
-    if (isStr && obj[key].match(regex)) {
-      let text = obj[key].slice(sign.length)
-      let fn = type == "en" ? encryptText : decryptText
+    if (is.match) {
+      let iv = genIv()
+      let text = value.slice(sign.length)
 
-      obj[key] = sign + fn({ config, iv, text })
+      obj[key] = sign + crypt({ config, iv, text })
       match = true
     }
   }
 
-  if (match) {
-    return JSON.stringify(obj, null, 2)
-  }
+  return match
 }
 
 function encryptText({ config, iv, text }) {
@@ -120,13 +114,11 @@ function encryptText({ config, iv, text }) {
 }
 
 function decryptText({ config, text }) {
-  let iv = Buffer.from(text.slice(0, 32), "hex")
-  text = text.slice(32)
-
+  let { iv, str } = extractIv(text)
   let decipher = createDecipher({ config, iv })
 
   let hex =
-    decipher.update(text, "hex", "utf8") +
+    decipher.update(str, "hex", "utf8") +
     decipher.final("utf8")
 
   return hex

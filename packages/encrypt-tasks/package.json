@@ -60,6 +60,7 @@
   },
   "dependencies": {
     "commandland": "^0.1.2",
+    "fs-extra": "^5.0.0",
     "glob": "^7.1.2",
     "mkdirp": "^0.5.1"
   }

@@ -1,16 +1,20 @@
 import {
-  copyFile,
   createReadStream,
   createWriteStream,
-  unlink,
-} from "fs"
+  move,
+  relGlob,
+} from "./fs"
 
-import { randomBytes } from "crypto"
-import glob from "glob"
-import { join } from "path"
-import { promisify } from "util"
+import {
+  createCipher,
+  createDecipher,
+  genIv,
+} from "./cipher"
 
-import { createCipher, createDecipher } from "./cipher"
+export const types = {
+  decrypt: decryptFile,
+  encrypt: encryptFile,
+}
 
 export async function cryptFiles({
   config,
@@ -18,11 +22,9 @@ export async function cryptFiles({
   set,
   type,
 }) {
-  let { files } = config
+  let promises = config.files.map(async path => {
+    let paths = await relGlob({ dirs, path })
 
-  let promises = files.map(async relGlob => {
-    let absGlob = join(dirs.root, relGlob)
-    let paths = await promisify(glob)(absGlob)
     let promises = paths.map(path =>
       cryptFile({ config, dirs, path, set, type })
     )
@@ -40,18 +42,16 @@ export async function cryptFile({
   set,
   type,
 }) {
+  let crypt = types[type]
   let relPath = path.replace(dirs.root + "/", "")
-  let fn = type == "en" ? encryptFile : decryptFile
 
-  let ok = !config.ivs[relPath] && type == "en"
-  ok = ok || (config.ivs[relPath] && type == "de")
+  let iv = config.ivs[relPath]
+  iv = getIv({ iv, type })
 
-  if (ok) {
-    let iv = getIv({ config, relPath, type })
+  if (iv) {
     await setIv({ iv, relPath, set, type })
-    await fn({ config, iv, path })
-    await promisify(copyFile)(`${path}.enc`, path)
-    await promisify(unlink)(`${path}.enc`)
+    await crypt({ config, iv, path })
+    await move(`${path}.enc`, path, { overwrite: true })
   }
 }
 
@@ -81,17 +81,18 @@ async function decryptFile({ config, iv, path }) {
   })
 }
 
-export function getIv({ config, relPath, type }) {
-  if (type == "en") {
-    return randomBytes(16)
-  } else {
-    let iv = config.ivs[relPath]
+export function getIv({ iv, type }) {
+  if (type == "encrypt" && !iv) {
+    return genIv()
+  }
+
+  if (type == "decrypt" && iv) {
     return Buffer.from(iv, "hex")
   }
 }
 
 export async function setIv({ iv, relPath, set, type }) {
-  if (type == "en") {
+  if (type == "encrypt") {
     await set(
       "encryptTasks.ivs",
       { [relPath]: iv.toString("hex") },

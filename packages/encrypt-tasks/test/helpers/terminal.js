@@ -14,6 +14,20 @@ export async function run({ fixture, onData, task }) {
   return { ...fixture, ...out }
 }
 
+export async function runInit(fixture) {
+  return await runWithSteps({
+    fixture,
+    steps: [
+      {
+        match: /Private key/,
+        write: `${fixture.path}/key\r`,
+      },
+      { match: /Password/, write: "password\r" },
+    ],
+    task: "encrypt.init",
+  })
+}
+
 export async function runWithSteps({
   fixture,
   steps,

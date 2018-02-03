@@ -1,11 +1,8 @@
-import { readFile, writeFile } from "fs"
-import { dirname, resolve } from "path"
-import { promisify } from "util"
-
-import mkdirp from "mkdirp"
+import { readFile, writeKeyPath } from "./fs"
+import { resolve } from "path"
 
 import { askForKeys, askForPass } from "./ask"
-import { crypt, makeKey } from "./crypt"
+import { crypt } from "./crypt"
 
 export async function encryptInit({ ask, get, dirs, set }) {
   if (get("encryptTasks")) {
@@ -24,36 +21,26 @@ export async function encryptInit({ ask, get, dirs, set }) {
   })
 
   try {
-    await promisify(readFile)(keyPath, "utf8")
+    await readFile(keyPath, "utf8")
   } catch (e) {
-    await writeKeyPath({ ask, keyPath })
+    let { password } = await askForPass(ask)
+    await writeKeyPath({ keyPath, password })
   }
 }
 
 export async function encrypt({
   get,
   dirs,
-  type = "en",
+  type = "encrypt",
   set,
 }) {
   let config = get("encryptTasks")
 
-  config.key = await promisify(readFile)(
-    config.keyPath,
-    "utf8"
-  )
+  config.key = await readFile(config.keyPath, "utf8")
 
   await crypt({ config, dirs, set, type })
 }
 
 export async function decrypt({ tasks }) {
-  await tasks.encrypt({ type: "de" })
-}
-
-async function writeKeyPath({ ask, keyPath }) {
-  let { password } = await askForPass(ask)
-  let key = makeKey(password)
-
-  await promisify(mkdirp)(dirname(keyPath))
-  await promisify(writeFile)(keyPath, key, "utf8")
+  await tasks.encrypt({ type: "decrypt" })
 }

@@ -1,19 +1,5 @@
 import { fixtures } from "./helpers/fixtures"
-import { run, runWithSteps } from "./helpers/terminal"
-
-async function runInit(fixture) {
-  return await runWithSteps({
-    fixture,
-    steps: [
-      {
-        match: /Private key/,
-        write: `${fixture.path}/key\r`,
-      },
-      { match: /Password/, write: "password\r" },
-    ],
-    task: "encrypt.init",
-  })
-}
+import { run, runInit } from "./helpers/terminal"
 
 test("init", async () => {
   let fixture = await fixtures()
@@ -27,10 +13,8 @@ test("init", async () => {
   )
 
   expect(steps.length).toEqual(0)
-
   expect(config.ivs).toEqual({})
   expect(config.files).toEqual([])
-
   expect(typeof config.jsonDirs[0]).toBe("string")
   expect(typeof config.keyPath).toBe("string")
 })
