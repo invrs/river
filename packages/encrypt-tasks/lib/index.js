@@ -1,3 +1,5 @@
+import "./source.maps"
+
 import { readFile, writeKeyPath } from "./fs"
 import { resolve } from "path"
 

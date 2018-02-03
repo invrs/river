@@ -55,6 +55,7 @@
     "jest": "^22.1.4",
     "lint-staged": "^6.0.1",
     "prettier": "^1.10.2",
+    "source-map-support": "^0.5.3",
     "task-env": "^1.5.1",
     "webpack": "^3.10.0"
   },
