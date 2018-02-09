@@ -6,8 +6,8 @@ import { resolve } from "path"
 import { askForKeys, askForPass } from "./ask"
 import { crypt } from "./crypt"
 
-export async function encryptInit({ ask, get, dirs, set }) {
-  if (get("encryptTasks")) {
+export async function encryptInit({ ask, config, dirs }) {
+  if (config.get("encryptTasks")) {
     console.warn("encryptTasks already exists")
     return
   }
@@ -15,10 +15,10 @@ export async function encryptInit({ ask, get, dirs, set }) {
   let { keyPath } = await askForKeys(ask)
   keyPath = resolve(keyPath)
 
-  await set("encryptTasks", {
+  await config.set("encryptTasks", {
+    configDirs: [dirs.config],
     files: [],
     ivs: {},
-    jsonDirs: [dirs.json],
     keyPath,
   })
 
@@ -31,16 +31,14 @@ export async function encryptInit({ ask, get, dirs, set }) {
 }
 
 export async function encrypt({
-  get,
+  config,
   dirs,
   type = "encrypt",
-  set,
 }) {
-  let config = get("encryptTasks")
+  let info = config.get("encryptTasks")
+  info.key = await readFile(info.keyPath, "utf8")
 
-  config.key = await readFile(config.keyPath, "utf8")
-
-  await crypt({ config, dirs, set, type })
+  await crypt({ config, dirs, info, type })
 }
 
 export async function decrypt({ tasks }) {

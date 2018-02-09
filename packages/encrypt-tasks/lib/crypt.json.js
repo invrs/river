@@ -23,24 +23,20 @@ export const types = {
   },
 }
 
-export async function cryptJsonDirs({
-  config,
-  dirs,
-  type,
-}) {
-  let { jsonDirs } = config
+export async function cryptJsonDirs({ dirs, info, type }) {
+  let { configDirs } = info
 
-  let promises = jsonDirs.map(async jsonDir => {
+  let promises = configDirs.map(async configDir => {
     let jsonFiles = await readdir(
-      resolve(dirs.root, jsonDir)
+      resolve(dirs.root, configDir)
     )
 
     let promises = jsonFiles.map(basename =>
       cryptJsonFile({
         basename,
-        config,
+        configDir,
         dirs,
-        jsonDir,
+        info,
         type,
       })
     )
@@ -53,15 +49,15 @@ export async function cryptJsonDirs({
 
 export async function cryptJsonFile({
   basename,
-  config,
+  configDir,
   dirs,
-  jsonDir,
+  info,
   type,
 }) {
   if (isJson(basename)) {
-    let path = resolve(dirs.root, jsonDir, basename)
+    let path = resolve(dirs.root, configDir, basename)
     let obj = await readJson(path)
-    let match = cryptJsonValues({ config, obj, type })
+    let match = cryptJsonValues({ info, obj, type })
 
     if (match) {
       await writeJson(path, obj)
@@ -70,7 +66,7 @@ export async function cryptJsonFile({
 }
 
 export function cryptJsonValues({
-  config,
+  info,
   match,
   obj,
   type,
@@ -83,7 +79,7 @@ export function cryptJsonValues({
 
     if (is.obj) {
       cryptJsonValues({
-        config,
+        info,
         match,
         obj: value,
         type,
@@ -94,7 +90,7 @@ export function cryptJsonValues({
       let iv = genIv()
       let text = value.slice(sign.length)
 
-      obj[key] = sign + crypt({ config, iv, text })
+      obj[key] = sign + crypt({ info, iv, text })
       match = true
     }
   }
@@ -102,8 +98,8 @@ export function cryptJsonValues({
   return match
 }
 
-function encryptText({ config, iv, text }) {
-  let cipher = createCipher({ config, iv })
+function encryptText({ info, iv, text }) {
+  let cipher = createCipher({ info, iv })
 
   let hex =
     iv.toString("hex") +
@@ -113,9 +109,9 @@ function encryptText({ config, iv, text }) {
   return hex
 }
 
-function decryptText({ config, text }) {
+function decryptText({ info, text }) {
   let { iv, str } = extractIv(text)
-  let decipher = createDecipher({ config, iv })
+  let decipher = createDecipher({ info, iv })
 
   let hex =
     decipher.update(str, "hex", "utf8") +

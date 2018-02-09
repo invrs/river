@@ -8,15 +8,15 @@ test("init", async () => {
   let key = await read("key")
   expect(typeof key).toBe("string")
 
-  let { encryptTasks: config } = await read(
-    "config/encrypt.tasks.json"
+  let { files, keyPath, ivs, configDirs } = await read(
+    "config/encryptTasks.json"
   )
 
   expect(steps.length).toEqual(0)
-  expect(config.ivs).toEqual({})
-  expect(config.files).toEqual([])
-  expect(typeof config.jsonDirs[0]).toBe("string")
-  expect(typeof config.keyPath).toBe("string")
+  expect(ivs).toEqual({})
+  expect(files).toEqual([])
+  expect(typeof configDirs[0]).toBe("string")
+  expect(typeof keyPath).toBe("string")
 })
 
 test("encrypt/decrypt JSON", async () => {
@@ -50,19 +50,17 @@ test("encrypt/decrypt files", async () => {
   let fixture = await fixtures()
   let { read, write } = await runInit(fixture)
 
-  let config = await read("config/encrypt.tasks.json")
-  config.encryptTasks.files = ["encrypt.txt"]
+  let config = await read("config/encryptTasks.json")
+  config.files = ["encrypt.txt"]
 
-  await write("config/encrypt.tasks.json", config)
+  await write("config/encryptTasks.json", config)
 
   for (let i = 0; i < 2; i++) {
     await run({ fixture, task: "encrypt" })
 
-    config = await read("config/encrypt.tasks.json")
+    config = await read("config/encryptTasks.json")
 
-    expect(
-      config.encryptTasks.ivs["encrypt.txt"].length
-    ).toBe(32)
+    expect(config.ivs["encrypt.txt"].length).toBe(32)
 
     let encrypt = await read("encrypt.txt")
     expect(encrypt).not.toBe("Encrypt me!\n")
@@ -71,11 +69,9 @@ test("encrypt/decrypt files", async () => {
   for (let i = 0; i < 2; i++) {
     await run({ fixture, task: "decrypt" })
 
-    config = await read("config/encrypt.tasks.json")
+    config = await read("config/encryptTasks.json")
 
-    expect(
-      config.encryptTasks.ivs["encrypt.txt"]
-    ).toBeUndefined()
+    expect(config.ivs["encrypt.txt"]).toBeUndefined()
 
     let decrypt = await read("encrypt.txt")
     expect(decrypt).toBe("Encrypt me!\n")

@@ -7,18 +7,18 @@ import {
 
 export const algo = "aes-256-ctr"
 
-export function createCipher({ config, iv }) {
-  let key = cipherKey(config)
+export function createCipher({ info, iv }) {
+  let key = cipherKey(info)
   return createCipheriv(algo, key, iv)
 }
 
-export function createDecipher({ config, iv }) {
-  let key = cipherKey(config)
+export function createDecipher({ info, iv }) {
+  let key = cipherKey(info)
   return createDecipheriv(algo, key, iv)
 }
 
-export function cipherKey(config) {
-  return Buffer.from(config.key, "hex")
+export function cipherKey(info) {
+  return Buffer.from(info.key, "hex")
 }
 
 export function genIv() {

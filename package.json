@@ -1,13 +1,93 @@
 {
   "name": "tasks",
+  "private": true,
   "version": "0.0.1",
   "description": "Inverse tasks",
   "scripts": {
+    "bootstrap": "lerna bootstrap",
     "build": "lerna run build",
     "fix": "lerna run fix",
     "pretty": "lerna run pretty",
     "lint": "lerna run lint",
     "test": "lerna run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/invrs/tasks.git"
+  },
+  "keywords": ["tasks", "task-env"],
+  "author": "Inverse Labs <labs@inverse.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/invrs/tasks/issues"
+  },
+  "homepage": "https://github.com/invrs/tasks#readme",
+  "devDependencies": {
+    "babel-cli": "6",
+    "babel-core": "6",
+    "babel-plugin-transform-async-to-generator": "6",
+    "babel-plugin-transform-object-rest-spread": "6",
+    "babel-preset-node6": "11",
+    "eslint": "4",
+    "eslint-config-prettier": "2",
+    "eslint-plugin-prettier": "2",
+    "fxtr": "1",
+    "husky": "^0.15.0-rc.8",
+    "jest": "22",
+    "lerna": "2",
+    "lint-staged": "6",
+    "prettier": "1"
+  },
+  "babel": {
+    "presets": ["node6"],
+    "plugins": [
+      "transform-async-to-generator",
+      "transform-object-rest-spread"
+    ]
+  },
+  "eslintConfig": {
+    "env": {
+      "es6": true,
+      "node": true
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:prettier/recommended"
+    ],
+    "parserOptions": {
+      "ecmaFeatures": {
+        "experimentalObjectRestSpread": true
+      },
+      "ecmaVersion": 8,
+      "sourceType": "module"
+    },
+    "rules": {
+      "curly": "error",
+      "indent": ["error", 2],
+      "linebreak-style": ["error", "unix"],
+      "no-console": [
+        "error",
+        {
+          "allow": ["warn", "error"]
+        }
+      ],
+      "quotes": ["error", "double"],
+      "semi": ["error", "never"],
+      "sort-keys": [
+        "error",
+        "asc",
+        {
+          "caseSensitive": true,
+          "natural": false
+        }
+      ],
+      "sort-vars": [
+        "error",
+        {
+          "ignoreCase": true
+        }
+      ]
+    }
   },
   "husky": {
     "hooks": {
@@ -25,32 +105,5 @@
     "printWidth": 60,
     "semi": false,
     "trailingComma": "es5"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/invrs/tasks.git"
-  },
-  "keywords": ["tasks", "task-env"],
-  "author": "Inverse Labs <labs@inverse.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/invrs/tasks/issues"
-  },
-  "homepage": "https://github.com/invrs/tasks#readme",
-  "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-plugin-transform-async-to-generator": "^6.24.1",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-node6": "^11.0.0",
-    "eslint": "^4.16.0",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-plugin-prettier": "^2.5.0",
-    "husky": "^0.15.0-rc.3",
-    "jest": "^22.1.4",
-    "lerna": "^2.8.0",
-    "lint-staged": "^6.0.1",
-    "prettier": "^1.10.2",
-    "webpack": "^3.10.0"
   }
 }
