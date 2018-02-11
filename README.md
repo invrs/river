@@ -10,6 +10,9 @@
 
 ![river](https://fsmedia.imgix.net/assets/river.gif)
 
-| Package                                 | Description                          |
-| --------------------------------------- | ------------------------------------ |
-| [encrypt-tasks](packages/encrypt-tasks) | Encrypt/decrypt files or JSON values |
+```bash
+git clone git@github.com:invrs/river.git
+cd river
+sudo ln -s river /usr/local/bin/river
+river setup
+```
