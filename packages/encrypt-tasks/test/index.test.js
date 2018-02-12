@@ -8,14 +8,13 @@ test("init", async () => {
   let key = await read("key")
   expect(typeof key).toBe("string")
 
-  let { files, keyPath, ivs, configDirs } = await read(
+  let { files, keyPath, ivs } = await read(
     "config/encryptTasks.json"
   )
 
   expect(steps.length).toEqual(0)
   expect(ivs).toEqual({})
   expect(files).toEqual([])
-  expect(typeof configDirs[0]).toBe("string")
   expect(typeof keyPath).toBe("string")
 })
 

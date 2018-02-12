@@ -6,7 +6,7 @@ import { resolve } from "path"
 import { askForKeys, askForPass } from "./ask"
 import { crypt } from "./crypt"
 
-export async function encryptInit({ ask, config, dirs }) {
+export async function encryptInit({ ask, config }) {
   if (config.get("encryptTasks")) {
     console.warn("encryptTasks already exists")
     return
@@ -16,7 +16,6 @@ export async function encryptInit({ ask, config, dirs }) {
   keyPath = resolve(keyPath)
 
   await config.set("encryptTasks", {
-    configDirs: [dirs.config],
     files: [],
     ivs: {},
     keyPath,
