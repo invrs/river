@@ -41,7 +41,7 @@ export async function cryptConfig({
       let iv = genIv()
       let text = value.slice(sign.length)
       config = await config.set(
-        newKeys.join("."),
+        newKeys,
         sign + crypt({ info, iv, text })
       )
     }
