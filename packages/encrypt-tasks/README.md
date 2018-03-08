@@ -32,14 +32,13 @@ Run the `encrypt.init` task to set your config:
 
 ## Configuration
 
-The `encryptTasks` namespace defines what to encrypt:
+The init task creates `encryptTasks.json`:
 
-| Field        | Type             | Description                                               |
-| ------------ | ---------------- | --------------------------------------------------------- |
-| `files`      | `Array.<String>` | Paths of files to encrypt (relative to root, can be glob) |
-| `jsonDirs`   | `Array.<String>` | Directories to search for encrypted JSON values           |
-| `publicKey`  | `String`         | Path to RSA public key                                    |
-| `privateKey` | `String`         | Path to RSA private key                                   |
+| Field     | Type                      | Description                                                                                            |
+| --------- | ------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `files`   | `Array.<String>`          | Paths of files to encrypt (relative to `root`, can be glob)                                            |
+| `keyPath` | `String`                  | Path to "private key" (password hash)                                                                  |
+| `ivs`     | `Object.<String, String>` | [Initialization vectors](https://en.wikipedia.org/wiki/Initialization_vector) for each file in `files` |
 
 ### Encrypted JSON values
 
@@ -50,6 +49,8 @@ Prepend string values with `<~` to encrypt them:
   "secret": "<~Encrypt this value!"
 }
 ```
+
+Initialization vectors are stored alongside the encrypted JSON value.
 
 ## Encrypt
 
