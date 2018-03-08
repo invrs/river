@@ -1,5 +1,7 @@
-import { runWithSteps } from "../../../../test/helpers/terminal"
-export * from "../../../../test/helpers/terminal"
+import { runWithSteps } from "../../../test/helpers/terminal"
+
+export * from "../../../test/helpers/fixtures"
+export * from "../../../test/helpers/terminal"
 
 export async function runInit(fixture) {
   return await runWithSteps({

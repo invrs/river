@@ -1,5 +1,4 @@
-import { fixtures } from "./helpers/fixtures"
-import { run, runInit } from "./helpers/terminal"
+import { fixtures, run, runInit } from "./helpers"
 
 test("init", async () => {
   let fixture = await fixtures(__dirname)
