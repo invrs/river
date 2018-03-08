@@ -2,7 +2,7 @@ import { fixtures } from "./helpers/fixtures"
 import { run, runInit } from "./helpers/terminal"
 
 test("init", async () => {
-  let fixture = await fixtures()
+  let fixture = await fixtures(__dirname)
   let { read, steps } = await runInit(fixture)
 
   let key = await read("key")
@@ -19,7 +19,7 @@ test("init", async () => {
 })
 
 test("encrypt/decrypt JSON", async () => {
-  let fixture = await fixtures()
+  let fixture = await fixtures(__dirname)
   let { read, write } = await runInit(fixture)
 
   write("config/secret.json", {
@@ -46,7 +46,7 @@ test("encrypt/decrypt JSON", async () => {
 })
 
 test("encrypt/decrypt files", async () => {
-  let fixture = await fixtures()
+  let fixture = await fixtures(__dirname)
   let { read, write } = await runInit(fixture)
 
   let config = await read("config/encryptTasks.json")
