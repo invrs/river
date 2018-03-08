@@ -22,6 +22,9 @@
     "url": "https://github.com/invrs/river/issues"
   },
   "homepage": "https://github.com/invrs/river#readme",
+  "dependencies": {
+    "task-env": "2"
+  },
   "devDependencies": {
     "babel-cli": "6",
     "babel-core": "6",
