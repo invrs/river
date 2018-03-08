@@ -1,7 +1,7 @@
 export async function askForKeys(ask) {
   return await ask([
     {
-      default: "~/.inverse/key",
+      default: `${process.env.HOME}/.inverse/key`,
       message: "Private key location",
       name: "keyPath",
       type: "input",
