@@ -1,13 +1,12 @@
 {
   "name": "river-tasks",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Do your job, then let go",
   "bin": {
     "river": "./river"
   },
   "scripts": {
-    "build":
-      "rimraf dist; babel lib --out-dir dist --source-maps",
+    "build": "rimraf dist; babel lib --out-dir dist --source-maps",
     "fix": "npm run lint -- --fix",
     "prepublishOnly": "npm run build",
     "pretest": "npm run build",
@@ -19,7 +18,10 @@
     "type": "git",
     "url": "git+ssh://git@github.com/invrs/river.git"
   },
-  "keywords": ["tasks", "task-env"],
+  "keywords": [
+    "tasks",
+    "task-env"
+  ],
   "author": "Inverse Labs <labs@inverse.com>",
   "license": "MIT",
   "bugs": {
@@ -44,7 +46,11 @@
     "rimraf": "2"
   },
   "jest": {
-    "setupFiles": ["./test/setup.js"],
-    "testMatch": ["**/*Test.js"]
+    "setupFiles": [
+      "./test/setup.js"
+    ],
+    "testMatch": [
+      "**/*Test.js"
+    ]
   }
 }
