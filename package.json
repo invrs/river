@@ -16,6 +16,7 @@
     "lerna-build": "lerna run build",
     "lerna-fix": "lerna run fix",
     "lerna-pretty": "lerna run pretty",
+    "lerna-publish": "lerna publish",
     "lerna-lint": "lerna run lint",
     "lerna-test": "lerna run test",
     "lint": "eslint --ignore-path .gitignore --ext=js .",
@@ -33,6 +34,9 @@
   },
   "homepage": "https://github.com/invrs/river#readme",
   "dependencies": {
+    "default-tasks": "0.1",
+    "encrypt-tasks": "0.1",
+    "starter-tasks": "0.1",
     "task-env": "2"
   },
   "devDependencies": {
