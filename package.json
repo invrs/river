@@ -1,15 +1,25 @@
 {
   "name": "river",
-  "private": true,
   "version": "0.0.1",
   "description": "Do your job, then let go",
+  "bin": {
+    "river": "./river"
+  },
   "scripts": {
-    "bootstrap": "lerna bootstrap",
-    "build": "lerna run build",
-    "fix": "lerna run fix",
-    "pretty": "lerna run pretty",
-    "lint": "lerna run lint",
-    "test": "lerna run test"
+    "build":
+      "rimraf dist; babel lib --out-dir dist --source-maps",
+    "fix": "npm run lint -- --fix",
+    "prepublishOnly": "npm run build",
+    "pretest": "npm run build",
+    "pretty": "prettier --write **/*.css **/*.json **/*.md",
+    "lerna-bootstrap": "lerna bootstrap",
+    "lerna-build": "lerna run build",
+    "lerna-fix": "lerna run fix",
+    "lerna-pretty": "lerna run pretty",
+    "lerna-lint": "lerna run lint",
+    "lerna-test": "lerna run test",
+    "lint": "eslint --ignore-path .gitignore --ext=js .",
+    "test": "jest test"
   },
   "repository": {
     "type": "git",
@@ -23,23 +33,25 @@
   },
   "homepage": "https://github.com/invrs/river#readme",
   "dependencies": {
-    "task-env": "2"
+    "task-env": "^2.3.1"
   },
   "devDependencies": {
     "babel-cli": "6",
     "babel-core": "6",
+    "babel-eslint": "8",
     "babel-plugin-transform-async-to-generator": "6",
     "babel-plugin-transform-object-rest-spread": "6",
     "babel-preset-node6": "11",
     "eslint": "4",
     "eslint-config-prettier": "2",
     "eslint-plugin-prettier": "2",
+    "eslint-plugin-react": "7",
     "fxtr": "1",
     "husky": "^0.15.0-rc.8",
     "jest": "22",
-    "lerna": "2",
     "lint-staged": "6",
-    "prettier": "1"
+    "prettier": "1",
+    "rimraf": "2"
   },
   "babel": {
     "presets": ["node6"],
@@ -96,6 +108,10 @@
     "hooks": {
       "pre-commit": "lint-staged && npm test"
     }
+  },
+  "jest": {
+    "setupFiles": ["./test/setup.js"],
+    "testMatch": ["**/*Test.js"]
   },
   "lint-staged": {
     "*.{css,json,md}": ["prettier --write", "git add"],

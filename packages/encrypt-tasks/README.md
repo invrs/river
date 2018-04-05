@@ -1,33 +1,19 @@
 # Encrypt Tasks
 
-[Task Env](https://github.com/invrs/task-env#readme) tasks to encrypt/decrypt files or JSON values.
+[River tasks](https://github.com/invrs/river#readme) to encrypt/decrypt files or JSON values.
 
 ## Install
 
 ```bash
-npm install --save encrypt-tasks
+npm install -g river-tasks
 ```
-
-Require `encrypt-tasks` into your `tasks`:
-
-```js
-#!/usr/bin/env node
-
-require("task-env")({
-  args: process.argv.slice(2),
-  root: __dirname,
-  tasks: [require("encrypt-tasks")],
-})
-```
-
-See [Task Env docs](https://github.com/invrs/task-env#readme) for more info.
 
 ## Initialize
 
 Run the `encrypt.init` task to set your config:
 
 ```bash
-./run encrypt.init
+river encrypt.init
 ```
 
 ## Configuration
@@ -55,11 +41,11 @@ Initialization vectors are stored alongside the encrypted JSON value.
 ## Encrypt
 
 ```bash
-./run encrypt
+river encrypt
 ```
 
 ## Decrypt
 
 ```bash
-./run decrypt
+river decrypt
 ```

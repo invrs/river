@@ -1,7 +1,9 @@
+import os from "os"
+
 export async function askForKeys(ask) {
   return await ask([
     {
-      default: `${process.env.HOME}/.inverse/key`,
+      default: `${os.homedir()}/.river/key`,
       message: "Private key location",
       name: "keyPath",
       type: "input",

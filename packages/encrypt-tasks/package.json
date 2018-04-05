@@ -15,15 +15,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/invrs/tasks.git"
+    "url": "git+ssh://git@github.com/invrs/river.git"
   },
   "keywords": ["task-env", "tasks", "encrypt"],
   "author": "Inverse Labs <labs@inverse.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/invrs/tasks/issues"
+    "url": "https://github.com/invrs/river/issues"
   },
-  "homepage": "https://github.com/invrs/tasks#readme",
+  "homepage": "https://github.com/invrs/river#readme",
   "devDependencies": {
     "babel-cli": "6",
     "babel-core": "6",
@@ -46,72 +46,8 @@
     "fs-extra": "5",
     "glob": "7"
   },
-  "babel": {
-    "presets": ["node6"],
-    "plugins": [
-      "transform-async-to-generator",
-      "transform-object-rest-spread"
-    ]
-  },
-  "eslintConfig": {
-    "env": {
-      "es6": true,
-      "node": true
-    },
-    "extends": [
-      "eslint:recommended",
-      "plugin:prettier/recommended"
-    ],
-    "parserOptions": {
-      "ecmaFeatures": {
-        "experimentalObjectRestSpread": true
-      },
-      "ecmaVersion": 8,
-      "sourceType": "module"
-    },
-    "rules": {
-      "curly": "error",
-      "indent": ["error", 2],
-      "linebreak-style": ["error", "unix"],
-      "no-console": [
-        "error",
-        {
-          "allow": ["warn", "error"]
-        }
-      ],
-      "quotes": ["error", "double"],
-      "semi": ["error", "never"],
-      "sort-keys": [
-        "error",
-        "asc",
-        {
-          "caseSensitive": true,
-          "natural": false
-        }
-      ],
-      "sort-vars": [
-        "error",
-        {
-          "ignoreCase": true
-        }
-      ]
-    }
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged && npm test"
-    }
-  },
-  "lint-staged": {
-    "*.{css,json,md}": ["prettier --write", "git add"],
-    "*.js": [
-      "eslint --ignore-path .gitignore --fix",
-      "git add"
-    ]
-  },
-  "prettier": {
-    "printWidth": 60,
-    "semi": false,
-    "trailingComma": "es5"
+  "jest": {
+    "setupFiles": ["./test/setup.js"],
+    "testMatch": ["**/*Test.js"]
   }
 }

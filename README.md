@@ -1,10 +1,8 @@
 # River
 
 ```bash
-git clone git@github.com:invrs/river.git
-cd river
-sudo ln -s river /usr/local/bin/river
-river setup
+npm install -g river-tasks
+river
 ```
 
 ![river](https://fsmedia.imgix.net/assets/river.gif)
