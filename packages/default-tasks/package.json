@@ -39,7 +39,9 @@
     "prettier": "1",
     "rimraf": "2"
   },
-  "dependencies": {},
+  "dependencies": {
+    "chalk": "^2.3.2"
+  },
   "jest": {
     "setupFiles": ["./test/setup.js"],
     "testMatch": ["**/*Test.js"]
