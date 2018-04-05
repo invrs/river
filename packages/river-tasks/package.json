@@ -1,0 +1,50 @@
+{
+  "name": "river-tasks",
+  "version": "0.1.0",
+  "description": "Do your job, then let go",
+  "bin": {
+    "river": "./river"
+  },
+  "scripts": {
+    "build":
+      "rimraf dist; babel lib --out-dir dist --source-maps",
+    "fix": "npm run lint -- --fix",
+    "prepublishOnly": "npm run build",
+    "pretest": "npm run build",
+    "pretty": "prettier --write **/*.css **/*.json **/*.md",
+    "lint": "eslint --ignore-path .gitignore --ext=js .",
+    "test": "jest test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/invrs/river.git"
+  },
+  "keywords": ["tasks", "task-env"],
+  "author": "Inverse Labs <labs@inverse.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/invrs/river/issues"
+  },
+  "homepage": "https://github.com/invrs/river#readme",
+  "dependencies": {
+    "default-tasks": "0.1",
+    "encrypt-tasks": "0.1",
+    "starter-tasks": "0.1",
+    "task-env": "2"
+  },
+  "devDependencies": {
+    "babel-cli": "6",
+    "babel-core": "6",
+    "babel-eslint": "8",
+    "babel-plugin-transform-async-to-generator": "6",
+    "babel-plugin-transform-object-rest-spread": "6",
+    "babel-preset-node6": "11",
+    "fxtr": "1",
+    "jest": "22",
+    "rimraf": "2"
+  },
+  "jest": {
+    "setupFiles": ["./test/setup.js"],
+    "testMatch": ["**/*Test.js"]
+  }
+}

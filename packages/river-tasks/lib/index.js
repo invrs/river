@@ -10,17 +10,19 @@ import * as starterTasks from "starter-tasks"
 let configDir = process.env.RIVER_CONFIG_DIR
 configDir = configDir || join(homedir(), ".river")
 
-taskEnv({
-  args: process.argv.slice(2),
-  setup: [setup],
-  stores: {
-    riverConfig: {
-      pattern: "**/*",
-      root: configDir,
+export async function riverTasks() {
+  return taskEnv({
+    args: process.argv.slice(2),
+    setup: [setup],
+    stores: {
+      riverConfig: {
+        pattern: "**/*",
+        root: configDir,
+      },
     },
-  },
-  tasks: [defaultTasks, encryptTasks, starterTasks],
-}).catch(console.error)
+    tasks: [defaultTasks, encryptTasks, starterTasks],
+  })
+}
 
 async function setup(config, args) {
   let { riverConfig } = args

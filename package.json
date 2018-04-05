@@ -1,26 +1,16 @@
 {
-  "name": "river-tasks",
-  "version": "0.1.0",
+  "name": "river",
+  "private": true,
+  "version": "0.0.1",
   "description": "Do your job, then let go",
-  "bin": {
-    "river": "./river"
-  },
   "scripts": {
-    "build":
-      "rimraf dist; babel lib --out-dir dist --source-maps",
+    "build": "lerna run build",
+    "bootstrap": "lerna bootstrap",
     "fix": "npm run lint -- --fix",
-    "prepublishOnly": "npm run build",
-    "pretest": "npm run build",
-    "pretty": "prettier --write **/*.css **/*.json **/*.md",
-    "lerna-bootstrap": "lerna bootstrap",
-    "lerna-build": "lerna run build",
-    "lerna-fix": "lerna run fix",
-    "lerna-pretty": "lerna run pretty",
-    "lerna-publish": "lerna publish",
-    "lerna-lint": "lerna run lint",
-    "lerna-test": "lerna run test",
     "lint": "eslint --ignore-path .gitignore --ext=js .",
-    "test": "jest test"
+    "pretty": "prettier --write **/*.css **/*.json **/*.md",
+    "publish": "lerna publish",
+    "test": "jest test; lerna run test"
   },
   "repository": {
     "type": "git",
@@ -33,12 +23,7 @@
     "url": "https://github.com/invrs/river/issues"
   },
   "homepage": "https://github.com/invrs/river#readme",
-  "dependencies": {
-    "default-tasks": "0.1",
-    "encrypt-tasks": "0.1",
-    "starter-tasks": "0.1",
-    "task-env": "2"
-  },
+  "dependencies": {},
   "devDependencies": {
     "babel-cli": "6",
     "babel-core": "6",
@@ -46,6 +31,7 @@
     "babel-plugin-transform-async-to-generator": "6",
     "babel-plugin-transform-object-rest-spread": "6",
     "babel-preset-node6": "11",
+    "commandland": "^0.1.2",
     "eslint": "4",
     "eslint-config-prettier": "2",
     "eslint-plugin-prettier": "2",
@@ -53,6 +39,7 @@
     "fxtr": "1",
     "husky": "^0.15.0-rc.8",
     "jest": "22",
+    "lerna": "2",
     "lint-staged": "6",
     "prettier": "1",
     "rimraf": "2"
