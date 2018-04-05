@@ -1,8 +1,7 @@
 {
   "name": "starter-tasks",
-  "version": "0.0.1",
-  "description":
-    "River tasks to start new projects and update old ones",
+  "version": "0.1.0",
+  "description": "River tasks to start new projects and update old ones",
   "keywords": [
     "boilerplate",
     "starter",
@@ -18,8 +17,7 @@
   "main": "dist/index.js",
   "homepage": "https://github.com/invrs/river#readme",
   "scripts": {
-    "build":
-      "rimraf dist; babel lib --out-dir dist --source-maps",
+    "build": "rimraf dist; babel lib --out-dir dist --source-maps",
     "fix": "npm run lint -- --fix",
     "prepublishOnly": "npm run build",
     "pretest": "npm run build",
@@ -45,9 +43,12 @@
     "prettier": "1",
     "rimraf": "2"
   },
-  "dependencies": {},
   "jest": {
-    "setupFiles": ["./test/setup.js"],
-    "testMatch": ["**/*Test.js"]
+    "setupFiles": [
+      "./test/setup.js"
+    ],
+    "testMatch": [
+      "**/*Test.js"
+    ]
   }
 }

@@ -1,8 +1,11 @@
 {
   "name": "default-tasks",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "River default tasks",
-  "keywords": ["task-env", "tasks"],
+  "keywords": [
+    "task-env",
+    "tasks"
+  ],
   "author": "Inverse Labs <labs@inverse.com>",
   "repository": {
     "type": "git",
@@ -12,8 +15,7 @@
   "main": "dist/index.js",
   "homepage": "https://github.com/invrs/river#readme",
   "scripts": {
-    "build":
-      "rimraf dist; babel lib --out-dir dist --source-maps",
+    "build": "rimraf dist; babel lib --out-dir dist --source-maps",
     "fix": "npm run lint -- --fix",
     "prepublishOnly": "npm run build",
     "pretest": "npm run build",
@@ -43,7 +45,11 @@
     "chalk": "^2.3.2"
   },
   "jest": {
-    "setupFiles": ["./test/setup.js"],
-    "testMatch": ["**/*Test.js"]
+    "setupFiles": [
+      "./test/setup.js"
+    ],
+    "testMatch": [
+      "**/*Test.js"
+    ]
   }
 }
