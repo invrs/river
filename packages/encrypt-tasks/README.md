@@ -10,10 +10,10 @@ npm install -g river-tasks
 
 ## Initialize
 
-Run the `encrypt.init` task to set your config:
+Run the `encryptInit` task to set your config:
 
 ```bash
-river encrypt.init
+river encryptInit
 ```
 
 ## Configuration

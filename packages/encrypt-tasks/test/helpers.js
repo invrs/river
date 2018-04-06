@@ -13,6 +13,6 @@ export async function runInit(fixture) {
       },
       { match: /Password/, write: "password\r" },
     ],
-    task: "encrypt.init",
+    task: "encryptInit",
   })
 }

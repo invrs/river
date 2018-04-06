@@ -31,7 +31,7 @@
     "babel-plugin-transform-async-to-generator": "6",
     "babel-plugin-transform-object-rest-spread": "6",
     "babel-preset-node6": "11",
-    "commandland": "^0.1.2",
+    "commandland": "0.1",
     "eslint": "4",
     "eslint-config-prettier": "2",
     "eslint-plugin-prettier": "2",
@@ -41,8 +41,7 @@
     "jest": "22",
     "lerna": "2",
     "lint-staged": "6",
-    "prettier": "1",
-    "rimraf": "2"
+    "prettier": "1"
   },
   "babel": {
     "presets": ["node6"],

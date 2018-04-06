@@ -2,7 +2,16 @@
 
 require("task-env")({
   args: process.argv.slice(2),
-  root: __dirname,
+  stores: {
+    config: {
+      pattern: "**/*",
+      root: __dirname,
+    },
+    riverConfig: {
+      pattern: "**/*",
+      root: __dirname 
+    }
+  },
   tasks: [
     require("../../dist")
   ],

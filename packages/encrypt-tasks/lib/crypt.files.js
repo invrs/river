@@ -18,15 +18,15 @@ export const types = {
 
 export async function cryptFiles({
   config,
-  dirs,
+  dir,
   info,
   type,
 }) {
   let promises = info.files.map(async path => {
-    let paths = await relGlob({ dirs, path })
+    let paths = await relGlob({ dir, path })
 
     let promises = paths.map(path =>
-      cryptFile({ config, dirs, info, path, type })
+      cryptFile({ config, dir, info, path, type })
     )
 
     return Promise.all(promises)
@@ -37,13 +37,13 @@ export async function cryptFiles({
 
 export async function cryptFile({
   config,
-  dirs,
+  dir,
   info,
   path,
   type,
 }) {
   let crypt = types[type]
-  let relPath = path.replace(dirs.root + "/", "")
+  let relPath = path.replace(dir + "/", "")
 
   let iv = info.ivs[relPath]
   iv = getIv({ iv, type })
@@ -55,30 +55,34 @@ export async function cryptFile({
   }
 }
 
-async function encryptFile({ info, iv, path }) {
+export async function encryptFile({ info, iv, path }) {
   let cipher = createCipher({ info, iv })
   let input = createReadStream(path)
   let output = createWriteStream(`${path}.enc`)
 
-  input.pipe(cipher).pipe(output)
-
-  return new Promise((resolve, reject) => {
+  let promise = new Promise((resolve, reject) => {
     output.on("error", e => reject(e))
     output.on("finish", () => resolve())
   })
+
+  input.pipe(cipher).pipe(output)
+
+  return promise
 }
 
-async function decryptFile({ info, iv, path }) {
+export async function decryptFile({ info, iv, path }) {
   let decipher = createDecipher({ info, iv })
   let input = createReadStream(path)
   let output = createWriteStream(`${path}.enc`)
 
-  input.pipe(decipher).pipe(output)
-
-  return new Promise((resolve, reject) => {
+  let promise = new Promise((resolve, reject) => {
     output.on("error", e => reject(e))
     output.on("finish", () => resolve())
   })
+
+  input.pipe(decipher).pipe(output)
+
+  return promise
 }
 
 export function getIv({ iv, type }) {

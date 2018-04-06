@@ -7,7 +7,8 @@
   },
   "main": "dist/index.js",
   "scripts": {
-    "build": "rimraf dist; babel lib --out-dir dist --source-maps",
+    "build":
+      "rimraf dist; babel lib --out-dir dist --source-maps",
     "fix": "npm run lint -- --fix",
     "prepublishOnly": "npm run build",
     "pretest": "npm run build",
@@ -19,10 +20,7 @@
     "type": "git",
     "url": "git+ssh://git@github.com/invrs/river.git"
   },
-  "keywords": [
-    "tasks",
-    "task-env"
-  ],
+  "keywords": ["tasks", "task-env"],
   "author": "Inverse Labs <labs@inverse.com>",
   "license": "MIT",
   "bugs": {
@@ -31,7 +29,8 @@
   "homepage": "https://github.com/invrs/river#readme",
   "dependencies": {
     "default-tasks": "0.1",
-    "encrypt-tasks": "^0.1.1",
+    "encrypt-tasks": "0.1",
+    "fs-extra": "5",
     "starter-tasks": "0.1",
     "task-env": "2"
   },
@@ -42,16 +41,13 @@
     "babel-plugin-transform-async-to-generator": "6",
     "babel-plugin-transform-object-rest-spread": "6",
     "babel-preset-node6": "11",
+    "commandland": "0.1",
     "fxtr": "1",
     "jest": "22",
     "rimraf": "2"
   },
   "jest": {
-    "setupFiles": [
-      "./test/setup.js"
-    ],
-    "testMatch": [
-      "**/*Test.js"
-    ]
+    "setupFiles": ["./test/setup.js"],
+    "testMatch": ["**/*Test.js"]
   }
 }

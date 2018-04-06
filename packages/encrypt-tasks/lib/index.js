@@ -7,7 +7,7 @@ import { askForKeys, askForPass } from "./ask"
 import { crypt } from "./crypt"
 
 export async function encryptInit({ ask, config }) {
-  if (config.get("encryptTasks")) {
+  if (await config.get("encryptTasks")) {
     console.warn("encryptTasks already exists")
     return
   }
@@ -31,13 +31,15 @@ export async function encryptInit({ ask, config }) {
 
 export async function encrypt({
   config,
-  dirs,
+  riverConfig,
   type = "encrypt",
 }) {
-  let info = config.get("encryptTasks")
+  let dir = await riverConfig.get("river.storeDir")
+  let info = await config.get("encryptTasks")
+
   info.key = await readFile(info.keyPath, "utf8")
 
-  await crypt({ config, dirs, info, type })
+  await crypt({ config, dir, info, type })
 }
 
 export async function decrypt({ tasks }) {

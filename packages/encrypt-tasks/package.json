@@ -1,7 +1,8 @@
 {
   "name": "encrypt-tasks",
   "version": "0.1.1",
-  "description": "Task Env tasks to encrypt/decrypt files or JSON values",
+  "description":
+    "Task Env tasks to encrypt/decrypt files or JSON values",
   "main": "dist/index.js",
   "scripts": {
     "build": "babel lib --out-dir dist --source-maps",
@@ -16,11 +17,7 @@
     "type": "git",
     "url": "git+ssh://git@github.com/invrs/river.git"
   },
-  "keywords": [
-    "task-env",
-    "tasks",
-    "encrypt"
-  ],
+  "keywords": ["task-env", "tasks", "encrypt"],
   "author": "Inverse Labs <labs@inverse.com>",
   "license": "MIT",
   "bugs": {
@@ -33,7 +30,7 @@
     "babel-plugin-transform-async-to-generator": "6",
     "babel-plugin-transform-object-rest-spread": "6",
     "babel-preset-node6": "11",
-    "commandland": "^0.1.2",
+    "commandland": "0.1",
     "eslint": "4",
     "eslint-config-prettier": "2",
     "eslint-plugin-prettier": "2",
@@ -50,11 +47,7 @@
     "glob": "7"
   },
   "jest": {
-    "setupFiles": [
-      "./test/setup.js"
-    ],
-    "testMatch": [
-      "**/*Test.js"
-    ]
+    "setupFiles": ["./test/setup.js"],
+    "testMatch": ["**/*Test.js"]
   }
 }

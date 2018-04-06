@@ -22,7 +22,6 @@ export const types = {
 
 export async function cryptConfig({
   config,
-  dirs,
   keys = [],
   info,
   obj,
@@ -30,7 +29,7 @@ export async function cryptConfig({
 }) {
   let { crypt, sign, regex } = types[type]
 
-  obj = obj || config.obj
+  obj = obj || config.state
 
   for (let key in obj) {
     let value = obj[key]
@@ -49,7 +48,6 @@ export async function cryptConfig({
     if (is.obj) {
       await cryptConfig({
         config,
-        dirs,
         info,
         keys: newKeys,
         obj: value,

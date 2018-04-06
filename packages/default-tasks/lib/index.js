@@ -1,11 +1,22 @@
+import { join } from "path"
+
 import chalk from "chalk"
+import { readJson } from "fs-extra"
 
 const ignore = ["defaultTask", "setup", "teardown"]
+const pkgPath = join(__dirname, "../../../package.json")
+
+export async function setup(config) {
+  let pkg = await readJson(pkgPath)
+  config.urls.defaultTask = pkg.homepage
+  return config
+}
 
 export async function defaultTask({ tasks }, { alias }) {
   let output = "\n"
+  let taskNames = Object.keys(tasks).sort()
 
-  for (let task in tasks) {
+  for (let task of taskNames) {
     if (ignore.includes(task)) {
       continue
     }
@@ -14,7 +25,8 @@ export async function defaultTask({ tasks }, { alias }) {
 
     if (alias[task]) {
       for (let key in alias[task]) {
-        for (let option of alias[task][key]) {
+        let options = alias[task][key].sort()
+        for (let option of options) {
           output += ` --${option}`
         }
       }
