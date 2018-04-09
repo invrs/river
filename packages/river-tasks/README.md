@@ -1,6 +1,6 @@
 # River Tasks
 
-The core of [River](https://github.com/invrs/river#readme). Uses [https://github.com/invrs/task-env#readme] to expose tasks and sets up the local and default stores.
+The core of [River](https://github.com/invrs/river#readme). Uses [Task Env](https://github.com/invrs/task-env#readme) to expose tasks and sets up the local and default stores.
 
 ## Install
 
