@@ -5,7 +5,8 @@
     "Task Env tasks to encrypt/decrypt files or JSON values",
   "main": "dist/index.js",
   "scripts": {
-    "build": "babel lib --out-dir dist --source-maps",
+    "build":
+      "rimraf dist; babel lib --out-dir dist --source-maps",
     "fix": "npm run lint -- --fix",
     "prepublishOnly": "npm run build",
     "pretest": "npm run build",
@@ -39,6 +40,7 @@
     "jest": "22",
     "lint-staged": "6",
     "prettier": "1",
+    "rimraf": "^2.6.2",
     "source-map-support": "0",
     "task-env": "2"
   },

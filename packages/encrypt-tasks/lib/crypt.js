@@ -1,5 +1,5 @@
-import { cryptConfig } from "./crypt.config"
-import { cryptFiles } from "./crypt.files"
+import { cryptConfig } from "./cryptConfig"
+import { cryptFiles } from "./cryptFiles"
 
 export async function crypt({ config, dir, info, type }) {
   return Promise.all([

@@ -39,7 +39,7 @@
     "jest": "22",
     "lint-staged": "6",
     "prettier": "1",
-    "rimraf": "2"
+    "rimraf": "^2.6.2"
   },
   "dependencies": {
     "chalk": "2",

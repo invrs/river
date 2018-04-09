@@ -1,5 +1,5 @@
-import { starterNode } from "../dist"
+import { starter } from "../dist"
 
 test("without parameters", () => {
-  expect(typeof starterNode).toBe("function")
+  expect(typeof starter).toBe("function")
 })

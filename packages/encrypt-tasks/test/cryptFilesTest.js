@@ -1,15 +1,18 @@
-import { fixtures, runInit } from "./helpers"
+import { fixtures, runWithInit } from "./helpers"
 
 import { genIv } from "../lib/cipher"
-import {
-  encryptFile,
-  decryptFile,
-} from "../lib/crypt.files"
+
+import { encryptFile, decryptFile } from "../lib/cryptFiles"
+
 import { move } from "../lib/fs"
 
 test("init", async () => {
   let fixture = await fixtures(__dirname)
-  let { path, read } = await runInit(fixture)
+
+  let { path, read } = await runWithInit(fixture, [
+    "encrypt",
+    "--init",
+  ])
 
   let iv = genIv()
   let key = await read("key")

@@ -3,7 +3,7 @@ import { runWithSteps } from "../../../test/helpers/terminal"
 export * from "../../../test/helpers/fixtures"
 export * from "../../../test/helpers/terminal"
 
-export async function runInit(fixture) {
+export async function runWithInit(fixture, task) {
   return await runWithSteps({
     fixture,
     steps: [
@@ -13,6 +13,6 @@ export async function runInit(fixture) {
       },
       { match: /Password/, write: "password\r" },
     ],
-    task: "encryptInit",
+    task,
   })
 }

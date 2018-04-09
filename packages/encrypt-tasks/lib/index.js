@@ -1,39 +1,30 @@
 import "./source.maps"
 
-import { readFile, writeKeyPath } from "./fs"
-import { resolve } from "path"
-
-import { askForKeys, askForPass } from "./ask"
 import { crypt } from "./crypt"
+import { readFile } from "./fs"
+import { init as initFn } from "./init"
 
-export async function encryptInit({ ask, config }) {
-  if (await config.get("encryptTasks")) {
-    console.warn("encryptTasks already exists")
-    return
+export async function setup(config) {
+  config.alias.encrypt = {
+    i: ["init"],
   }
 
-  let { keyPath } = await askForKeys(ask)
-  keyPath = resolve(keyPath)
-
-  await config.set("encryptTasks", {
-    files: [],
-    ivs: {},
-    keyPath,
-  })
-
-  try {
-    await readFile(keyPath, "utf8")
-  } catch (e) {
-    let { password } = await askForPass(ask)
-    await writeKeyPath({ keyPath, password })
-  }
+  return config
 }
 
 export async function encrypt({
+  ask,
   config,
+  init,
   riverConfig,
   type = "encrypt",
 }) {
+  await initFn({ ask, config })
+
+  if (init) {
+    return
+  }
+
   let dir = await riverConfig.get("river.storeDir")
   let info = await config.get("encryptTasks")
 

@@ -3,7 +3,11 @@ import * as cmd from "commandland"
 export async function run({ fixture, onData, task }) {
   let { path } = fixture
 
-  let out = await cmd.run(`${path}/run`, [task], {
+  if (!Array.isArray(task)) {
+    task = [task]
+  }
+
+  let out = await cmd.run(`${path}/run`, task, {
     onData,
     silent: true,
   })

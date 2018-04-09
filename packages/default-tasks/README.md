@@ -1,25 +1,35 @@
-# Starter Tasks
+# Default Tasks
 
-[River tasks](https://github.com/invrs/river#readme) to start projects and update old ones.
+[River](https://github.com/invrs/river#readme) default task.
 
 ## Install
 
 ```bash
-npm install -g river-tasks
+npm install -g river
 ```
 
-## Start project
+## How it works
 
-Create a new [node-starter](https://github.com/invrs/node-starter#readme) project:
+Define argument options for your task by exporting a `setup` function in your task package:
 
 ```bash
-river starter.node -p my-project
+export async function setup(config) {
+  config.alias.myTask = {
+    p: ["path"]
+  }
+
+  return config
+}
+
+export async function myTask({ path }) {
+  // do something
+}
 ```
 
-Use the `-b` option to specify a branch:
+## List tasks
+
+List each task and its options:
 
 ```bash
-river starter.node -p my-project -b next
+river
 ```
-
-Run the command again on an existing project to update it.

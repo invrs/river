@@ -1,8 +1,11 @@
-import { fixtures, run, runInit } from "./helpers"
+import { fixtures, run, runWithInit } from "./helpers"
 
 test("init", async () => {
   let fixture = await fixtures(__dirname)
-  let { read, steps } = await runInit(fixture)
+  let { read, steps } = await runWithInit(
+    fixture,
+    "encrypt"
+  )
 
   let key = await read("key")
   expect(typeof key).toBe("string")
@@ -19,11 +22,10 @@ test("init", async () => {
 
 test("encrypt/decrypt JSON", async () => {
   let fixture = await fixtures(__dirname)
-  let { read, write } = await runInit(fixture)
-
-  write("secret.json", {
-    secret: "<~Encrypt this value!",
-  })
+  let { read } = await runWithInit(fixture, [
+    "encrypt",
+    "--init",
+  ])
 
   for (let i = 0; i < 2; i++) {
     await run({ fixture, task: "encrypt" })
@@ -42,7 +44,10 @@ test("encrypt/decrypt JSON", async () => {
 
 test("encrypt/decrypt files", async () => {
   let fixture = await fixtures(__dirname)
-  let { read, write } = await runInit(fixture)
+  let { read, write } = await runWithInit(fixture, [
+    "encrypt",
+    "--init",
+  ])
 
   let config = await read("encryptTasks.json")
   config.files = ["encrypt.txt"]

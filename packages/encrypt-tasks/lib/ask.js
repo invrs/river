@@ -3,7 +3,7 @@ import os from "os"
 export async function askForKeys(ask) {
   return await ask([
     {
-      default: `${os.homedir()}/.river/key`,
+      default: `${os.homedir()}/.river/encryptTasksKey`,
       message: "Private key location",
       name: "keyPath",
       type: "input",

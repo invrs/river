@@ -44,7 +44,7 @@
     "commandland": "0.1",
     "fxtr": "1",
     "jest": "22",
-    "rimraf": "2"
+    "rimraf": "^2.6.2"
   },
   "jest": {
     "setupFiles": ["./test/setup.js"],
