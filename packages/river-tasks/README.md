@@ -1,16 +1,17 @@
-# River
+# River Tasks
+
+The core of [River](https://github.com/invrs/river#readme). Uses [https://github.com/invrs/task-env#readme] to expose tasks and sets up the local and default stores.
+
+## Install
 
 ```bash
 npm install -g river-tasks
-river
 ```
 
-![river](https://fsmedia.imgix.net/assets/river.gif)
+## Stores
 
-> Act without doing; work without effort.
->
-> Think of the small as large and the few as many.
->
-> Confront the difficult while it is still easy;
->
-> accomplish the great task by a series of small acts.
+River exposes two stores: `riverConfig` and `config`. These are referred to as your "local" and "default" stores, respectively. The default store is meant to be version controlled, the local store is not.
+
+The path for the local store defaults to `~/.river`, but can be changed with the `RIVER_CONFIG_DIR` environmental variable.
+
+When you run river for the first time, it asks where you would like to keep your default store. It keeps this path in `riverConfig` and automatically sets up the default `config` store based on this directory every time you run river.
