@@ -8,7 +8,7 @@
 npm install -g river-tasks
 ```
 
-### Encrypt JSON
+## Encrypted JSON format
 
 Encrypt/decrypt tasks look for encrypted JSON values in the default store.
 
