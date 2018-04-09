@@ -1,14 +1,12 @@
-import { join } from "path"
-
 import chalk from "chalk"
-import { readJson } from "fs-extra"
+
+import { homepage } from "./homepage"
 
 const ignore = ["defaultTask", "setup", "teardown"]
-const pkgPath = join(__dirname, "../../../package.json")
 
 export async function setup(config) {
-  let pkg = await readJson(pkgPath)
-  config.urls.defaultTask = pkg.homepage
+  config.urls.defaultTask = await homepage()
+
   return config
 }
 

@@ -1,19 +1,16 @@
-import { join } from "path"
-import { readJson } from "fs-extra"
-
-const pkgPath = join(__dirname, "../package.json")
+import { clone } from "./clone"
+import { homepage } from "./homepage"
+import { initGit } from "./initGit"
 
 export async function setup(config) {
-  let pkg = await readJson(pkgPath)
-
-  config.alias.starterNode = {
+  config.alias.starter = {
     b: ["branch"],
     p: ["path"],
     r: ["repo"],
     u: ["user"],
   }
 
-  config.urls.starter = pkg.homepage
+  config.urls.starter = await homepage()
 
   return config
 }
@@ -27,25 +24,4 @@ export async function starter({
 }) {
   await clone({ branch, path, repo, run, user })
   await initGit({ path, run })
-}
-
-async function clone({ branch, path, repo, run, user }) {
-  await run("git", [
-    "clone",
-    "-b",
-    branch,
-    `git@github.com:${user}/${repo}.git`,
-    path,
-  ])
-}
-
-async function initGit({ path, run }) {
-  await run("sh", [
-    "-c",
-    `
-    cd ${path};
-    rm -rf .git;
-    git init .
-  `,
-  ])
 }

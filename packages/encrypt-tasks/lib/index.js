@@ -2,12 +2,15 @@ import "./source.maps"
 
 import { crypt } from "./crypt"
 import { readFile } from "./fs"
+import { homepage } from "./homepage"
 import { init as initFn } from "./init"
 
 export async function setup(config) {
   config.alias.encrypt = {
     i: ["init"],
   }
+
+  config.urls.encrypt = await homepage()
 
   return config
 }

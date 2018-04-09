@@ -28,7 +28,7 @@ export async function riverTasks(tasks) {
   })
 }
 
-async function setup(config, args) {
+export async function setup(config, args) {
   let { riverConfig } = args
 
   let storeDir = await riverConfig.get("river.storeDir")
@@ -45,7 +45,7 @@ async function setup(config, args) {
   return config
 }
 
-async function setStoreDir({ ask, riverConfig }) {
+export async function setStoreDir({ ask, riverConfig }) {
   let { storeDir } = await ask([
     {
       default: configDir,

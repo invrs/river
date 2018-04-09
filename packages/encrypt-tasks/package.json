@@ -24,7 +24,8 @@
   "bugs": {
     "url": "https://github.com/invrs/river/issues"
   },
-  "homepage": "https://github.com/invrs/river#readme",
+  "homepage":
+    "https://github.com/invrs/river/tree/master/packages/encrypt-tasks#readme",
   "devDependencies": {
     "babel-cli": "6",
     "babel-core": "6",
