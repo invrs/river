@@ -11,10 +11,7 @@ import * as starterTasks from "starter-tasks"
 const configDir =
   process.env.RIVER_CONFIG_DIR || join(homedir(), ".river")
 
-export async function riverTasks({
-  tasks = [],
-  tasksOverride,
-} = {}) {
+export async function riverTasks(tasks = []) {
   return taskEnv({
     args: process.argv.slice(2),
     setup: [setup],
@@ -24,7 +21,7 @@ export async function riverTasks({
         root: configDir,
       },
     },
-    tasks: tasksOverride || [
+    tasks: [
       defaultTasks,
       encryptTasks,
       starterTasks,
