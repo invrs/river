@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-require("../../dist").riverTasks({
-  tasks: [
-    { testTask: () => {} }
-  ],
-}).catch(console.error)
+require("../../dist")
+  .riverTasks()
+  .catch(console.error)

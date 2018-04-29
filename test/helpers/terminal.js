@@ -8,6 +8,7 @@ export async function run({ fixture, onData, task }) {
   }
 
   let out = await cmd.run(`${path}/run`, task, {
+    cwd: path,
     onData,
     silent: true,
   })

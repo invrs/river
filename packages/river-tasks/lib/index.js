@@ -1,3 +1,4 @@
+import { existsSync } from "fs"
 import { homedir } from "os"
 import { join } from "path"
 
@@ -13,7 +14,7 @@ const configDir =
 export async function riverTasks({
   tasks = [],
   tasksOverride,
-}) {
+} = {}) {
   return taskEnv({
     args: process.argv.slice(2),
     setup: [setup],
@@ -27,9 +28,23 @@ export async function riverTasks({
       defaultTasks,
       encryptTasks,
       starterTasks,
+      ...cwdTasks(),
       ...tasks,
     ],
   })
+}
+
+export function cwdTasks() {
+  const tasksPath = join(process.cwd(), "tasks")
+
+  let tasksPathExists =
+    existsSync(tasksPath) || existsSync(tasksPath + ".js")
+
+  if (tasksPathExists) {
+    return require(tasksPath)
+  } else {
+    return []
+  }
 }
 
 export async function setup(config, args) {
