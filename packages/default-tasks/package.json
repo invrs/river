@@ -3,7 +3,9 @@
   "_inBundle": true,
   "_location": "/river-tasks/default-tasks",
   "_phantomChildren": {},
-  "_requiredBy": ["/river-tasks"],
+  "_requiredBy": [
+    "/river-tasks"
+  ],
   "author": {
     "name": "Inverse Labs",
     "email": "labs@inverse.com"
@@ -28,13 +30,19 @@
     "jest": "22",
     "rimraf": "^2.6.2"
   },
-  "homepage":
-    "https://github.com/invrs/river/tree/master/packages/default-tasks#readme",
+  "homepage": "https://github.com/invrs/river/tree/master/packages/default-tasks#readme",
   "jest": {
-    "setupFiles": ["./test/setup.js"],
-    "testMatch": ["**/*Test.js"]
+    "setupFiles": [
+      "./test/setup.js"
+    ],
+    "testMatch": [
+      "**/*Test.js"
+    ]
   },
-  "keywords": ["task-env", "tasks"],
+  "keywords": [
+    "task-env",
+    "tasks"
+  ],
   "license": "MIT",
   "main": "dist/index.js",
   "name": "default-tasks",
@@ -43,8 +51,7 @@
     "url": "git+ssh://git@github.com/invrs/river.git"
   },
   "scripts": {
-    "build":
-      "rimraf dist; babel lib --out-dir dist --source-maps",
+    "build": "rimraf dist; babel lib --out-dir dist --source-maps",
     "fix": "npm run lint -- --fix",
     "lint": "eslint --ignore-path .gitignore --ext=js .",
     "prepublishOnly": "npm run build",
@@ -52,5 +59,5 @@
     "pretty": "prettier --write **/*.css **/*.json **/*.md",
     "test": "jest test"
   },
-  "version": "0.2.0"
+  "version": "0.2.1"
 }

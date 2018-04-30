@@ -3,7 +3,9 @@
   "_inBundle": true,
   "_location": "/river-tasks/starter-tasks",
   "_phantomChildren": {},
-  "_requiredBy": ["/river-tasks"],
+  "_requiredBy": [
+    "/river-tasks"
+  ],
   "author": {
     "name": "Inverse Labs",
     "email": "labs@inverse.com"
@@ -14,8 +16,7 @@
   "dependencies": {
     "fs-extra": "^5.0.0"
   },
-  "description":
-    "River tasks to start new projects and update old ones",
+  "description": "River tasks to start new projects and update old ones",
   "devDependencies": {
     "babel-cli": "6",
     "babel-core": "^6.26.3",
@@ -28,11 +29,14 @@
     "jest": "22",
     "rimraf": "^2.6.2"
   },
-  "homepage":
-    "https://github.com/invrs/river/tree/master/packages/starter-tasks#readme",
+  "homepage": "https://github.com/invrs/river/tree/master/packages/starter-tasks#readme",
   "jest": {
-    "setupFiles": ["./test/setup.js"],
-    "testMatch": ["**/*Test.js"]
+    "setupFiles": [
+      "./test/setup.js"
+    ],
+    "testMatch": [
+      "**/*Test.js"
+    ]
   },
   "keywords": [
     "boilerplate",
@@ -48,8 +52,7 @@
     "url": "git+ssh://git@github.com/invrs/river.git"
   },
   "scripts": {
-    "build":
-      "rimraf dist; babel lib --out-dir dist --source-maps",
+    "build": "rimraf dist; babel lib --out-dir dist --source-maps",
     "fix": "npm run lint -- --fix",
     "lint": "eslint --ignore-path .gitignore --ext=js .",
     "prepublishOnly": "npm run build",
@@ -57,5 +60,5 @@
     "pretty": "prettier --write **/*.css **/*.json **/*.md",
     "test": "jest test"
   },
-  "version": "0.2.0"
+  "version": "0.2.1"
 }
