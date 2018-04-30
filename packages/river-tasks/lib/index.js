@@ -1,17 +1,22 @@
-import { existsSync } from "fs"
+// Packages
 import { homedir } from "os"
 import { join } from "path"
 
+import findUp from "find-up"
 import taskEnv from "task-env"
 
 import * as defaultTasks from "default-tasks"
 import * as encryptTasks from "encrypt-tasks"
 import * as starterTasks from "starter-tasks"
 
+// Constants
 const configDir =
   process.env.RIVER_CONFIG_DIR || join(homedir(), ".river")
 
+// Functions
 export async function riverTasks(tasks = []) {
+  let relativeTasks = await taskUp()
+
   return taskEnv({
     args: process.argv.slice(2),
     setup: [setup],
@@ -25,16 +30,16 @@ export async function riverTasks(tasks = []) {
       defaultTasks,
       encryptTasks,
       starterTasks,
-      ...cwdTasks(),
+      ...relativeTasks,
       ...tasks,
     ],
   })
 }
 
-export function cwdTasks() {
-  const tasksPath = join(process.cwd(), "riverTasks")
+export async function taskUp() {
+  const tasksPath = await findUp("riverTasks.js")
 
-  if (existsSync(tasksPath + ".js")) {
+  if (tasksPath) {
     return require(tasksPath)
   } else {
     return []
