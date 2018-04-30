@@ -1,30 +1,21 @@
 {
-  "name": "starter-tasks",
-  "version": "0.2.0",
-  "description": "River tasks to start new projects and update old ones",
-  "keywords": [
-    "boilerplate",
-    "starter",
-    "task-env",
-    "tasks"
-  ],
-  "author": "Inverse Labs <labs@inverse.com>",
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/invrs/river.git"
+  "_id": "starter-tasks@0.2.0",
+  "_inBundle": true,
+  "_location": "/river-tasks/starter-tasks",
+  "_phantomChildren": {},
+  "_requiredBy": ["/river-tasks"],
+  "author": {
+    "name": "Inverse Labs",
+    "email": "labs@inverse.com"
   },
-  "license": "MIT",
-  "main": "dist/index.js",
-  "homepage": "https://github.com/invrs/river/tree/master/packages/starter-tasks#readme",
-  "scripts": {
-    "build": "rimraf dist; babel lib --out-dir dist --source-maps",
-    "fix": "npm run lint -- --fix",
-    "prepublishOnly": "npm run build",
-    "pretest": "npm run build",
-    "pretty": "prettier --write **/*.css **/*.json **/*.md",
-    "lint": "eslint --ignore-path .gitignore --ext=js .",
-    "test": "jest test"
+  "bugs": {
+    "url": "https://github.com/invrs/river/issues"
   },
+  "dependencies": {
+    "fs-extra": "^5.0.0"
+  },
+  "description":
+    "River tasks to start new projects and update old ones",
   "devDependencies": {
     "babel-cli": "6",
     "babel-core": "^6.26.3",
@@ -37,15 +28,34 @@
     "jest": "22",
     "rimraf": "^2.6.2"
   },
+  "homepage":
+    "https://github.com/invrs/river/tree/master/packages/starter-tasks#readme",
   "jest": {
-    "setupFiles": [
-      "./test/setup.js"
-    ],
-    "testMatch": [
-      "**/*Test.js"
-    ]
+    "setupFiles": ["./test/setup.js"],
+    "testMatch": ["**/*Test.js"]
   },
-  "dependencies": {
-    "fs-extra": "^5.0.0"
-  }
+  "keywords": [
+    "boilerplate",
+    "starter",
+    "task-env",
+    "tasks"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "name": "starter-tasks",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/invrs/river.git"
+  },
+  "scripts": {
+    "build":
+      "rimraf dist; babel lib --out-dir dist --source-maps",
+    "fix": "npm run lint -- --fix",
+    "lint": "eslint --ignore-path .gitignore --ext=js .",
+    "prepublishOnly": "npm run build",
+    "pretest": "npm run build",
+    "pretty": "prettier --write **/*.css **/*.json **/*.md",
+    "test": "jest test"
+  },
+  "version": "0.2.0"
 }

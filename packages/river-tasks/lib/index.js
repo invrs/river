@@ -32,12 +32,9 @@ export async function riverTasks(tasks = []) {
 }
 
 export function cwdTasks() {
-  const tasksPath = join(process.cwd(), "tasks")
+  const tasksPath = join(process.cwd(), "riverTasks")
 
-  let tasksPathExists =
-    existsSync(tasksPath) || existsSync(tasksPath + ".js")
-
-  if (tasksPathExists) {
+  if (existsSync(tasksPath + ".js")) {
     return require(tasksPath)
   } else {
     return []
