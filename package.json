@@ -134,5 +134,8 @@
     "printWidth": 60,
     "semi": false,
     "trailingComma": "es5"
+  },
+  "dependencies": {
+    "task-env": "^2.9.0"
   }
 }
