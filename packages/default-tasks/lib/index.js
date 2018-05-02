@@ -2,7 +2,12 @@ import chalk from "chalk"
 
 import { homepage } from "./homepage"
 
-const ignore = ["defaultTask", "setup", "teardown"]
+const ignore = [
+  "defaultTask",
+  "preSetup",
+  "setup",
+  "teardown",
+]
 
 export async function setup(config) {
   config.urls.defaultTask = await homepage()
