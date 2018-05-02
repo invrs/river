@@ -19,7 +19,7 @@ export async function riverTasks(tasks = []) {
 
   return taskEnv({
     args: process.argv.slice(2),
-    setup: [setup],
+    preSetup: [preSetup],
     stores: {
       riverConfig: {
         pattern: "**/*",
@@ -46,7 +46,7 @@ export async function taskUp() {
   }
 }
 
-export async function setup(config, args) {
+export async function preSetup(config, args) {
   let { riverConfig } = args
 
   let storeDir = await riverConfig.get("river.storeDir")
