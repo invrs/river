@@ -9,10 +9,8 @@ const ignore = [
   "teardown",
 ]
 
-export async function setup(config) {
+export async function preSetup(config) {
   config.urls.defaultTask = await homepage()
-
-  return config
 }
 
 export async function defaultTask({ tasks }, { alias }) {

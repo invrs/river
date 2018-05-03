@@ -2,7 +2,7 @@ import { clone } from "./clone"
 import { homepage } from "./homepage"
 import { initGit } from "./initGit"
 
-export async function setup(config) {
+export async function preSetup(config) {
   config.alias.starter = {
     b: ["branch"],
     p: ["path"],
@@ -11,8 +11,6 @@ export async function setup(config) {
   }
 
   config.urls.starter = await homepage()
-
-  return config
 }
 
 export async function starter({

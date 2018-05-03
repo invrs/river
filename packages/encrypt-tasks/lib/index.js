@@ -5,14 +5,11 @@ import { readFile } from "./fs"
 import { homepage } from "./homepage"
 import { init as initFn } from "./init"
 
-export async function setup(config) {
+export async function preSetup(config) {
   config.alias.encrypt = {
     i: ["init"],
   }
-
   config.urls.encrypt = await homepage()
-
-  return config
 }
 
 export async function encrypt({

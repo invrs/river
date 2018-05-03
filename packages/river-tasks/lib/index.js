@@ -59,8 +59,6 @@ export async function preSetup(config, args) {
   } else {
     await setStoreDir(args)
   }
-
-  return config
 }
 
 export async function setStoreDir({ ask, riverConfig }) {
