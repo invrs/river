@@ -14,7 +14,7 @@ const configDir =
   process.env.RIVER_CONFIG_DIR || join(homedir(), ".river")
 
 // Functions
-export async function riverTasks(tasks = []) {
+export async function riverTasks(tasks = [], options = {}) {
   let relativeTasks = await taskUp()
 
   return taskEnv({
@@ -23,7 +23,7 @@ export async function riverTasks(tasks = []) {
     stores: {
       riverConfig: {
         pattern: "**/*",
-        root: configDir,
+        root: options.configDir || configDir,
       },
     },
     tasks: [
