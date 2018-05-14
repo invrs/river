@@ -61,5 +61,5 @@
     "pretty": "prettier --write **/*.css **/*.json **/*.md",
     "test": "jest test"
   },
-  "version": "0.2.3"
+  "version": "0.2.4"
 }
