@@ -9,7 +9,7 @@ require("task-env")({
     },
     riverConfig: {
       pattern: "**/*",
-      root: __dirname 
+      root: __dirname + "/river"
     }
   },
   tasks: [

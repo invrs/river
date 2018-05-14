@@ -4,28 +4,31 @@ import { askForKeys, askForPass } from "./ask"
 import { readFile, writeKeyPath } from "./fs"
 
 export async function init({ ask, config, riverConfig }) {
-  if (await config.get("encryptTasks")) {
-    return
+  const encryptConfig = await config.get("encryptTasks")
+  const riverEncryptConfig = await riverConfig.get(
+    "encryptTasks"
+  )
+
+  if (!riverEncryptConfig || !riverEncryptConfig.keyPath) {
+    let { keyPath } = await askForKeys(ask)
+    keyPath = resolve(keyPath)
+
+    try {
+      await readFile(keyPath, "utf8")
+    } catch (e) {
+      let { password } = await askForPass(ask)
+      await writeKeyPath({ keyPath, password })
+    }
+
+    await riverConfig.set("encryptTasks", {
+      keyPath,
+    })
   }
 
-  let { keyPath } = await askForKeys(ask)
-  keyPath = resolve(keyPath)
-
-  await config.set("encryptTasks", {
-    files: [],
-    ivs: {},
-  })
-
-  await riverConfig.set("encryptTasks", {
-    files: [],
-    ivs: {},
-    keyPath,
-  })
-
-  try {
-    await readFile(keyPath, "utf8")
-  } catch (e) {
-    let { password } = await askForPass(ask)
-    await writeKeyPath({ keyPath, password })
+  if (!encryptConfig) {
+    await config.set("encryptTasks", {
+      files: [],
+      ivs: {},
+    })
   }
 }
