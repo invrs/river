@@ -64,8 +64,8 @@ export async function preSetup(config, args) {
 export async function setStoreDir({ ask, riverConfig }) {
   let { storeDir } = await ask([
     {
-      default: configDir,
-      message: "Where would you like to keep task configs?",
+      message:
+        "Where would you like to keep version controlled configs?",
       name: "storeDir",
       type: "input",
     },
