@@ -19,16 +19,17 @@ export async function encrypt({
   riverConfig,
   type = "encrypt",
 }) {
-  await initFn({ ask, config })
+  await initFn({ ask, config, riverConfig })
 
   if (init) {
     return
   }
 
   let dir = await riverConfig.get("river.storeDir")
+  let localInfo = await riverConfig.get("encryptTasks")
   let info = await config.get("encryptTasks")
 
-  info.key = await readFile(info.keyPath, "utf8")
+  info.key = await readFile(localInfo.keyPath, "utf8")
 
   await crypt({ config, dir, info, type })
 }

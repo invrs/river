@@ -3,7 +3,7 @@ import { resolve } from "path"
 import { askForKeys, askForPass } from "./ask"
 import { readFile, writeKeyPath } from "./fs"
 
-export async function init({ ask, config }) {
+export async function init({ ask, config, riverConfig }) {
   if (await config.get("encryptTasks")) {
     return
   }
@@ -12,6 +12,11 @@ export async function init({ ask, config }) {
   keyPath = resolve(keyPath)
 
   await config.set("encryptTasks", {
+    files: [],
+    ivs: {},
+  })
+
+  await riverConfig.set("encryptTasks", {
     files: [],
     ivs: {},
     keyPath,
