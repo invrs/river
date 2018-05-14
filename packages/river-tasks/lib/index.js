@@ -58,6 +58,7 @@ export async function preSetup(config, args) {
     }
   } else {
     await setStoreDir(args)
+    await preSetup(config, args)
   }
 }
 
@@ -65,7 +66,7 @@ export async function setStoreDir({ ask, riverConfig }) {
   let { storeDir } = await ask([
     {
       message:
-        "Where would you like to keep version controlled configs?",
+        "Where is your version controlled config directory?",
       name: "storeDir",
       type: "input",
     },
