@@ -1,5 +1,5 @@
 #!/usr/bin/env node
 
 require("../../dist")
-  .riverTasks([], { configDir: __dirname + "/river" })
+  .riverTasks([], { riverConfigDir: __dirname + "/river" })
   .catch(console.error)

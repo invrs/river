@@ -9,23 +9,15 @@ import * as defaultTasks from "default-tasks"
 import * as encryptTasks from "encrypt-tasks"
 import * as starterTasks from "starter-tasks"
 
-// Constants
-const configDir =
-  process.env.RIVER_CONFIG_DIR || join(homedir(), ".river")
-
 // Functions
 export async function riverTasks(tasks = [], options = {}) {
-  let relativeTasks = await taskUp()
+  const stores = setupStores(options)
+  const relativeTasks = await taskUp()
 
   return taskEnv({
     args: process.argv.slice(2),
     preSetup: [preSetup],
-    stores: {
-      riverConfig: {
-        pattern: "**/*",
-        root: options.configDir || configDir,
-      },
-    },
+    stores,
     tasks: [
       defaultTasks,
       encryptTasks,
@@ -34,6 +26,39 @@ export async function riverTasks(tasks = [], options = {}) {
       ...tasks,
     ],
   })
+}
+
+export function configDir(options) {
+  return options.configDir || process.env.CONFIG_DIR
+}
+
+export function riverConfigDir(options) {
+  return (
+    options.riverConfigDir ||
+    process.env.RIVER_CONFIG_DIR ||
+    join(homedir(), ".river")
+  )
+}
+
+export function setupStores(options) {
+  const stores = {
+    riverConfig: {
+      pattern: "**/*",
+      root: riverConfigDir(options),
+    },
+  }
+
+  if (configDir(options)) {
+    return {
+      ...stores,
+      config: {
+        pattern: "**/*",
+        root: configDir(options),
+      },
+    }
+  }
+
+  return stores
 }
 
 export async function taskUp() {
@@ -48,6 +73,10 @@ export async function taskUp() {
 
 export async function preSetup(config, args) {
   let { riverConfig } = args
+
+  if (config.stores.config) {
+    return
+  }
 
   let storeDir = await riverConfig.get("river.storeDir")
 
