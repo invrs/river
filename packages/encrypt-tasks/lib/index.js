@@ -1,7 +1,7 @@
 import "./source.maps"
 
 import { crypt } from "./crypt"
-import { readFile } from "./fs"
+import { configDir, readFile } from "./fs"
 import { homepage } from "./homepage"
 import { init as initFn } from "./init"
 
@@ -25,7 +25,7 @@ export async function encrypt({
     return
   }
 
-  let dir = await riverConfig.get("river.storeDir")
+  let dir = await configDir(riverConfig)
   let localInfo = await riverConfig.get("encryptTasks")
   let info = await config.get("encryptTasks")
 
