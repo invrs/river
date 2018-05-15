@@ -74,16 +74,16 @@ export async function taskUp() {
 export async function preSetup(config, args) {
   let { riverConfig } = args
 
-  if (configDir() || config.stores.config) {
+  if (config.stores.config) {
     return
   }
 
   let storeDir = await riverConfig.get("river.storeDir")
 
-  if (storeDir) {
+  if (configDir() || storeDir) {
     config.stores.config = {
       pattern: "**/*",
-      root: storeDir,
+      root: configDir() || storeDir,
     }
   } else {
     await setStoreDir(args)
