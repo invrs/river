@@ -1,6 +1,6 @@
 {
   "name": "river-tasks",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "description": "Do your job, then let go",
   "bin": {
     "river": "./river"
@@ -35,7 +35,7 @@
     "find-up": "^2.1.0",
     "fs-extra": "5",
     "starter-tasks": "^0.2.2",
-    "task-env": "^2.12.0"
+    "task-env": "^2.12.1"
   },
   "devDependencies": {
     "babel-cli": "6",
