@@ -1,6 +1,6 @@
 {
   "name": "river-tasks",
-  "version": "0.7.5",
+  "version": "0.7.6",
   "description": "Do your job, then let go",
   "bin": {
     "river": "./river"
@@ -31,7 +31,7 @@
   "homepage": "https://github.com/invrs/river#readme",
   "dependencies": {
     "default-tasks": "^0.2.4",
-    "encrypt-tasks": "^0.2.4",
+    "encrypt-tasks": "^0.2.5",
     "find-up": "^2.1.0",
     "fs-extra": "5",
     "starter-tasks": "^0.2.2",
