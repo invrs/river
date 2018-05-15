@@ -1,6 +1,6 @@
 {
   "name": "river-tasks",
-  "version": "0.7.4",
+  "version": "0.7.5",
   "description": "Do your job, then let go",
   "bin": {
     "river": "./river"
