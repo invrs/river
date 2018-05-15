@@ -28,11 +28,11 @@ export async function riverTasks(tasks = [], options = {}) {
   })
 }
 
-export function configDir(options) {
+export function configDir(options = {}) {
   return options.configDir || process.env.CONFIG_DIR
 }
 
-export function riverConfigDir(options) {
+export function riverConfigDir(options = {}) {
   return (
     options.riverConfigDir ||
     process.env.RIVER_CONFIG_DIR ||
@@ -74,7 +74,7 @@ export async function taskUp() {
 export async function preSetup(config, args) {
   let { riverConfig } = args
 
-  if (config.stores.config) {
+  if (configDir() || config.stores.config) {
     return
   }
 
