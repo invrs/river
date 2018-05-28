@@ -35,8 +35,7 @@
   "dependencies": {
     "@babel/runtime": "7.0.0-beta.42",
     "deepmerge": "^2.1.0",
-    "fs-extra": "^5.0.0",
-    "rimraf": "2"
+    "fs-extra": "^5.0.0"
   },
   "devDependencies": {
     "@babel/cli": "7.0.0-beta.42",
@@ -48,7 +47,7 @@
     "commandland": "0.1",
     "fxtr": "1",
     "jest": "22",
-    "rimraf": "^2.6.2"
+    "rimraf": "2"
   },
   "jest": {
     "setupFiles": [

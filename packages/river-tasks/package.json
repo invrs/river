@@ -38,7 +38,6 @@
     "find-up": "^2.1.0",
     "fs-extra": "5",
     "lerna-tasks": "^0.8.5",
-    "rimraf": "2",
     "starter-tasks": "^0.8.9",
     "task-env": "^2.14.0"
   },
@@ -52,7 +51,7 @@
     "commandland": "0.1",
     "fxtr": "1",
     "jest": "22",
-    "rimraf": "^2.6.2"
+    "rimraf": "2"
   },
   "jest": {
     "setupFiles": [
