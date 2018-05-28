@@ -1,6 +1,6 @@
 {
   "name": "lerna-tasks",
-  "version": "0.3.0",
+  "version": "0.8.3",
   "description": "River tasks to run lerna commands",
   "main": "dist/index.js",
   "license": "MIT",
@@ -31,21 +31,21 @@
     "watch": "rimraf dist; babel lib --watch --out-dir dist --source-maps"
   },
   "dependencies": {
-    "fs-extra": "^5.0.0",
     "@babel/runtime": "7.0.0-beta.42",
+    "fs-extra": "^5.0.0",
     "rimraf": "2"
   },
   "devDependencies": {
-    "commandland": "0.1",
-    "fxtr": "1",
-    "jest": "22",
-    "rimraf": "^2.6.2",
     "@babel/cli": "7.0.0-beta.42",
     "@babel/core": "7.0.0-beta.42",
     "@babel/plugin-proposal-object-rest-spread": "7.0.0-beta.42",
     "@babel/plugin-transform-runtime": "7.0.0-beta.42",
     "@babel/preset-env": "7.0.0-beta.42",
-    "babel-core": "^7.0.0-bridge.0"
+    "babel-core": "^7.0.0-bridge.0",
+    "commandland": "0.1",
+    "fxtr": "1",
+    "jest": "22",
+    "rimraf": "^2.6.2"
   },
   "jest": {
     "setupFiles": [

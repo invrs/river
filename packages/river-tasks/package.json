@@ -1,6 +1,6 @@
 {
   "name": "river-tasks",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "description": "Do your job, then let go",
   "bin": {
     "river": "./river"
@@ -31,28 +31,28 @@
   },
   "homepage": "https://github.com/invrs/river#readme",
   "dependencies": {
-    "@invrs/npm-tasks": "^0.3.1",
-    "default-tasks": "^0.3.0",
-    "encrypt-tasks": "^0.3.0",
+    "@babel/runtime": "7.0.0-beta.42",
+    "@invrs/npm-tasks": "^0.8.3",
+    "default-tasks": "^0.8.3",
+    "encrypt-tasks": "^0.8.3",
     "find-up": "^2.1.0",
     "fs-extra": "5",
-    "lerna-tasks": "^0.3.0",
-    "starter-tasks": "^0.3.0",
-    "task-env": "^2.13.0",
-    "@babel/runtime": "7.0.0-beta.42",
-    "rimraf": "2"
+    "lerna-tasks": "^0.8.3",
+    "rimraf": "2",
+    "starter-tasks": "^0.8.3",
+    "task-env": "^2.13.0"
   },
   "devDependencies": {
-    "commandland": "0.1",
-    "fxtr": "1",
-    "jest": "22",
-    "rimraf": "^2.6.2",
     "@babel/cli": "7.0.0-beta.42",
     "@babel/core": "7.0.0-beta.42",
     "@babel/plugin-proposal-object-rest-spread": "7.0.0-beta.42",
     "@babel/plugin-transform-runtime": "7.0.0-beta.42",
     "@babel/preset-env": "7.0.0-beta.42",
-    "babel-core": "^7.0.0-bridge.0"
+    "babel-core": "^7.0.0-bridge.0",
+    "commandland": "0.1",
+    "fxtr": "1",
+    "jest": "22",
+    "rimraf": "^2.6.2"
   },
   "jest": {
     "setupFiles": [
