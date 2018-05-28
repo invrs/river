@@ -41,37 +41,41 @@ test("encrypt/decrypt JSON", async () => {
   }
 })
 
-test("encrypt/decrypt files", async () => {
-  let fixture = await fixtures(__dirname)
-  let { read, write } = await runWithInit(fixture, [
-    "encrypt",
-    "--init",
-  ])
+test(
+  "encrypt/decrypt files",
+  async () => {
+    let fixture = await fixtures(__dirname)
+    let { read, write } = await runWithInit(fixture, [
+      "encrypt",
+      "--init",
+    ])
 
-  let config = await read("encryptTasks.json")
-  config.files = ["encrypt.txt"]
+    let config = await read("encryptTasks.json")
+    config.files = ["encrypt.txt"]
 
-  await write("encryptTasks.json", config)
+    await write("encryptTasks.json", config)
 
-  for (let i = 0; i < 2; i++) {
-    await run({ fixture, task: "encrypt" })
+    for (let i = 0; i < 2; i++) {
+      await run({ fixture, task: "encrypt" })
 
-    config = await read("encryptTasks.json")
+      config = await read("encryptTasks.json")
 
-    expect(config.ivs["encrypt.txt"].length).toBe(32)
+      expect(config.ivs["encrypt.txt"].length).toBe(32)
 
-    let encrypt = await read("encrypt.txt")
-    expect(encrypt).not.toBe("Encrypt me!\n")
-  }
+      let encrypt = await read("encrypt.txt")
+      expect(encrypt).not.toBe("Encrypt me!\n")
+    }
 
-  for (let i = 0; i < 2; i++) {
-    await run({ fixture, task: "decrypt" })
+    for (let i = 0; i < 2; i++) {
+      await run({ fixture, task: "decrypt" })
 
-    config = await read("encryptTasks.json")
+      config = await read("encryptTasks.json")
 
-    expect(config.ivs["encrypt.txt"]).toBeUndefined()
+      expect(config.ivs["encrypt.txt"]).toBeUndefined()
 
-    let decrypt = await read("encrypt.txt")
-    expect(decrypt).toBe("Encrypt me!\n")
-  }
-})
+      let decrypt = await read("encrypt.txt")
+      expect(decrypt).toBe("Encrypt me!\n")
+    }
+  },
+  10000
+)

@@ -54,12 +54,16 @@ export async function starter({ cwd }) {
 
         if (extname(targetPath) == ".json") {
           const target = await readJson(targetPath)
+          const dontMerge = (destination, source) => source
           const newTarget = deepMerge(
             target,
-            starters[starter][starterPath]
+            starters[starter][starterPath],
+            { arrayMerge: dontMerge }
           )
 
-          await writeJson(targetPath, newTarget)
+          await writeJson(targetPath, newTarget, {
+            spaces: 2,
+          })
         } else {
           const absStarterPath = join(
             templatesPath,
