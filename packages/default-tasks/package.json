@@ -1,23 +1,38 @@
 {
-  "_id": "default-tasks@0.2.0",
-  "_inBundle": true,
-  "_location": "/river-tasks/default-tasks",
-  "_phantomChildren": {},
-  "_requiredBy": [
-    "/river-tasks"
-  ],
+  "name": "default-tasks",
+  "description": "River default tasks",
+  "version": "0.2.4",
+  "main": "dist/index.js",
+  "license": "MIT",
   "author": {
     "name": "Inverse Labs",
     "email": "labs@inverse.com"
   },
+  "keywords": [
+    "task-env",
+    "tasks"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/invrs/river.git"
+  },
+  "homepage": "https://github.com/invrs/river/tree/master/packages/default-tasks#readme",
   "bugs": {
     "url": "https://github.com/invrs/river/issues"
+  },
+  "scripts": {
+    "build": "rimraf dist; babel lib --out-dir dist --source-maps",
+    "fix": "npm run lint -- --fix",
+    "lint": "eslint --ignore-path .gitignore --ext=js .",
+    "prepublishOnly": "npm run build",
+    "pretest": "npm run build",
+    "pretty": "prettier --write **/*.css **/*.json **/*.md",
+    "test": "jest test"
   },
   "dependencies": {
     "chalk": "^2.4.1",
     "fs-extra": "5"
   },
-  "description": "River default tasks",
   "devDependencies": {
     "babel-cli": "6",
     "babel-core": "^6.26.3",
@@ -30,7 +45,6 @@
     "jest": "22",
     "rimraf": "^2.6.2"
   },
-  "homepage": "https://github.com/invrs/river/tree/master/packages/default-tasks#readme",
   "jest": {
     "setupFiles": [
       "./test/setup.js"
@@ -38,26 +52,5 @@
     "testMatch": [
       "**/*Test.js"
     ]
-  },
-  "keywords": [
-    "task-env",
-    "tasks"
-  ],
-  "license": "MIT",
-  "main": "dist/index.js",
-  "name": "default-tasks",
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/invrs/river.git"
-  },
-  "scripts": {
-    "build": "rimraf dist; babel lib --out-dir dist --source-maps",
-    "fix": "npm run lint -- --fix",
-    "lint": "eslint --ignore-path .gitignore --ext=js .",
-    "prepublishOnly": "npm run build",
-    "pretest": "npm run build",
-    "pretty": "prettier --write **/*.css **/*.json **/*.md",
-    "test": "jest test"
-  },
-  "version": "0.2.4"
+  }
 }

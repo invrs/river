@@ -34,6 +34,8 @@
     "encrypt-tasks": "^0.2.5",
     "find-up": "^2.1.0",
     "fs-extra": "5",
+    "lerna-tasks": "^0.2.2",
+    "npm-tasks": "^0.2.2",
     "starter-tasks": "^0.2.2",
     "task-env": "^2.12.1"
   },

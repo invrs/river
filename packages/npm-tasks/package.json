@@ -1,7 +1,7 @@
 {
-  "name": "starter-tasks",
+  "name": "npm-tasks",
   "version": "0.2.2",
-  "description": "River tasks to start new projects and update old ones",
+  "description": "River tasks to run npm commands",
   "main": "dist/index.js",
   "license": "MIT",
   "author": {
@@ -9,16 +9,14 @@
     "email": "labs@inverse.com"
   },
   "keywords": [
-    "boilerplate",
-    "starter",
-    "task-env",
+    "npm",
     "tasks"
   ],
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/invrs/river.git"
   },
-  "homepage": "https://github.com/invrs/river/tree/master/packages/starter-tasks#readme",
+  "homepage": "https://github.com/invrs/river/tree/master/packages/npm-tasks#readme",
   "bugs": {
     "url": "https://github.com/invrs/river/issues"
   },

@@ -1,53 +1,22 @@
 {
-  "_id": "encrypt-tasks@0.2.0",
-  "_inBundle": true,
-  "_location": "/river-tasks/encrypt-tasks",
-  "_phantomChildren": {},
-  "_requiredBy": [
-    "/river-tasks"
-  ],
+  "name": "encrypt-tasks",
+  "version": "0.2.5",
+  "description": "Task Env tasks to encrypt/decrypt files or JSON values",
+  "license": "MIT",
+  "main": "dist/index.js",
   "author": {
     "name": "Inverse Labs",
     "email": "labs@inverse.com"
-  },
-  "bugs": {
-    "url": "https://github.com/invrs/river/issues"
-  },
-  "dependencies": {
-    "fs-extra": "5",
-    "glob": "7"
-  },
-  "description": "Task Env tasks to encrypt/decrypt files or JSON values",
-  "devDependencies": {
-    "babel-cli": "6",
-    "babel-core": "^6.26.3",
-    "babel-plugin-transform-async-to-generator": "6",
-    "babel-plugin-transform-object-rest-spread": "6",
-    "babel-preset-node6": "11",
-    "commandland": "0.1",
-    "fxtr": "^1.2.0",
-    "jest": "22",
-    "rimraf": "^2.6.2",
-    "source-map-support": "^0.5.5",
-    "task-env": "2"
-  },
-  "homepage": "https://github.com/invrs/river/tree/master/packages/encrypt-tasks#readme",
-  "jest": {
-    "setupFiles": [
-      "./test/setup.js"
-    ],
-    "testMatch": [
-      "**/*Test.js"
-    ]
   },
   "keywords": [
     "task-env",
     "tasks",
     "encrypt"
   ],
-  "license": "MIT",
-  "main": "dist/index.js",
-  "name": "encrypt-tasks",
+  "homepage": "https://github.com/invrs/river/tree/master/packages/encrypt-tasks#readme",
+  "bugs": {
+    "url": "https://github.com/invrs/river/issues"
+  },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/invrs/river.git"
@@ -61,5 +30,29 @@
     "pretty": "prettier --write **/*.css **/*.json **/*.md",
     "test": "jest test"
   },
-  "version": "0.2.5"
+  "dependencies": {
+    "fs-extra": "5",
+    "glob": "7"
+  },
+  "devDependencies": {
+    "babel-cli": "6",
+    "babel-core": "^6.26.3",
+    "babel-plugin-transform-async-to-generator": "6",
+    "babel-plugin-transform-object-rest-spread": "6",
+    "babel-preset-node6": "11",
+    "commandland": "0.1",
+    "fxtr": "^1.2.0",
+    "jest": "22",
+    "rimraf": "^2.6.2",
+    "source-map-support": "^0.5.5",
+    "task-env": "2"
+  },
+  "jest": {
+    "setupFiles": [
+      "./test/setup.js"
+    ],
+    "testMatch": [
+      "**/*Test.js"
+    ]
+  }
 }

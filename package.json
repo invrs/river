@@ -7,7 +7,10 @@
     "type": "git",
     "url": "git+ssh://git@github.com/invrs/river.git"
   },
-  "keywords": ["tasks", "task-env"],
+  "keywords": [
+    "tasks",
+    "task-env"
+  ],
   "author": "Inverse Labs <labs@inverse.com>",
   "license": "MIT",
   "bugs": {
@@ -40,7 +43,9 @@
     "prettier": "^1.12.1"
   },
   "babel": {
-    "presets": ["node6"],
+    "presets": [
+      "node6"
+    ],
     "plugins": [
       "transform-async-to-generator",
       "transform-object-rest-spread"
@@ -74,7 +79,10 @@
           "SwitchCase": 1
         }
       ],
-      "linebreak-style": ["error", "unix"],
+      "linebreak-style": [
+        "error",
+        "unix"
+      ],
       "max-len": [
         "error",
         {
@@ -86,15 +94,24 @@
       "no-console": [
         "error",
         {
-          "allow": ["warn", "error"]
+          "allow": [
+            "warn",
+            "error"
+          ]
         }
       ],
-      "quotes": ["error", "double"],
+      "quotes": [
+        "error",
+        "double"
+      ],
       "react/display-name": "off",
       "react/no-find-dom-node": "off",
       "react/prop-types": "off",
       "react/react-in-jsx-scope": "off",
-      "semi": ["error", "never"],
+      "semi": [
+        "error",
+        "never"
+      ],
       "sort-keys": [
         "error",
         "asc",
@@ -118,13 +135,22 @@
     }
   },
   "jest": {
-    "roots": ["<rootDir>/test/"],
-    "setupFiles": ["./test/setup.js"],
-    "testMatch": ["**/*Test.js"],
+    "roots": [
+      "<rootDir>/test/"
+    ],
+    "setupFiles": [
+      "./test/setup.js"
+    ],
+    "testMatch": [
+      "**/*Test.js"
+    ],
     "verbose": true
   },
   "lint-staged": {
-    "*.{css,json,md}": ["prettier --write", "git add"],
+    "*.{css,json,md}": [
+      "prettier --write",
+      "git add"
+    ],
     "*.js": [
       "eslint --ignore-path .gitignore --fix",
       "git add"
@@ -134,8 +160,5 @@
     "printWidth": 60,
     "semi": false,
     "trailingComma": "es5"
-  },
-  "dependencies": {
-    "task-env": "^2.10.0"
   }
 }
