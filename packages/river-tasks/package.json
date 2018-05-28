@@ -1,6 +1,6 @@
 {
   "name": "river-tasks",
-  "version": "0.8.8",
+  "version": "0.8.9",
   "description": "Do your job, then let go",
   "bin": {
     "river": "./river"
@@ -39,7 +39,7 @@
     "fs-extra": "5",
     "lerna-tasks": "^0.8.5",
     "rimraf": "2",
-    "starter-tasks": "^0.8.8",
+    "starter-tasks": "^0.8.9",
     "task-env": "^2.14.0"
   },
   "devDependencies": {
