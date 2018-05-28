@@ -1,10 +1,4 @@
 {
-  "scripts": {
-    "build": "rimraf dist; babel lib --out-dir dist --source-maps",
-    "prepublishOnly": "npm run build",
-    "pretest": "npm run build",
-    "watch": "rimraf dist; babel lib --watch --out-dir dist --source-maps"
-  },
   "dependencies": {
     "@babel/runtime": "7.0.0-beta.42",
     "rimraf": "2"
@@ -14,7 +8,6 @@
     "@babel/core": "7.0.0-beta.42",
     "@babel/plugin-proposal-object-rest-spread": "7.0.0-beta.42",
     "@babel/plugin-transform-runtime": "7.0.0-beta.42",
-    "@babel/preset-env": "7.0.0-beta.42",
-    "babel-core": "^7.0.0-bridge.0"
+    "@babel/preset-env": "7.0.0-beta.42"
   }
 }

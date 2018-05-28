@@ -27,7 +27,7 @@
     "prepublishOnly": "npm run build",
     "pretest": "npm run build",
     "pretty": "prettier --write **/*.css **/*.json **/*.md",
-    "test": "jest test",
+    "test": "jest",
     "watch": "rimraf dist; babel lib --watch --out-dir dist --source-maps"
   },
   "dependencies": {
@@ -50,15 +50,18 @@
   },
   "jest": {
     "setupFiles": [
-      "./test/setup.js"
+      "<rootDir>/test/setup.js"
     ],
     "testMatch": [
-      "**/*Test.js"
+      "<rootDir>/test/**/*Test.js"
     ]
   },
   "starters": [
+    "basics",
     "babel",
-    "babel-node"
+    "babel-node",
+    "babel-scripts",
+    "jest"
   ],
   "babel": {
     "env": {

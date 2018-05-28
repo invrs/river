@@ -1,41 +1,48 @@
 {
-  "name": "starter-tasks",
-  "version": "0.8.3",
-  "description": "River tasks to start new projects and update old ones",
+  "name": "watchman-tasks",
+  "version": "0.1.0",
+  "description": "River tasks to manage watchman.",
   "main": "dist/index.js",
-  "license": "MIT",
-  "author": {
-    "name": "Inverse Labs",
-    "email": "labs@inverse.com"
-  },
-  "keywords": [
-    "boilerplate",
-    "starter",
-    "task-env",
-    "tasks"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/invrs/river.git"
-  },
-  "homepage": "https://github.com/invrs/river/tree/master/packages/starter-tasks#readme",
-  "bugs": {
-    "url": "https://github.com/invrs/river/issues"
-  },
   "scripts": {
     "build": "rimraf dist; babel lib --out-dir dist --source-maps",
-    "fix": "npm run lint -- --fix",
-    "lint": "eslint --ignore-path .gitignore --ext=js .",
     "prepublishOnly": "npm run build",
     "pretest": "npm run build",
-    "pretty": "prettier --write **/*.css **/*.json **/*.md",
     "test": "jest",
     "watch": "rimraf dist; babel lib --watch --out-dir dist --source-maps"
   },
+  "keywords": [
+    "river",
+    "tasks",
+    "watchman"
+  ],
+  "author": "Winton Welsh <winton@cyclo.ps>",
+  "license": "MIT",
+  "starters": [
+    "basics",
+    "babel",
+    "babel-node",
+    "jest"
+  ],
+  "watchman": {
+    "triggers": {
+      "name": "babel",
+      "expression": [
+        "anyof",
+        [
+          "match",
+          "lib/**/*.js",
+          "wholename"
+        ]
+      ],
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ]
+    }
+  },
   "dependencies": {
     "@babel/runtime": "7.0.0-beta.42",
-    "deepmerge": "^2.1.0",
-    "fs-extra": "^5.0.0",
     "rimraf": "2"
   },
   "devDependencies": {
@@ -45,26 +52,8 @@
     "@babel/plugin-transform-runtime": "7.0.0-beta.42",
     "@babel/preset-env": "7.0.0-beta.42",
     "babel-core": "^7.0.0-bridge.0",
-    "commandland": "0.1",
-    "fxtr": "1",
-    "jest": "22",
-    "rimraf": "^2.6.2"
+    "jest": "22"
   },
-  "jest": {
-    "setupFiles": [
-      "<rootDir>/test/setup.js"
-    ],
-    "testMatch": [
-      "<rootDir>/test/**/*Test.js"
-    ]
-  },
-  "starters": [
-    "basics",
-    "babel",
-    "babel-node",
-    "babel-scripts",
-    "jest"
-  ],
   "babel": {
     "env": {
       "test": {
@@ -93,6 +82,14 @@
     "plugins": [
       "@babel/plugin-proposal-object-rest-spread",
       "@babel/plugin-transform-runtime"
+    ]
+  },
+  "jest": {
+    "setupFiles": [
+      "<rootDir>/test/setup.js"
+    ],
+    "testMatch": [
+      "<rootDir>/test/**/*Test.js"
     ]
   }
 }

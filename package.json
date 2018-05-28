@@ -27,7 +27,8 @@
     "test": "lerna run test"
   },
   "dependencies": {
-    "@babel/runtime": "7.0.0-beta.42"
+    "@babel/runtime": "7.0.0-beta.42",
+    "rimraf": "2"
   },
   "devDependencies": {
     "@babel/cli": "7.0.0-beta.42",
