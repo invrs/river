@@ -35,7 +35,7 @@
     "find-up": "^2.1.0",
     "fs-extra": "5",
     "lerna-tasks": "^0.3.0",
-    "npm-tasks": "^0.3.0",
+    "@invrs/npm-tasks": "^0.3.0",
     "starter-tasks": "^0.3.0",
     "task-env": "^2.12.1"
   },

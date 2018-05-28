@@ -1,5 +1,5 @@
 {
-  "name": "npm-tasks",
+  "name": "@invrs/npm-tasks",
   "version": "0.3.0",
   "description": "River tasks to run npm commands",
   "main": "dist/index.js",

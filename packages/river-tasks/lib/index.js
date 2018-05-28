@@ -8,7 +8,7 @@ import taskEnv from "task-env"
 import * as defaultTasks from "default-tasks"
 import * as encryptTasks from "encrypt-tasks"
 import * as lernaTasks from "lerna-tasks"
-import * as npmTasks from "npm-tasks"
+import * as npmTasks from "@invrs/npm-tasks"
 import * as starterTasks from "starter-tasks"
 
 // Functions
