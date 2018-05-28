@@ -40,7 +40,7 @@
     "lerna-tasks": "^0.8.3",
     "rimraf": "2",
     "starter-tasks": "^0.8.3",
-    "task-env": "^2.13.0"
+    "task-env": "^2.14.0"
   },
   "devDependencies": {
     "@babel/cli": "7.0.0-beta.42",
