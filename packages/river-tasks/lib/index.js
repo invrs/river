@@ -1,6 +1,6 @@
 // Packages
 import { homedir } from "os"
-import { join } from "path"
+import { dirname, join } from "path"
 
 import findUp from "find-up"
 import taskEnv from "task-env"
@@ -66,11 +66,13 @@ export function riverConfigDir(options = {}) {
 }
 
 export async function relativeTasks() {
-  const cwd = await findUp("riverTasks.js")
+  const riverTasks = await findUp("riverTasks.js")
 
-  if (cwd) {
-    const tasks = require(cwd)
-    return { cwd, tasks }
+  if (riverTasks) {
+    return {
+      cwd: dirname(riverTasks),
+      tasks: require(riverTasks),
+    }
   } else {
     return { tasks: [] }
   }
