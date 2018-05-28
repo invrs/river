@@ -37,7 +37,7 @@
     "fs-extra": "5",
     "lerna-tasks": "^0.3.0",
     "starter-tasks": "^0.3.0",
-    "task-env": "^2.12.1"
+    "task-env": "^2.13.0"
   },
   "devDependencies": {
     "babel-cli": "6",

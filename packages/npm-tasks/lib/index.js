@@ -8,20 +8,6 @@ import glob from "glob"
 // Helpers
 import { homepage } from "./homepage"
 
-async function eachPackage(cwd, fn) {
-  const pkgPath = `${cwd}/packages`
-  const pkgGlob = `${pkgPath}/*/package.json`
-  const paths = await promisify(glob)(pkgGlob)
-
-  for (const path of paths) {
-    const cwd = dirname(path)
-    const base = basename(cwd)
-    const pkg = await readJson(path)
-
-    await fn({ base, cwd, path, pkg })
-  }
-}
-
 // Tasks
 export async function preSetup(config) {
   config.alias.npm = {
@@ -57,6 +43,20 @@ export async function npm(options) {
 }
 
 // Helpers
+async function eachPackage(cwd, fn) {
+  const pkgPath = `${cwd}/packages`
+  const pkgGlob = `${pkgPath}/*/package.json`
+  const paths = await promisify(glob)(pkgGlob)
+
+  for (const path of paths) {
+    const cwd = dirname(path)
+    const base = basename(cwd)
+    const pkg = await readJson(path)
+
+    await fn({ base, cwd, path, pkg })
+  }
+}
+
 async function npmClean({ cwd, run }) {
   const rm = [
     "rm",

@@ -29,9 +29,11 @@
     "prepublishOnly": "npm run build",
     "pretest": "npm run build",
     "pretty": "prettier --write **/*.css **/*.json **/*.md",
-    "test": "jest test"
+    "test": "jest test",
+    "watch": "rimraf dist; babel lib --watch --out-dir dist --source-maps"
   },
   "dependencies": {
+    "deepmerge": "^2.1.0",
     "fs-extra": "^5.0.0"
   },
   "devDependencies": {
@@ -53,5 +55,9 @@
     "testMatch": [
       "**/*Test.js"
     ]
-  }
+  },
+  "starters": [
+    "babel",
+    "babel-node"
+  ]
 }
