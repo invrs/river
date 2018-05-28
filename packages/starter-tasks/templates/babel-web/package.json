@@ -1,24 +1,5 @@
 {
   "babel": {
-    "env": {
-      "test": {
-        "presets": [
-          [
-            "@babel/preset-env",
-            {
-              "targets": {
-                "browsers": [
-                  "> 0.5%",
-                  "last 2 versions",
-                  "Firefox ESR",
-                  "not dead"
-                ]
-              }
-            }
-          ]
-        ]
-      }
-    },
     "presets": [
       [
         "@babel/preset-env",
