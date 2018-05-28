@@ -1,6 +1,6 @@
 {
   "name": "river-tasks",
-  "version": "0.8.9",
+  "version": "0.8.10",
   "description": "Do your job, then let go",
   "bin": {
     "river": "./river"
@@ -32,13 +32,13 @@
   "homepage": "https://github.com/invrs/river#readme",
   "dependencies": {
     "@babel/runtime": "7.0.0-beta.42",
-    "@invrs/npm-tasks": "^0.8.5",
-    "default-tasks": "^0.8.5",
-    "encrypt-tasks": "^0.8.5",
+    "@invrs/npm-tasks": "^0.8.10",
+    "default-tasks": "^0.8.10",
+    "encrypt-tasks": "^0.8.10",
     "find-up": "^2.1.0",
     "fs-extra": "5",
-    "lerna-tasks": "^0.8.5",
-    "starter-tasks": "^0.8.9",
+    "lerna-tasks": "^0.8.10",
+    "starter-tasks": "^0.8.10",
     "task-env": "^2.14.0"
   },
   "devDependencies": {
