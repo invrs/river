@@ -1,6 +1,6 @@
 {
   "name": "npm-tasks",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "River tasks to run npm commands",
   "main": "dist/index.js",
   "license": "MIT",
