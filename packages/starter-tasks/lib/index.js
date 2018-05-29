@@ -121,7 +121,7 @@ async function mergeStarters({ dirPath, pkg }) {
       const clean = isCleanInstall(starter, starterPath)
 
       if (clean && exists) {
-        return
+        continue
       }
 
       if (extname(targetPath) == ".json" && exists) {
