@@ -48,7 +48,8 @@
     "commandland": "0.1",
     "fxtr": "1",
     "jest": "22",
-    "rimraf": "2"
+    "rimraf": "2",
+    "prettier": "^1.13.0"
   },
   "jest": {
     "setupFiles": [
@@ -79,8 +80,28 @@
     "babel",
     "babel-node",
     "babel-scripts",
-    "eslint",
     "jest",
-    "jest-scripts"
-  ]
+    "jest-scripts",
+    "watchman-babel"
+  ],
+  "watchman": {
+    "triggers": [
+      {
+        "name": "babel",
+        "expression": [
+          "anyof",
+          [
+            "match",
+            "lib/**/*.js",
+            "wholename"
+          ]
+        ],
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ]
+      }
+    ]
+  }
 }

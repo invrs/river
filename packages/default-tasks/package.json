@@ -55,14 +55,6 @@
       "<rootDir>/test/**/*Test.js"
     ]
   },
-  "starters": [
-    "basics",
-    "babel",
-    "babel-node",
-    "babel-scripts",
-    "jest",
-    "jest-scripts"
-  ],
   "babel": {
     "presets": [
       [
@@ -77,6 +69,35 @@
     "plugins": [
       "@babel/plugin-proposal-object-rest-spread",
       "@babel/plugin-transform-runtime"
+    ]
+  },
+  "starters": [
+    "basics",
+    "babel",
+    "babel-node",
+    "babel-scripts",
+    "jest",
+    "jest-scripts",
+    "watchman-babel"
+  ],
+  "watchman": {
+    "triggers": [
+      {
+        "name": "babel",
+        "expression": [
+          "anyof",
+          [
+            "match",
+            "lib/**/*.js",
+            "wholename"
+          ]
+        ],
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ]
+      }
     ]
   }
 }

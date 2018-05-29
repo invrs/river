@@ -50,7 +50,9 @@ export async function starter({ cwd, only }) {
 
     for (const starter of pkg.starters) {
       for (const starterPath in starters[starter]) {
-        const targetPath = join(dirPath, starterPath)
+        const targetPath = convertTargetPath(
+          join(dirPath, starterPath)
+        )
         const exists = await pathExists(targetPath)
         const clean = isCleanInstall(starter, starterPath)
 
@@ -78,10 +80,7 @@ export async function starter({ cwd, only }) {
           )
 
           await ensureDir(dirname(targetPath))
-          await copy(
-            absStarterPath,
-            convertTargetPath(targetPath)
-          )
+          await copy(absStarterPath, targetPath)
         }
 
         // eslint-disable-next-line no-console
