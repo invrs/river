@@ -122,8 +122,8 @@ async function buildStarters() {
 
 function convertTargetPath(targetPath) {
   return targetPath
-    .replace(/\/gitignore$/, ".gitignore")
-    .replace(/\/npmignore$/, ".npmignore")
+    .replace(/\/gitignore$/, "/.gitignore")
+    .replace(/\/npmignore$/, "/.npmignore")
 }
 
 function isCleanInstall(starter, starterPath) {
