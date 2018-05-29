@@ -1,3 +1,4 @@
+import { dirname } from "path"
 import { promisify } from "util"
 
 // Packages
@@ -16,7 +17,7 @@ export async function preSetup(config) {
   config.urls.watchman = await homepage()
 }
 
-export async function watchman({ cwd, only }) {
+export async function watchman({ cwd, only, run }) {
   const globStr =
     cwd +
     (only
@@ -26,13 +27,24 @@ export async function watchman({ cwd, only }) {
   const paths = await promisify(glob)(globStr)
 
   for (const path of paths) {
-    const pkg = await readJson(path)
-    // const dirPath = dirname(path)
+    const { watchman } = await readJson(path)
 
-    if (!pkg.watchman) {
+    if (!watchman) {
       continue
     }
 
-    // console.log(pkg.watchman)
+    const { triggers } = watchman
+    const dirPath = dirname(path)
+
+    for (const trigger of triggers) {
+      const payload = ["trigger", dirPath, trigger]
+
+      await run("sh", [
+        "-c",
+        `watchman  -j <<-EOT\n${JSON.stringify(
+          payload
+        )}\nEOT`,
+      ])
+    }
   }
 }

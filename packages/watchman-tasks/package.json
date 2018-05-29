@@ -63,21 +63,23 @@
     "jest-scripts"
   ],
   "watchman": {
-    "triggers": {
-      "name": "babel",
-      "expression": [
-        "anyof",
-        [
-          "match",
-          "lib/**/*.js",
-          "wholename"
+    "triggers": [
+      {
+        "name": "babel",
+        "expression": [
+          "anyof",
+          [
+            "match",
+            "lib/**/*.js",
+            "wholename"
+          ]
+        ],
+        "command": [
+          "npm",
+          "run",
+          "build"
         ]
-      ],
-      "command": [
-        "npm",
-        "run",
-        "build"
-      ]
-    }
+      }
+    ]
   }
 }
