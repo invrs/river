@@ -1,6 +1,6 @@
 {
   "name": "river-tasks",
-  "version": "0.8.10",
+  "version": "0.8.11",
   "description": "Do your job, then let go",
   "bin": {
     "river": "./river"
@@ -34,7 +34,7 @@
     "@babel/runtime": "7.0.0-beta.42",
     "@invrs/npm-tasks": "^0.8.10",
     "default-tasks": "^0.8.10",
-    "encrypt-tasks": "^0.8.10",
+    "encrypt-tasks": "^0.8.11",
     "find-up": "^2.1.0",
     "fs-extra": "5",
     "lerna-tasks": "^0.8.10",
