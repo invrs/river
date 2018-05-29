@@ -23,15 +23,14 @@ const cleanInstall = ["basics", "jest/test"]
 // Tasks
 export async function preSetup(config) {
   config.alias.starter = {
+    a: ["add"],
     o: ["only"],
   }
 
   config.urls.starter = await homepage()
 }
 
-export async function starter({ cwd, only }) {
-  const starters = await buildStarters()
-
+export async function starter({ add, cwd, only }) {
   const globStr =
     cwd +
     (only
@@ -44,53 +43,24 @@ export async function starter({ cwd, only }) {
     const pkg = await readJson(path)
     const dirPath = dirname(path)
 
-    if (!pkg.starters) {
-      continue
-    }
-
-    for (const starter of pkg.starters) {
-      for (const starterPath in starters[starter]) {
-        const targetPath = convertTargetPath(
-          join(dirPath, starterPath)
-        )
-        const exists = await pathExists(targetPath)
-        const clean = isCleanInstall(starter, starterPath)
-
-        if (clean && exists) {
-          continue
-        }
-
-        if (extname(targetPath) == ".json" && exists) {
-          const target = await readJson(targetPath)
-          const dontMerge = (_, source) => source
-          const newTarget = deepMerge(
-            target,
-            starters[starter][starterPath],
-            { arrayMerge: dontMerge }
-          )
-
-          await writeJson(targetPath, newTarget, {
-            spaces: 2,
-          })
-        } else {
-          const absStarterPath = join(
-            templatesPath,
-            starter,
-            starterPath
-          )
-
-          await ensureDir(dirname(targetPath))
-          await copy(absStarterPath, targetPath)
-        }
-
-        // eslint-disable-next-line no-console
-        console.log(`${starter} -> ${targetPath}`)
-      }
+    if (add) {
+      await addStarter({ add, path, pkg })
+    } else {
+      await mergeStarters({ dirPath, pkg })
     }
   }
 }
 
 // Helpers
+async function addStarter({ add, path, pkg }) {
+  const { starters = [] } = pkg
+
+  if (starters.indexOf(add) == -1) {
+    pkg.starters = [add, ...starters].sort()
+    await writeJson(path, pkg, { spaces: 2 })
+  }
+}
+
 async function buildStarters() {
   const paths = await promisify(glob)(
     templatesPath + "/**/*",
@@ -131,6 +101,54 @@ function isCleanInstall(starter, starterPath) {
   for (const clean of cleanInstall) {
     if (clean == path.slice(0, clean.length)) {
       return true
+    }
+  }
+}
+
+async function mergeStarters({ dirPath, pkg }) {
+  if (!pkg.starters) {
+    return
+  }
+
+  const starters = await buildStarters()
+
+  for (const starter of pkg.starters) {
+    for (const starterPath in starters[starter]) {
+      const targetPath = convertTargetPath(
+        join(dirPath, starterPath)
+      )
+      const exists = await pathExists(targetPath)
+      const clean = isCleanInstall(starter, starterPath)
+
+      if (clean && exists) {
+        return
+      }
+
+      if (extname(targetPath) == ".json" && exists) {
+        const target = await readJson(targetPath)
+        const dontMerge = (_, source) => source
+        const newTarget = deepMerge(
+          target,
+          starters[starter][starterPath],
+          { arrayMerge: dontMerge }
+        )
+
+        await writeJson(targetPath, newTarget, {
+          spaces: 2,
+        })
+      } else {
+        const absStarterPath = join(
+          templatesPath,
+          starter,
+          starterPath
+        )
+
+        await ensureDir(dirname(targetPath))
+        await copy(absStarterPath, targetPath)
+      }
+
+      // eslint-disable-next-line no-console
+      console.log(`${starter} -> ${targetPath}`)
     }
   }
 }

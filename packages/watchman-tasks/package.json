@@ -56,12 +56,13 @@
     ]
   },
   "starters": [
-    "basics",
     "babel",
     "babel-node",
     "babel-scripts",
+    "basics",
     "jest",
-    "jest-scripts"
+    "jest-scripts",
+    "watchman-babel"
   ],
   "watchman": {
     "triggers": [
