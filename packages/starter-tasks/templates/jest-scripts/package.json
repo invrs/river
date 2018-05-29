@@ -1,6 +1,5 @@
 {
   "scripts": {
-    "pretest": "npm run build",
     "test": "jest"
   }
 }
