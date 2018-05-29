@@ -1,6 +1,6 @@
 {
   "name": "lerna-tasks",
-  "version": "0.8.13",
+  "version": "0.8.17",
   "description": "River tasks to run lerna commands",
   "main": "dist/index.js",
   "license": "MIT",

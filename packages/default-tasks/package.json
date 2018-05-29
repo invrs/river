@@ -1,7 +1,7 @@
 {
   "name": "default-tasks",
   "description": "River default tasks",
-  "version": "0.8.13",
+  "version": "0.8.17",
   "main": "dist/index.js",
   "license": "MIT",
   "author": {
