@@ -44,8 +44,6 @@ export async function starter({ cwd, only }) {
     const pkg = await readJson(path)
     const dirPath = dirname(path)
 
-    // console.log(path, pkg.starters)
-
     if (!pkg.starters) {
       continue
     }
@@ -80,7 +78,10 @@ export async function starter({ cwd, only }) {
           )
 
           await ensureDir(dirname(targetPath))
-          await copy(absStarterPath, targetPath)
+          await copy(
+            absStarterPath,
+            convertTargetPath(targetPath)
+          )
         }
 
         // eslint-disable-next-line no-console
@@ -117,6 +118,12 @@ async function buildStarters() {
   }
 
   return starters
+}
+
+function convertTargetPath(targetPath) {
+  return targetPath
+    .replace(/\/gitignore$/, ".gitignore")
+    .replace(/\/npmignore$/, ".npmignore")
 }
 
 function isCleanInstall(starter, starterPath) {

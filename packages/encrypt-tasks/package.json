@@ -67,20 +67,6 @@
     "jest-scripts"
   ],
   "babel": {
-    "env": {
-      "test": {
-        "presets": [
-          [
-            "@babel/preset-env",
-            {
-              "targets": {
-                "node": "6.14"
-              }
-            }
-          ]
-        ]
-      }
-    },
     "presets": [
       [
         "@babel/preset-env",

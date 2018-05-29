@@ -10,6 +10,7 @@ import * as encryptTasks from "encrypt-tasks"
 import * as lernaTasks from "lerna-tasks"
 import * as npmTasks from "@invrs/npm-tasks"
 import * as starterTasks from "starter-tasks"
+import * as watchmanTasks from "watchman-tasks"
 
 // Functions
 export async function riverTasks(tasks = [], options = {}) {
@@ -27,6 +28,7 @@ export async function riverTasks(tasks = [], options = {}) {
       lernaTasks,
       npmTasks,
       starterTasks,
+      watchmanTasks,
       ...relative.tasks,
       ...tasks,
     ],
