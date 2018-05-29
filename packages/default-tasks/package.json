@@ -60,7 +60,8 @@
     "babel",
     "babel-node",
     "babel-scripts",
-    "jest"
+    "jest",
+    "jest-scripts"
   ],
   "babel": {
     "env": {

@@ -21,7 +21,9 @@
     "basics",
     "babel",
     "babel-node",
-    "jest"
+    "babel-scripts",
+    "jest",
+    "jest-scripts"
   ],
   "watchman": {
     "triggers": {
