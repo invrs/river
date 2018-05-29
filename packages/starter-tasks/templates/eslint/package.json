@@ -5,6 +5,7 @@
     "pretty": "prettier --write **/*.css **/*.json **/*.md"
   },
   "devDependencies": {
+    "babel-eslint": "^8.2.3",
     "eslint": "4",
     "eslint-config-prettier": "2",
     "eslint-plugin-prettier": "2",

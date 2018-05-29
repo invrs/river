@@ -79,6 +79,7 @@
     "babel",
     "babel-node",
     "babel-scripts",
+    "eslint",
     "jest",
     "jest-scripts"
   ]
