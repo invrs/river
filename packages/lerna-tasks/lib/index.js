@@ -6,6 +6,7 @@ export async function preSetup(config) {
     b: ["build"],
     e: ["env"],
     f: ["force"],
+    o: ["only"],
     p: ["publish"],
     v: ["version"],
   }
@@ -14,7 +15,13 @@ export async function preSetup(config) {
 }
 
 export async function lerna(options) {
-  const { bootstrap, build, ignore, publish } = options
+  const {
+    bootstrap,
+    build,
+    ignore,
+    only,
+    publish,
+  } = options
 
   options.args = []
 
@@ -22,6 +29,15 @@ export async function lerna(options) {
     for (let project of ignore) {
       options.args = options.args.concat([
         "--ignore",
+        project,
+      ])
+    }
+  }
+
+  if (only) {
+    for (let project of only) {
+      options.args = options.args.concat([
+        "--scope",
         project,
       ])
     }
