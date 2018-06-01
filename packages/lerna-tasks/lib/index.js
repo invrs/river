@@ -25,23 +25,8 @@ export async function lerna(options) {
 
   options.args = []
 
-  if (ignore) {
-    for (let project of ignore) {
-      options.args = options.args.concat([
-        "--ignore",
-        project,
-      ])
-    }
-  }
-
-  if (only) {
-    for (let project of only) {
-      options.args = options.args.concat([
-        "--scope",
-        project,
-      ])
-    }
-  }
+  buildArgs("ignore", ignore, options)
+  buildArgs("scope", only, options)
 
   if (bootstrap || (!build && !publish)) {
     await lernaBootstrap(options)
@@ -57,6 +42,19 @@ export async function lerna(options) {
 }
 
 // Helpers
+function buildArgs(option, value, options) {
+  if (value) {
+    value = Array.isArray(value) ? value : [value]
+
+    for (let project of value) {
+      options.args = options.args.concat([
+        `--${option}`,
+        project,
+      ])
+    }
+  }
+}
+
 async function lernaBootstrap({ cwd, run }) {
   await run("npx", ["lerna", "bootstrap"], { cwd })
 }
