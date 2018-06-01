@@ -1,6 +1,6 @@
 {
   "name": "starter-tasks",
-  "version": "0.8.18",
+  "version": "0.8.19",
   "description": "River tasks to start new projects and update old ones",
   "main": "dist/index.js",
   "license": "MIT",
