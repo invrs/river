@@ -48,6 +48,7 @@ function buildArgs(option, value, options) {
 
     for (let project of value) {
       options.args = options.args.concat([
+        "--include-filtered-dependencies",
         `--${option}`,
         project,
       ])

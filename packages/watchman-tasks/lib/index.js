@@ -12,12 +12,13 @@ import { homepage } from "./homepage"
 export async function preSetup(config) {
   config.alias.watchman = {
     o: ["only"],
+    r: ["remove"],
   }
 
   config.urls.watchman = await homepage()
 }
 
-export async function watchman({ cwd, only, run }) {
+export async function watchman({ cwd, only, remove, run }) {
   const globStr =
     cwd +
     (only
@@ -37,14 +38,22 @@ export async function watchman({ cwd, only, run }) {
     const dirPath = dirname(path)
 
     for (const trigger of triggers) {
-      const payload = ["trigger", dirPath, trigger]
+      if (remove) {
+        await run("watchman", [
+          "trigger-del",
+          dirPath,
+          trigger.name,
+        ])
+      } else {
+        const payload = ["trigger", dirPath, trigger]
 
-      await run("sh", [
-        "-c",
-        `watchman  -j <<-EOT\n${JSON.stringify(
-          payload
-        )}\nEOT`,
-      ])
+        await run("sh", [
+          "-c",
+          `watchman  -j <<-EOT\n${JSON.stringify(
+            payload
+          )}\nEOT`,
+        ])
+      }
     }
   }
 }
