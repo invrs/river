@@ -1,6 +1,6 @@
 {
   "name": "river-tasks",
-  "version": "0.8.21",
+  "version": "0.8.22",
   "description": "Do your job, then let go",
   "bin": {
     "river": "./river"
@@ -36,10 +36,10 @@
     "encrypt-tasks": "^0.8.19",
     "find-up": "^2.1.0",
     "fs-extra": "5",
-    "lerna-tasks": "^0.8.20",
+    "lerna-tasks": "^0.8.22",
     "starter-tasks": "^0.8.19",
     "task-env": "^2.14.1",
-    "watchman-tasks": "^0.8.19"
+    "watchman-tasks": "^0.8.22"
   },
   "devDependencies": {
     "@babel/cli": "7.0.0-beta.42",
