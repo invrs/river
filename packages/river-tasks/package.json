@@ -37,6 +37,7 @@
     "find-up": "^2.1.0",
     "fs-extra": "5",
     "lerna-tasks": "^0.8.22",
+    "link-tasks": "^0.8.22",
     "starter-tasks": "^0.8.19",
     "task-env": "^2.14.1",
     "watchman-tasks": "^0.8.22"

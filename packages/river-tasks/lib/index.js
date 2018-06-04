@@ -8,6 +8,7 @@ import taskEnv from "task-env"
 import * as defaultTasks from "default-tasks"
 import * as encryptTasks from "encrypt-tasks"
 import * as lernaTasks from "lerna-tasks"
+import * as linkTasks from "link-tasks"
 import * as npmTasks from "@invrs/npm-tasks"
 import * as starterTasks from "starter-tasks"
 import * as watchmanTasks from "watchman-tasks"
@@ -26,6 +27,7 @@ export async function riverTasks(tasks = [], options = {}) {
       defaultTasks,
       encryptTasks,
       lernaTasks,
+      linkTasks,
       npmTasks,
       starterTasks,
       watchmanTasks,

@@ -1,0 +1,55 @@
+import { join } from "path"
+import { promisify } from "util"
+
+// Packages
+import glob from "glob"
+import {
+  ensureSymlink,
+  pathExists,
+  readJson,
+  remove,
+} from "fs-extra"
+
+// Helpers
+import { homepage } from "./homepage"
+
+// Tasks
+export async function preSetup(config) {
+  config.alias.link = {
+    o: ["only"],
+  }
+
+  config.urls.link = await homepage()
+}
+
+export async function link({ cwd, only }) {
+  const globStr =
+    cwd +
+    (only
+      ? `/packages/${only}/node_modules`
+      : "{/packages/*,}/node_modules")
+
+  const paths = await promisify(glob)(globStr)
+  const { links } = await readJson(`${cwd}/package.json`)
+
+  for (const path of paths) {
+    for (const link in links) {
+      if (only && link != only) {
+        continue
+      }
+
+      const pkgDist = join(path, link, "dist")
+      const exists = await pathExists(pkgDist)
+
+      if (exists) {
+        const linkTo = join(cwd, links[link], "dist")
+
+        await remove(pkgDist)
+        await ensureSymlink(linkTo, pkgDist)
+
+        // eslint-disable-next-line no-console
+        console.log(linkTo, "—>", pkgDist)
+      }
+    }
+  }
+}

@@ -1,7 +1,7 @@
 {
-  "name": "watchman-tasks",
+  "name": "link-tasks",
   "version": "0.8.22",
-  "description": "River tasks to manage watchman.",
+  "description": "River tasks to symlink packages",
   "main": "dist/index.js",
   "scripts": {
     "build": "rimraf dist; babel lib --out-dir dist --source-maps",
@@ -12,7 +12,7 @@
   "keywords": [
     "river",
     "tasks",
-    "watchman"
+    "symlink"
   ],
   "author": "Inverse Labs <labs@inverse.com>",
   "license": "MIT",
