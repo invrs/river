@@ -1,6 +1,6 @@
 {
   "name": "river-tasks",
-  "version": "0.8.23",
+  "version": "0.8.24",
   "description": "Do your job, then let go",
   "bin": {
     "river": "./river"
@@ -38,7 +38,7 @@
     "fs-extra": "5",
     "lerna-tasks": "^0.8.22",
     "link-tasks": "^0.8.23",
-    "starter-tasks": "^0.8.23",
+    "starter-tasks": "^0.8.24",
     "task-env": "^2.14.1",
     "watchman-tasks": "^0.8.23"
   },
