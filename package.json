@@ -145,7 +145,7 @@
     "verbose": true
   },
   "links": {
-    "dot-prop-immutable": "../dot-store/packages/dot-prop-immutable",
+    "@invrs/dot-prop-immutable": "../dot-store/packages/dot-prop-immutable",
     "dot-store": "../dot-store/packages/dot-store-core",
     "dot-store-fs": "../dot-store/packages/dot-store-fs",
     "dot-store-iframe": "../dot-store/packages/dot-store-iframe",
