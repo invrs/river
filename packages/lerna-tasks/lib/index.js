@@ -72,10 +72,10 @@ async function lernaPublish({
   env,
   force,
   run,
-  version = "minor",
+  version = "patch",
 }) {
-  if (env != "production") {
-    version = "patch"
+  if (env == "production") {
+    version = "minor"
   }
 
   force = force ? ["--force-publish", force] : []

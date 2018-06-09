@@ -15,6 +15,8 @@ export async function preSetup(config) {
     g: ["globally"],
     i: ["install"],
     l: ["list"],
+    p: ["publish"],
+    s: ["skipLerna"],
     u: ["update"],
     v: ["version"],
   }
@@ -23,7 +25,7 @@ export async function preSetup(config) {
 }
 
 export async function npm(options) {
-  const { clean, install, list, update } = options
+  const { clean, install, list, publish, update } = options
 
   if (clean) {
     await npmClean(options)
@@ -35,6 +37,10 @@ export async function npm(options) {
 
   if (list) {
     await npmList(options)
+  }
+
+  if (publish) {
+    await npmPublish(options)
   }
 
   if (update) {
@@ -112,8 +118,35 @@ async function npmList(options) {
   console.log("")
 }
 
+export async function npmPublish({
+  cwd,
+  env,
+  run,
+  version = "patch",
+}) {
+  if (env == "production") {
+    version = "minor"
+  }
+
+  const { code } = await run("npm", ["version", version], {
+    cwd,
+  })
+
+  if (code !== 0) {
+    return
+  }
+
+  await run("npm", ["publish"], { cwd })
+}
+
 async function npmUpdate(options) {
-  const { cwd, tasks, update, version = "latest" } = options
+  const {
+    cwd,
+    skipLerna,
+    tasks,
+    update,
+    version = "latest",
+  } = options
 
   await eachPackage(cwd, async ({ cwd, pkg }) => {
     const dep = pkg.dependencies[update]
@@ -129,5 +162,7 @@ async function npmUpdate(options) {
     }
   })
 
-  await tasks.lerna({ bootstrap: true })
+  if (!skipLerna) {
+    await tasks.lerna({ bootstrap: true })
+  }
 }

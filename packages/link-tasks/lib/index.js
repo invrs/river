@@ -17,12 +17,13 @@ import { homepage } from "./homepage"
 export async function preSetup(config) {
   config.alias.link = {
     o: ["only"],
+    u: ["update"],
   }
 
   config.urls.link = await homepage()
 }
 
-export async function link({ cwd, only }) {
+export async function link({ cwd, only, tasks, update }) {
   const globStr =
     cwd +
     (only
@@ -51,5 +52,23 @@ export async function link({ cwd, only }) {
         console.log(linkTo, "—>", pkgDist)
       }
     }
+  }
+
+  if (update) {
+    for (const link in links) {
+      const path = join(cwd, links[link], "package.json")
+      const exists = await pathExists(path)
+
+      if (exists) {
+        const pkg = await readJson(path)
+        tasks.npm({
+          skipLerna: true,
+          update: link,
+          version: pkg.version,
+        })
+      }
+    }
+
+    await tasks.lerna({ bootstrap: true })
   }
 }
