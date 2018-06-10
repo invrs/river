@@ -1,6 +1,6 @@
 {
   "name": "watchman-tasks",
-  "version": "0.8.23",
+  "version": "0.8.25",
   "description": "River tasks to manage watchman.",
   "main": "dist/index.js",
   "scripts": {
