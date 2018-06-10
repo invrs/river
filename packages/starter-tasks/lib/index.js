@@ -68,6 +68,7 @@ async function askStarter({ ask, cwd }) {
   const choices = Object.keys(projectTypes)
   const paths = await promisify(glob)(templatesPath + "/*")
   const templates = paths.map(path => basename(path))
+
   const { name, starters } = await ask([
     {
       choices,
@@ -95,25 +96,15 @@ async function askStarter({ ask, cwd }) {
   ])
 
   const lerna = await pathExists(join(cwd, "packages"))
-  const dirPath = join(
-    cwd,
-    lerna ? `packages/${name}` : name
-  )
+  const prefixPath = lerna ? `packages/${name}` : name
+  const dirPath = join(cwd, prefixPath)
   const pkgPath = join(dirPath, "package.json")
-  await ensureFile(pkgPath)
+  const pkg = await writePackage({
+    name,
+    pkgPath,
+    starters,
+  })
 
-  let pkg
-
-  try {
-    pkg = await readJson(pkgPath)
-  } catch (e) {
-    pkg = {}
-  }
-
-  pkg.name = name
-  pkg.starters = starters
-
-  await writeJson(pkgPath, pkg)
   await mergeStarters({ dirPath, pkg })
 }
 
@@ -223,4 +214,17 @@ async function mergeStarters({ dirPath, pkg }) {
       console.log(`${starter} -> ${targetPath}`)
     }
   }
+}
+
+async function writePackage({ name, pkgPath, starters }) {
+  const exists = await pathExists(pkgPath)
+  await ensureFile(pkgPath)
+  const pkg = exists ? await readJson(pkgPath) : {}
+
+  pkg.name = name
+  pkg.starters = starters
+
+  await writeJson(pkgPath, pkg)
+
+  return pkg
 }
