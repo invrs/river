@@ -21,6 +21,7 @@
     "build": "lerna run build",
     "bootstrap": "lerna bootstrap",
     "fix": "npm run lint -- --fix",
+    "link": "ln -s $PWD/packages/river-tasks/river /usr/local/bin/river",
     "lint": "eslint --ignore-path .gitignore --ext=js .",
     "pretty": "prettier --write **/*.css **/*.json **/*.md",
     "publish": "lerna publish",
