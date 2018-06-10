@@ -128,6 +128,13 @@ export async function npmPublish({
     version = "minor"
   }
 
+  const { out } = await run("git", ["describe"], { cwd })
+  const publishRegex = /v\d+\.\d+\.\d+-\d+-[\w\d]+/m
+
+  if (!out.match(publishRegex)) {
+    return
+  }
+
   const { code } = await run("npm", ["version", version], {
     cwd,
   })
