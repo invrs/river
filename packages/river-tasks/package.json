@@ -1,6 +1,6 @@
 {
   "name": "river-tasks",
-  "version": "0.8.25",
+  "version": "0.8.26",
   "description": "Do your job, then let go",
   "bin": {
     "river": "./river"
@@ -31,7 +31,7 @@
   "homepage": "https://github.com/invrs/river#readme",
   "dependencies": {
     "@babel/runtime": "7.0.0-beta.42",
-    "@invrs/npm-tasks": "^0.8.25",
+    "@invrs/npm-tasks": "^0.8.26",
     "default-tasks": "^0.8.19",
     "encrypt-tasks": "^0.8.19",
     "find-up": "^2.1.0",
