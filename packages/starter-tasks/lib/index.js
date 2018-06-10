@@ -1,4 +1,4 @@
-import { dirname, extname, join } from "path"
+import { basename, dirname, extname, join } from "path"
 import { promisify } from "util"
 
 // Packages
@@ -8,6 +8,7 @@ import glob from "glob"
 import {
   copy,
   ensureDir,
+  ensureFile,
   pathExists,
   readJson,
   writeJson,
@@ -17,20 +18,29 @@ import {
 import { homepage } from "./homepage"
 
 // Constants
-const templatesPath = join(__dirname, "../templates")
+import { projectTypes } from "./projectTypes"
+
 const cleanInstall = ["basics", "jest/test"]
+const templatesPath = join(__dirname, "../templates")
 
 // Tasks
 export async function preSetup(config) {
   config.alias.starter = {
     a: ["add"],
     o: ["only"],
+    u: ["update"],
   }
 
   config.urls.starter = await homepage()
 }
 
-export async function starter({ add, cwd, only }) {
+export async function starter(options) {
+  const { add, cwd, only, update } = options
+
+  if (!add && !update) {
+    return await askStarter(options)
+  }
+
   const globStr =
     cwd +
     (only
@@ -45,20 +55,82 @@ export async function starter({ add, cwd, only }) {
 
     if (add) {
       await addStarter({ add, path, pkg })
-    } else {
+    }
+
+    if (update) {
       await mergeStarters({ dirPath, pkg })
     }
   }
 }
 
 // Helpers
+async function askStarter({ ask, cwd }) {
+  const choices = Object.keys(projectTypes)
+  const paths = await promisify(glob)(templatesPath + "/*")
+  const templates = paths.map(path => basename(path))
+  const { name, starters } = await ask([
+    {
+      choices,
+      message: "What kind of project is this?",
+      name: "projectType",
+      type: "list",
+    },
+    {
+      choices: ({ projectType }) => {
+        return templates.map(template => {
+          const checked = projectTypes[
+            projectType
+          ].includes(template)
+          return { checked, name: template }
+        })
+      },
+      message: "Add or remove starters",
+      name: "starters",
+      type: "checkbox",
+    },
+    {
+      message: "Project name",
+      name: "name",
+    },
+  ])
+
+  const lerna = await pathExists(join(cwd, "packages"))
+  const dirPath = join(
+    cwd,
+    lerna ? `packages/${name}` : name
+  )
+  const pkgPath = join(dirPath, "package.json")
+  await ensureFile(pkgPath)
+
+  let pkg
+
+  try {
+    pkg = await readJson(pkgPath)
+  } catch (e) {
+    pkg = {}
+  }
+
+  pkg.name = name
+  pkg.starters = starters
+
+  await writeJson(pkgPath, pkg)
+  await mergeStarters({ dirPath, pkg })
+}
+
 async function addStarter({ add, path, pkg }) {
   const { starters = [] } = pkg
 
-  if (starters.indexOf(add) == -1) {
-    pkg.starters = [add, ...starters].sort()
-    await writeJson(path, pkg, { spaces: 2 })
+  if (!Array.isArray(add)) {
+    add = [add]
   }
+
+  pkg.starters = [...add, ...starters]
+  pkg.starters = pkg.starters.filter(
+    (v, i, a) => a.indexOf(v) === i
+  )
+  pkg.starters = pkg.starters.sort()
+
+  await writeJson(path, pkg, { spaces: 2 })
 }
 
 async function buildStarters() {
