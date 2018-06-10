@@ -61,7 +61,7 @@ export async function link({ cwd, only, tasks, update }) {
 
       if (exists) {
         const pkg = await readJson(path)
-        tasks.npm({
+        await tasks.npm({
           skipLerna: true,
           update: link,
           version: pkg.version,
