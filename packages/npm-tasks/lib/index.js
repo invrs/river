@@ -155,11 +155,15 @@ async function npmUpdate(options) {
     version = "latest",
   } = options
 
+  const carat = `^${version}`
+
   await eachPackage(cwd, async ({ cwd, pkg }) => {
     const dep = pkg.dependencies[update]
     const dev = pkg.devDependencies[update]
 
-    if (dep || dev) {
+    const depVersion = dep || dev
+
+    if (depVersion && depVersion != carat) {
       await tasks.npm({
         cwd,
         dev,

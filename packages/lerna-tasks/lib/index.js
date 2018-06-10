@@ -3,6 +3,7 @@ import { homepage } from "./homepage"
 // Tasks
 export async function preSetup(config) {
   config.alias.lerna = {
+    a: ["add"],
     b: ["build"],
     e: ["env"],
     f: ["force"],
@@ -16,6 +17,7 @@ export async function preSetup(config) {
 
 export async function lerna(options) {
   const {
+    add,
     bootstrap,
     build,
     ignore,
@@ -28,8 +30,12 @@ export async function lerna(options) {
   buildArgs("ignore", ignore, options)
   buildArgs("scope", only, options)
 
-  if (bootstrap || (!build && !publish)) {
+  if (bootstrap || (!add && !build && !publish)) {
     await lernaBootstrap(options)
+  }
+
+  if (add) {
+    await lernaAdd(options)
   }
 
   if (build) {
@@ -54,6 +60,14 @@ function buildArgs(option, value, options) {
       ])
     }
   }
+}
+
+async function lernaAdd({ add, args, cwd, run, version }) {
+  await run(
+    "npx",
+    ["lerna", "add", `${add}@${version}`, ...args],
+    { cwd }
+  )
 }
 
 async function lernaBootstrap({ cwd, run }) {
