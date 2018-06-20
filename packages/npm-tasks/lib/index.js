@@ -2,7 +2,7 @@ import { basename, dirname } from "path"
 import { promisify } from "util"
 
 // Packages
-import { readJson } from "fs-extra"
+import { readJson, writeJson } from "fs-extra"
 import glob from "glob"
 
 // Helpers
@@ -51,7 +51,7 @@ export async function npm(options) {
 // Helpers
 async function eachPackage(cwd, fn) {
   const pkgPath = `${cwd}/packages`
-  const pkgGlob = `${pkgPath}/*/package.json`
+  const pkgGlob = `{${pkgPath}/*,}/package.json`
   const paths = await promisify(glob)(pkgGlob)
 
   for (const path of paths) {
@@ -157,20 +157,19 @@ async function npmUpdate(options) {
 
   const carat = `^${version}`
 
-  await eachPackage(cwd, async ({ cwd, pkg }) => {
+  await eachPackage(cwd, async ({ path, pkg }) => {
     const dep = pkg.dependencies[update]
     const dev = pkg.devDependencies[update]
 
-    const depVersion = dep || dev
-
-    if (depVersion && depVersion != carat) {
-      await tasks.npm({
-        cwd,
-        dev,
-        install: `${update}@${version}`,
-        update: false,
-      })
+    if (dep && dep != carat) {
+      pkg.dependencies[update] = carat
     }
+
+    if (dev && dev != carat) {
+      pkg.dependencies[update] = carat
+    }
+
+    await writeJson(path, pkg, { spaces: 2 })
   })
 
   if (!skipLerna) {
