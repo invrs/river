@@ -39,7 +39,7 @@
     "lerna-tasks": "^0.8.27",
     "link-tasks": "^0.8.27",
     "starter-tasks": "^0.8.28",
-    "task-env": "^2.14.1",
+    "task-env": "^2.14.4",
     "watchman-tasks": "^0.8.25"
   },
   "devDependencies": {
