@@ -69,8 +69,6 @@ async function npmClean({ cwd, run }) {
     ["-rf", "node_modules", "package-lock.json"],
   ]
 
-  await run(...rm, { cwd })
-
   await eachPackage(cwd, async ({ cwd }) => {
     await run(...rm, { cwd })
   })
@@ -166,7 +164,7 @@ async function npmUpdate(options) {
     }
 
     if (dev && dev != carat) {
-      pkg.dependencies[update] = carat
+      pkg.devDependencies[update] = carat
     }
 
     await writeJson(path, pkg, { spaces: 2 })
