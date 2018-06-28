@@ -51,7 +51,7 @@ export async function npm(options) {
 // Helpers
 async function eachPackage(cwd, fn) {
   const pkgPath = `${cwd}/packages`
-  const pkgGlob = `{${pkgPath}/*,}/package.json`
+  const pkgGlob = `{${pkgPath}/*,${cwd}}/package.json`
   const paths = await promisify(glob)(pkgGlob)
 
   for (const path of paths) {
@@ -156,15 +156,20 @@ async function npmUpdate(options) {
   const carat = `^${version}`
 
   await eachPackage(cwd, async ({ path, pkg }) => {
-    const dep = pkg.dependencies[update]
-    const dev = pkg.devDependencies[update]
+    if (pkg.dependencies) {
+      const dep = pkg.dependencies[update]
 
-    if (dep && dep != carat) {
-      pkg.dependencies[update] = carat
+      if (dep && dep != carat) {
+        pkg.dependencies[update] = carat
+      }
     }
 
-    if (dev && dev != carat) {
-      pkg.devDependencies[update] = carat
+    if (pkg.devDependencies) {
+      const dev = pkg.devDependencies[update]
+
+      if (dev && dev != carat) {
+        pkg.devDependencies[update] = carat
+      }
     }
 
     await writeJson(path, pkg, { spaces: 2 })
