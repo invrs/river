@@ -78,7 +78,7 @@ async function lernaBootstrap({ cwd, run }) {
   const { devDependencies } = await readJson(
     `${cwd}/package.json`
   )
-  if (devDependencies.lerna) {
+  if (devDependencies && devDependencies.lerna) {
     await run("npx", ["lerna", "bootstrap"], { cwd })
   }
 }
