@@ -1,3 +1,7 @@
+// Packages
+import { readJson } from "fs-extra"
+
+// Helpers
 import { homepage } from "./homepage"
 
 // Tasks
@@ -71,7 +75,12 @@ async function lernaAdd({ add, args, cwd, run, version }) {
 }
 
 async function lernaBootstrap({ cwd, run }) {
-  await run("npx", ["lerna", "bootstrap"], { cwd })
+  const { devDependencies } = await readJson(
+    `${cwd}/package.json`
+  )
+  if (devDependencies.lerna) {
+    await run("npx", ["lerna", "bootstrap"], { cwd })
+  }
 }
 
 async function lernaBuild({ args, cwd, run }) {
