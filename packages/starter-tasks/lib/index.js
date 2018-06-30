@@ -85,7 +85,8 @@ async function askStarter({ ask, cwd }) {
           return { checked, name: template }
         })
       },
-      message: "Add or remove starters",
+      message:
+        "Select starter templates (see https://git.io/fa8FQ)",
       name: "starters",
       type: "checkbox",
     },

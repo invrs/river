@@ -1,6 +1,7 @@
 export const projectTypes = {
   Browser: [
     "babel",
+    "babel-scripts",
     "babel-web",
     "basics",
     "eslint",
@@ -12,6 +13,7 @@ export const projectTypes = {
   Lerna: ["babel", "basics", "eslint", "husky"],
   React: [
     "babel",
+    "babel-scripts",
     "babel-web-react",
     "basics",
     "eslint",
@@ -24,6 +26,7 @@ export const projectTypes = {
   Server: [
     "babel",
     "babel-node",
+    "babel-scripts",
     "basics",
     "eslint",
     "husky",
@@ -34,6 +37,7 @@ export const projectTypes = {
   Task: [
     "babel",
     "babel-node",
+    "babel-scripts",
     "basics",
     "eslint",
     "husky",
