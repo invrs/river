@@ -1,6 +1,6 @@
 {
   "name": "link-tasks",
-  "version": "0.8.27",
+  "version": "0.8.33",
   "description": "River tasks to symlink packages",
   "main": "dist/index.js",
   "scripts": {

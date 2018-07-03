@@ -1,6 +1,6 @@
 {
   "name": "@invrs/npm-tasks",
-  "version": "0.8.29",
+  "version": "0.8.33",
   "description": "River tasks to run npm commands",
   "main": "dist/index.js",
   "license": "MIT",
