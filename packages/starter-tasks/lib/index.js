@@ -66,7 +66,9 @@ export async function starter(options) {
 // Helpers
 async function askStarter({ ask, cwd }) {
   const choices = Object.keys(projectTypes)
-  const paths = await promisify(glob)(templatesPath + "/*")
+  const paths = await promisify(glob)(
+    templatesPath + "/!(basics)"
+  )
   const templates = paths.map(path => basename(path))
 
   const { name, starters } = await ask([
@@ -100,13 +102,13 @@ async function askStarter({ ask, cwd }) {
   const prefixPath = lerna ? `packages/${name}` : name
   const dirPath = join(cwd, prefixPath)
   const pkgPath = join(dirPath, "package.json")
-  const pkg = await writePackage({
+
+  await mergeStarters({ dirPath, starters })
+  await writePackage({
     name,
     pkgPath,
     starters,
   })
-
-  await mergeStarters({ dirPath, pkg })
 }
 
 async function addStarter({ add, path, pkg }) {
@@ -169,15 +171,16 @@ function isCleanInstall(starter, starterPath) {
   }
 }
 
-async function mergeStarters({ dirPath, pkg }) {
-  if (!pkg.starters) {
+async function mergeStarters({ dirPath, starters }) {
+  if (!starters) {
     return
   }
 
-  const starters = await buildStarters()
+  const starterBuild = await buildStarters()
+  starters.unshift("basics")
 
-  for (const starter of pkg.starters) {
-    for (const starterPath in starters[starter]) {
+  for (const starter of starters) {
+    for (const starterPath in starterBuild[starter]) {
       const targetPath = convertTargetPath(
         join(dirPath, starterPath)
       )
@@ -193,7 +196,7 @@ async function mergeStarters({ dirPath, pkg }) {
         const dontMerge = (_, source) => source
         const newTarget = deepMerge(
           target,
-          starters[starter][starterPath],
+          starterBuild[starter][starterPath],
           { arrayMerge: dontMerge }
         )
 
@@ -220,12 +223,15 @@ async function mergeStarters({ dirPath, pkg }) {
 async function writePackage({ name, pkgPath, starters }) {
   const exists = await pathExists(pkgPath)
   await ensureFile(pkgPath)
-  const pkg = exists ? await readJson(pkgPath) : {}
+  const merge = exists ? await readJson(pkgPath) : {}
 
-  pkg.name = name
-  pkg.starters = starters
+  const pkg = {
+    name: name,
+    starters: starters,
+    ...merge,
+  }
 
-  await writeJson(pkgPath, pkg)
+  await writeJson(pkgPath, pkg, { spaces: 2 })
 
   return pkg
 }
