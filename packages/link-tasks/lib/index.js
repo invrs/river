@@ -41,6 +41,7 @@ export async function link({ cwd, only, tasks, update }) {
       if (exists) {
         const pkg = await readJson(path)
         await tasks.npm({
+          cwd,
           skipLerna: true,
           update: link,
           version: pkg.version,
@@ -48,7 +49,7 @@ export async function link({ cwd, only, tasks, update }) {
       }
     }
 
-    await tasks.lerna({ bootstrap: true })
+    await tasks.lerna({ bootstrap: true, cwd })
   }
 
   for (const path of paths) {

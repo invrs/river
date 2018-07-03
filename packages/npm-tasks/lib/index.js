@@ -176,6 +176,6 @@ async function npmUpdate(options) {
   })
 
   if (!skipLerna) {
-    await tasks.lerna({ bootstrap: true })
+    await tasks.lerna({ bootstrap: true, cwd })
   }
 }
