@@ -126,10 +126,14 @@ export async function npmPublish({
     version = "minor"
   }
 
-  const { out } = await run("git", ["describe"], { cwd })
+  const { out } = await run(
+    "git",
+    ["describe", "--always"],
+    { cwd }
+  )
   const publishRegex = /v\d+\.\d+\.\d+-\d+-[\w\d]+/m
 
-  if (!out.match(publishRegex)) {
+  if (out.match(publishRegex)) {
     return
   }
 
