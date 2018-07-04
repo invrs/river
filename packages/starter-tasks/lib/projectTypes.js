@@ -34,6 +34,7 @@ export const projectTypes = {
     "jest-scripts",
     "watchman-babel",
   ],
+  "Sass Package": ["sass", "watchman-sass"],
   "Server/Task Package": [
     "babel",
     "babel-node",
