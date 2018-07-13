@@ -58,11 +58,11 @@ export async function link({ cwd, only, tasks, update }) {
         continue
       }
 
-      const pkgDist = join(path, link, "dist")
+      const pkgDist = join(path, link)
       const exists = await pathExists(pkgDist)
 
       if (exists) {
-        const linkTo = join(cwd, links[link], "dist")
+        const linkTo = join(cwd, links[link])
 
         await remove(pkgDist)
         await ensureSymlink(linkTo, pkgDist)
