@@ -116,7 +116,7 @@ async function npmList(options) {
   console.log("")
 }
 
-export async function npmPublish({
+async function npmPublish({
   cwd,
   env,
   run,
