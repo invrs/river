@@ -58,7 +58,10 @@ export async function starter(options) {
     }
 
     if (update) {
-      await mergeStarters({ dirPath, pkg })
+      await mergeStarters({
+        dirPath,
+        starters: pkg.starters,
+      })
     }
   }
 }
