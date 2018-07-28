@@ -32,12 +32,14 @@
   "dependencies": {
     "@babel/runtime": "7.0.0-beta.42",
     "@invrs/npm-tasks": "^0.8.35",
+    "cloud-function-tasks": "^0.8.35",
     "default-tasks": "^0.8.35",
     "encrypt-tasks": "^0.8.35",
     "find-up": "^2.1.0",
     "fs-extra": "5",
     "lerna-tasks": "^0.8.35",
     "link-tasks": "^0.8.35",
+    "next-tasks": "^0.8.35",
     "starter-tasks": "^0.8.35",
     "task-env": "^2.14.6",
     "watchman-tasks": "^0.8.35"

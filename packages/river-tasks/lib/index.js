@@ -5,10 +5,12 @@ import { dirname, join } from "path"
 import findUp from "find-up"
 import taskEnv from "task-env"
 
+import * as cloudFunctionTasks from "cloud-function-tasks"
 import * as defaultTasks from "default-tasks"
 import * as encryptTasks from "encrypt-tasks"
 import * as lernaTasks from "lerna-tasks"
 import * as linkTasks from "link-tasks"
+import * as nextTasks from "next-tasks"
 import * as npmTasks from "@invrs/npm-tasks"
 import * as starterTasks from "starter-tasks"
 import * as watchmanTasks from "watchman-tasks"
@@ -24,10 +26,12 @@ export async function riverTasks(tasks = [], options = {}) {
     setup: [setupCwd(relative)],
     stores,
     tasks: [
+      cloudFunctionTasks,
       defaultTasks,
       encryptTasks,
       lernaTasks,
       linkTasks,
+      nextTasks,
       npmTasks,
       starterTasks,
       watchmanTasks,
