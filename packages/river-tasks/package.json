@@ -1,6 +1,6 @@
 {
   "name": "river-tasks",
-  "version": "0.8.35",
+  "version": "0.8.36",
   "description": "Do your job, then let go",
   "bin": {
     "river": "./river"
@@ -34,7 +34,7 @@
     "@invrs/npm-tasks": "^0.8.35",
     "cloud-function-tasks": "^0.8.35",
     "default-tasks": "^0.8.35",
-    "encrypt-tasks": "^0.8.35",
+    "encrypt-tasks": "^0.8.36",
     "find-up": "^2.1.0",
     "fs-extra": "5",
     "lerna-tasks": "^0.8.35",
