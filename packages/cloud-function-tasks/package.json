@@ -1,35 +1,38 @@
 {
-  "name": "watchman-tasks",
-  "version": "0.8.25",
-  "description": "River tasks to manage watchman.",
-  "main": "dist/index.js",
-  "scripts": {
-    "build": "rimraf dist; babel lib --out-dir dist --source-maps",
-    "prepublishOnly": "npm run build",
-    "test": "jest",
-    "watch": "rimraf dist; babel lib --watch --out-dir dist --source-maps"
-  },
+  "name": "cloud-function-tasks",
+  "starters": [
+    "basics",
+    "babel",
+    "babel-node",
+    "babel-scripts",
+    "jest",
+    "jest-scripts",
+    "watchman-babel"
+  ],
+  "version": "0.0.1",
+  "description": "River tasks to build cloud function packages",
   "keywords": [
     "river",
     "tasks",
-    "watchman"
+    "cloud function"
   ],
   "author": "Inverse Labs <labs@inverse.com>",
   "license": "MIT",
+  "homepage": "https://github.com//#readme",
   "dependencies": {
     "@babel/runtime": "7.0.0-beta.42",
-    "fs-extra": "^6.0.1",
-    "glob": "^7.1.2"
+    "fs-extra": "^7.0.0"
   },
   "devDependencies": {
     "@babel/cli": "7.0.0-beta.42",
     "@babel/core": "7.0.0-beta.42",
+    "@babel/preset-env": "7.0.0-beta.42",
+    "@babel/plugin-proposal-class-properties": "7.0.0-beta.42",
     "@babel/plugin-proposal-object-rest-spread": "7.0.0-beta.42",
     "@babel/plugin-transform-runtime": "7.0.0-beta.42",
-    "@babel/preset-env": "7.0.0-beta.42",
+    "rimraf": "2",
     "babel-core": "^7.0.0-bridge.0",
-    "jest": "22",
-    "rimraf": "2"
+    "jest": "22"
   },
   "babel": {
     "presets": [
@@ -43,9 +46,17 @@
       ]
     ],
     "plugins": [
+      "@babel/plugin-proposal-class-properties",
       "@babel/plugin-proposal-object-rest-spread",
       "@babel/plugin-transform-runtime"
     ]
+  },
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "babel lib --out-dir dist --source-maps",
+    "prepublishOnly": "rimraf dist; npm run build",
+    "watch": "rimraf dist; babel lib --watch --out-dir dist --source-maps",
+    "test": "jest"
   },
   "jest": {
     "setupFiles": [
@@ -56,15 +67,6 @@
       "<rootDir>/test/**/*Test.js"
     ]
   },
-  "starters": [
-    "babel",
-    "babel-node",
-    "babel-scripts",
-    "basics",
-    "jest",
-    "jest-scripts",
-    "watchman-babel"
-  ],
   "watchman": {
     "triggers": [
       {

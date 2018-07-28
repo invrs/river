@@ -53,6 +53,7 @@
     "setupFiles": [
       "<rootDir>/test/setup.js"
     ],
+    "testEnvironment": "node",
     "testMatch": [
       "<rootDir>/test/**/*Test.js"
     ]
