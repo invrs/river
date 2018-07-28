@@ -47,7 +47,7 @@ function nextPath(cwd, path) {
   return join(cwd, "packages/next", path)
 }
 
-async function buildCloudFunctions({ config, cwd }) {
+async function buildCloudFunctions({ cwd, npmrc }) {
   const hasNext = await pathExists(nextPath(cwd))
 
   await buildPackage(cwd)
@@ -59,10 +59,9 @@ async function buildCloudFunctions({ config, cwd }) {
     )
   }
 
-  await writeFile(
-    cloudFnDistPath(cwd, ".npmrc"),
-    config.get("npmrc.inversedeploy")
-  )
+  if (npmrc) {
+    await writeFile(cloudFnDistPath(cwd, ".npmrc"), npmrc)
+  }
 }
 
 async function buildPackage(cwd) {
