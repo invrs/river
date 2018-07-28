@@ -101,7 +101,7 @@ export async function setStoreDir({ ask, riverConfig }) {
 
 export function setupCwd({ cwd }) {
   return config => {
-    config.parsedArgs.cwd = cwd || process.cwd()
+    config.customArgs.cwd = cwd || process.cwd()
   }
 }
 

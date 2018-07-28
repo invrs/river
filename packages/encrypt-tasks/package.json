@@ -47,7 +47,7 @@
     "jest": "22",
     "rimraf": "2",
     "source-map-support": "^0.5.5",
-    "task-env": "^2.14.6"
+    "task-env": "^2.14.7"
   },
   "jest": {
     "setupFiles": [

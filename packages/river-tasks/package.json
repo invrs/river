@@ -41,7 +41,7 @@
     "link-tasks": "^0.8.35",
     "next-tasks": "^0.8.35",
     "starter-tasks": "^0.8.35",
-    "task-env": "^2.14.6",
+    "task-env": "^2.14.7",
     "watchman-tasks": "^0.8.35"
   },
   "devDependencies": {
