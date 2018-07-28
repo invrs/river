@@ -1,6 +1,6 @@
 {
   "name": "encrypt-tasks",
-  "version": "0.8.33",
+  "version": "0.8.35",
   "description": "Task Env tasks to encrypt/decrypt files or JSON values",
   "license": "MIT",
   "main": "dist/index.js",
