@@ -1,7 +1,8 @@
 import "./source.maps"
 
+import { basename } from "path"
+
 import { crypt } from "./crypt"
-import { configDir, readFile } from "./fs"
 import { homepage } from "./homepage"
 import { init as initFn } from "./init"
 
@@ -15,23 +16,31 @@ export async function preSetup(config) {
 export async function encrypt({
   ask,
   config,
+  cwd,
   init,
   riverConfig,
   type = "encrypt",
 }) {
-  await initFn({ ask, config, riverConfig })
+  const dir = process.env.CONFIG_DIR
+  const ns = `${basename(cwd || "default")}-${basename(
+    dir
+  )}`
+
+  await initFn({ ask, config, ns, riverConfig })
 
   if (init) {
     return
   }
 
-  let dir = await configDir(riverConfig)
-  let localInfo = await riverConfig.get("encryptTasks")
-  let info = await config.get("encryptTasks")
+  const info = await config.get("encryptTasks")
+  info.key = await riverConfig.get(`encryptTasks.${ns}.key`)
 
-  info.key = await readFile(localInfo.keyPath, "utf8")
-
-  await crypt({ config, dir, info, type })
+  await crypt({
+    config,
+    dir,
+    info,
+    type,
+  })
 }
 
 export async function decrypt({ tasks }) {

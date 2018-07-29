@@ -46,18 +46,14 @@ export function configDir(options = {}) {
 }
 
 export async function preSetupStores(config, args) {
-  let { riverConfig } = args
-
   if (config.stores.config) {
     return
   }
 
-  let storeDir = await riverConfig.get("river.storeDir")
-
-  if (configDir() || storeDir) {
+  if (configDir()) {
     config.stores.config = {
       pattern: "**/*",
-      root: configDir() || storeDir,
+      root: configDir(),
     }
   } else {
     await setStoreDir(args)

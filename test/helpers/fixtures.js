@@ -20,10 +20,5 @@ export async function fixtures(dirname) {
 
   await write("run", run)
 
-  let river = await read("river/river.json")
-  river.storeDir = path
-
-  await write("river/river.json", river)
-
   return { path, read, write }
 }

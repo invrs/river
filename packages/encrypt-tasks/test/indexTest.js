@@ -1,22 +1,23 @@
+import { basename } from "path"
 import { fixtures, run, runWithInit } from "./helpers"
 
 test("init", async () => {
-  let fixture = await fixtures(__dirname)
-  let { read, steps } = await runWithInit(
+  const fixture = await fixtures(__dirname)
+  const { read, steps } = await runWithInit(
     fixture,
     "encrypt"
   )
 
-  let key = await read("key")
-  expect(typeof key).toBe("string")
+  const { files, ivs } = await read("encryptTasks.json")
+  const localInfo = await read("river/encryptTasks.json")
 
-  let { files, ivs } = await read("encryptTasks.json")
-  let { keyPath } = await read("river/encryptTasks.json")
+  const key =
+    localInfo[`default-${basename(fixture.path)}`].key
 
   expect(steps.length).toEqual(0)
   expect(ivs).toEqual({})
   expect(files).toEqual([])
-  expect(typeof keyPath).toBe("string")
+  expect(typeof key).toBe("string")
 })
 
 test("encrypt/decrypt JSON", async () => {

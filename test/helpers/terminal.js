@@ -9,6 +9,11 @@ export async function run({ fixture, onData, task }) {
 
   let out = await cmd.run(`${path}/run`, task, {
     cwd: path,
+    env: {
+      ...process.env,
+      CONFIG_DIR: path,
+      RIVER_CONFIG_DIR: path + "/river",
+    },
     onData,
     silent: true,
   })

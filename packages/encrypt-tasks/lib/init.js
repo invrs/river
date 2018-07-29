@@ -1,28 +1,24 @@
-import { resolve } from "path"
+import { makeKey } from "./cipher"
 
-import { askForKeys, askForPass } from "./ask"
-import { readFile, writeKeyPath } from "./fs"
-
-export async function init({ ask, config, riverConfig }) {
+export async function init({
+  ask,
+  config,
+  ns,
+  riverConfig,
+}) {
   const encryptConfig = await config.get("encryptTasks")
+
   const riverEncryptConfig = await riverConfig.get(
-    "encryptTasks"
+    `encryptTasks.${ns}`
   )
 
-  if (!riverEncryptConfig || !riverEncryptConfig.keyPath) {
-    let { keyPath } = await askForKeys(ask)
-    keyPath = resolve(keyPath)
+  if (!riverEncryptConfig || !riverEncryptConfig.key) {
+    let { password } = await askForPass(ask)
 
-    try {
-      await readFile(keyPath, "utf8")
-    } catch (e) {
-      let { password } = await askForPass(ask)
-      await writeKeyPath({ keyPath, password })
-    }
-
-    await riverConfig.set("encryptTasks", {
-      keyPath,
-    })
+    await riverConfig.set(
+      `encryptTasks.${ns}.key`,
+      makeKey(password)
+    )
   }
 
   if (!encryptConfig) {
@@ -31,4 +27,14 @@ export async function init({ ask, config, riverConfig }) {
       ivs: {},
     })
   }
+}
+
+export async function askForPass(ask) {
+  return await ask([
+    {
+      message: "Password",
+      name: "password",
+      type: "password",
+    },
+  ])
 }
