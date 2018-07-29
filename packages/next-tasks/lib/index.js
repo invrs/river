@@ -17,7 +17,7 @@ export async function next(options) {
 }
 
 // Helpers
-function nextPath(cwd, path) {
+function nextPath(cwd, path = "") {
   return join(cwd, "packages/next", path)
 }
 

@@ -35,15 +35,15 @@ export async function cloudFunctions(options) {
 }
 
 // Helpers
-function cloudFnPath(cwd, path) {
+function cloudFnPath(cwd, path = "") {
   return join(cwd, "packages/cloud-functions", path)
 }
 
-function cloudFnDistPath(cwd, path) {
+function cloudFnDistPath(cwd, path = "") {
   return join(cwd, "packages/cloud-functions/dist", path)
 }
 
-function nextPath(cwd, path) {
+function nextPath(cwd, path = "") {
   return join(cwd, "packages/next", path)
 }
 
