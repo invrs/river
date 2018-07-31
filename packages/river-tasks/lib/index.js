@@ -45,7 +45,7 @@ export function configDir(options = {}) {
   return options.configDir || process.env.CONFIG_DIR
 }
 
-export async function preSetupStores(config, args) {
+export async function preSetupStores(config) {
   if (config.stores.config) {
     return
   }
@@ -55,9 +55,6 @@ export async function preSetupStores(config, args) {
       pattern: "**/*",
       root: configDir(),
     }
-  } else {
-    await setStoreDir(args)
-    await preSetupStores(config, args)
   }
 }
 
@@ -80,19 +77,6 @@ export async function relativeTasks() {
   } else {
     return { tasks: [] }
   }
-}
-
-export async function setStoreDir({ ask, riverConfig }) {
-  let { storeDir } = await ask([
-    {
-      message:
-        "Where is your version controlled config directory?",
-      name: "storeDir",
-      type: "input",
-    },
-  ])
-
-  await riverConfig.merge("river", { storeDir })
 }
 
 export function setupCwd({ cwd }) {
