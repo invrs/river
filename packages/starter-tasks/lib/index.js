@@ -221,7 +221,10 @@ async function mergeStarters({
         await writeJson(targetPath, newTarget, {
           spaces: 2,
         })
-      } else {
+
+        // eslint-disable-next-line no-console
+        console.log(`${starter} -> ${targetPath}`)
+      } else if (!depsOnly) {
         const absStarterPath = join(
           templatesPath,
           starter,
@@ -230,10 +233,10 @@ async function mergeStarters({
 
         await ensureDir(dirname(targetPath))
         await copy(absStarterPath, targetPath)
-      }
 
-      // eslint-disable-next-line no-console
-      console.log(`${starter} -> ${targetPath}`)
+        // eslint-disable-next-line no-console
+        console.log(`${starter} -> ${targetPath}`)
+      }
     }
   }
 }
