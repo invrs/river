@@ -62,6 +62,7 @@
     "babel-scripts",
     "basics",
     "jest",
+    "jest-node",
     "jest-scripts",
     "watchman-babel"
   ],
