@@ -1,6 +1,6 @@
 {
   "name": "starter-tasks",
-  "version": "0.8.35",
+  "version": "0.8.37",
   "description": "River tasks to start new projects and update old ones",
   "main": "dist/index.js",
   "license": "MIT",
@@ -40,6 +40,7 @@
   "devDependencies": {
     "@babel/cli": "7.0.0-beta.42",
     "@babel/core": "7.0.0-beta.42",
+    "@babel/plugin-proposal-class-properties": "7.0.0-beta.42",
     "@babel/plugin-proposal-object-rest-spread": "7.0.0-beta.42",
     "@babel/plugin-transform-runtime": "7.0.0-beta.42",
     "@babel/preset-env": "7.0.0-beta.42",
@@ -48,8 +49,7 @@
     "fxtr": "1",
     "jest": "23.4.2",
     "prettier": "^1.13.0",
-    "rimraf": "^2.6.2",
-    "@babel/plugin-proposal-class-properties": "7.0.0-beta.42"
+    "rimraf": "^2.6.2"
   },
   "jest": {
     "setupFiles": [
