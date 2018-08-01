@@ -27,6 +27,7 @@ const templatesPath = join(__dirname, "../templates")
 export async function preSetup(config) {
   config.alias.starter = {
     a: ["add"],
+    d: ["depsOnly"],
     o: ["only"],
     u: ["update"],
   }
@@ -35,7 +36,7 @@ export async function preSetup(config) {
 }
 
 export async function starter(options) {
-  const { add, cwd, only, update } = options
+  const { add, cwd, depsOnly, only, update } = options
 
   if (!add && !update) {
     return await askStarter(options)
@@ -59,6 +60,7 @@ export async function starter(options) {
 
     if (update) {
       await mergeStarters({
+        depsOnly,
         dirPath,
         starters: pkg.starters,
       })
@@ -174,7 +176,11 @@ function isCleanInstall(starter, starterPath) {
   }
 }
 
-async function mergeStarters({ dirPath, starters }) {
+async function mergeStarters({
+  depsOnly,
+  dirPath,
+  starters,
+}) {
   if (!starters) {
     return
   }
@@ -197,11 +203,20 @@ async function mergeStarters({ dirPath, starters }) {
       if (extname(targetPath) == ".json" && exists) {
         const target = await readJson(targetPath)
         const dontMerge = (_, source) => source
-        const newTarget = deepMerge(
+
+        let newTarget = deepMerge(
           target,
           starterBuild[starter][starterPath],
           { arrayMerge: dontMerge }
         )
+
+        if (depsOnly) {
+          newTarget = {
+            ...target,
+            dependencies: newTarget.dependencies,
+            devDependencies: newTarget.devDependencies,
+          }
+        }
 
         await writeJson(targetPath, newTarget, {
           spaces: 2,

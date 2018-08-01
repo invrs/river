@@ -7,14 +7,14 @@
   },
   "dependencies": {
     "express": "^4.16.3",
-    "next": "^6.0.3",
-    "next-routes": "1",
-    "react": "16.4.1",
-    "react-dom": "16.4.1"
+    "next": "^6.1.1",
+    "next-routes": "^1.4.2",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1"
   },
   "devDependencies": {
-    "rimraf": "2",
-    "webpack-bundle-analyzer": "^2.11.1"
+    "rimraf": "^2.6.2",
+    "webpack-bundle-analyzer": "^2.13.1"
   },
   "babel": {
     "env": {

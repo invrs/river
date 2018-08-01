@@ -40,6 +40,7 @@ export const projectTypes = {
     "babel-node",
     "babel-scripts",
     "jest",
+    "jest-node",
     "jest-scripts",
     "watchman-babel",
   ],
