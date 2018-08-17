@@ -16,6 +16,7 @@ export async function preSetup(config) {
     b: ["build"],
     d: ["deploy"],
     e: ["env"],
+    r: ["routes"],
   }
 }
 
@@ -47,14 +48,18 @@ function nextPath(cwd, path = "") {
   return join(cwd, "packages/next", path)
 }
 
-async function buildCloudFunctions({ cwd, npmrc }) {
+async function buildCloudFunctions({
+  cwd,
+  npmrc,
+  routes = "routes.js",
+}) {
   const hasNext = await pathExists(nextPath(cwd))
 
   await buildPackage(cwd)
 
   if (hasNext) {
     await copy(
-      nextPath(cwd, "routes.js"),
+      nextPath(cwd, routes),
       cloudFnDistPath(cwd, "routes.js")
     )
   }
