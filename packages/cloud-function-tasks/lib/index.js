@@ -74,6 +74,7 @@ async function buildPackage(cwd) {
     cloudFnPath(cwd, "package.json")
   )
 
+  pkg.engines = { node: "8" }
   pkg.name = pkg.name + "-dist"
   pkg.main = "index.js"
   pkg.private = true
