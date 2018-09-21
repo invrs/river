@@ -1,6 +1,6 @@
 {
   "name": "river-tasks",
-  "version": "0.8.38",
+  "version": "0.8.39",
   "description": "Do your job, then let go",
   "bin": {
     "river": "./river"
@@ -32,7 +32,7 @@
   "dependencies": {
     "@babel/runtime": "7.0.0-beta.42",
     "@invrs/npm-tasks": "^0.8.37",
-    "cloud-function-tasks": "^0.8.38",
+    "cloud-function-tasks": "^0.8.39",
     "default-tasks": "^0.8.37",
     "encrypt-tasks": "^0.8.37",
     "find-up": "^2.1.0",

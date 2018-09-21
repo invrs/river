@@ -10,7 +10,7 @@
     "jest-scripts",
     "watchman-babel"
   ],
-  "version": "0.8.38",
+  "version": "0.8.39",
   "description": "River tasks to build cloud function packages",
   "keywords": [
     "river",
